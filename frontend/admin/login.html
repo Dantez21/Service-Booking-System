@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Login</title>
+    <link rel="stylesheet" href="../public/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Admin Login</h2>
+        <input type="text" id="username" placeholder="Username"><br><br>
+        <input type="password" id="password" placeholder="Password"><br><br>
+        <button id="loginBtn">Login</button>
+    </div>
+
+    <script src="../public/js/auth.js"></script>
+    <script>
+        document.getElementById("loginBtn").addEventListener("click", async () => {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+            const res = await login(username, password);
+            alert(JSON.stringify(res));
+        });
+    </script>
+</body>
+</html>
