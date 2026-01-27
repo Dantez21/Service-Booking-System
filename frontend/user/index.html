@@ -1,35 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-     <title>Daniel Wambua | AI & XR Developer</title>
-     <link rel="stylesheet" href="../public/css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../public/css/style.css">
+    <title>Daniel Wambua Portfolio</title>
 </head>
 <body>
-    <header>
-        <h1>My Portfolio</h1>
-        <h1>Daniel Wambua</h1>
-        <p>AI, Data & XR Developer</p>
+    <nav>
+        <div class="logo">Daniel Wambua</div>
+        <div class="nav-links">
+            <a href="#">Home</a><a href="#">Projects</a><a href="#">Skills</a>
+            <a href="hire.html" class="btn-hire-nav">Hire Me</a>
+        </div>
+    </nav>
 
-        <button>View Projects</button>
-        <button>Hire Me</button>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="projects.html">Projects</a>
-            <a href="services.html">Services</a>
-            <a href="hire.html">Hire Me</a>
-            <a href="contact.html">Contact</a>
-            <a href="chatbot.html">Chatbot</a>
-        </nav>
+    <header class="hero">
+        <div class="hero-text">
+            <h1>Daniel Wambua</h1>
+            <p>AI, Data & XR Developer</p>
+            <div style="margin-top: 20px;">
+                <button class="btn-primary" style="background: rgba(255,255,255,0.2); border: 1px solid white;">View My Projects</button>
+                <button class="btn-hire-nav" style="padding: 11px 25px; margin-left:10px;">Hire Me</button>
+            </div>
+        </div>
+        <img src="https://via.placeholder.com/150" class="hero-img" alt="Profile">
     </header>
 
     <div class="container">
-        <h2>Welcome to My Portfolio</h2>
-        <p>This is a simple, clean portfolio homepage.</p>
-    </div>
+        <h3 class="section-title">My Skills</h3>
+        <div class="skill-grid">
+            <div class="skill-card"><span>🤖</span> <strong>AI & Machine Learning</strong></div>
+            <div class="skill-card"><span>📊</span> <strong>Data Science</strong></div>
+            <div class="skill-card"><span>🥽</span> <strong>XR Development</strong></div>
+        </div>
 
-    <footer>
-        &copy; 2026 My Portfolio
-    </footer>
+        <h3 class="section-title" style="margin-top: 40px;">Featured Projects</h3>
+        <div class="project-grid">
+            <div class="card project-card">
+                <img src="https://via.placeholder.com/400x200" alt="Project">
+                <h4>AI Chatbot System</h4>
+                <p>Advanced natural language processing interface for enterprise data.</p>
+                <button class="btn-primary">View Details</button>
+            </div>
+            </div>
+    </div>
 </body>
 </html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../public/css/style.css">
+    <title>Admin Dashboard - Daniel Wambua</title>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">Danie Dashboard</div>
+        <div class="nav-links">
+            <a href="dashboard.html">Home</a>
+            <a href="manage-projects.html">Projects</a>
+            <a href="messages.html">Messages</a>
+            <a href="login.html" style="color: #ff4d4d;">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header style="margin-bottom: 30px;">
+            <h1>Welcome, Admin</h1>
+            <p style="color: #666;">Here is what's happening with your portfolio today.</p>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card bg-blue">
+                <small>New Requests</small>
+                <h2>12</h2>
+            </div>
+            <div class="stat-card bg-green">
+                <small>Payments Received</small>
+                <h2>KES 45,000</h2>
+            </div>
+            <div class="stat-card bg-orange">
+                <small>Messages</small>
+                <h2>8</h2>
+            </div>
+            <div class="stat-card bg-pink">
+                <small>User Stats</small>
+                <h2>1.2k</h2>
+            </div>
+        </div>
+
+        <div class="main-dash-grid">
+            
+            <section>
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h3>Hire Requests</h3>
+                        <button class="btn-primary" style="font-size: 0.8rem; width: auto;">View All</button>
+                    </div>
+                    <div style="height: 200px; background: #fdfdfd; border: 1px dashed #ddd; border-radius: 8px; display: flex; align-items: flex-end; justify-content: space-around; padding: 10px;">
+                        <div style="width: 30px; height: 40%; background: var(--navy-light); border-radius: 4px;"></div>
+                        <div style="width: 30px; height: 70%; background: var(--navy-light); border-radius: 4px;"></div>
+                        <div style="width: 30px; height: 55%; background: var(--navy-light); border-radius: 4px;"></div>
+                        <div style="width: 30px; height: 90%; background: var(--success); border-radius: 4px;"></div>
+                        <div style="width: 30px; height: 30%; background: var(--navy-light); border-radius: 4px;"></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Manage Projects</h3>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr><th>Project Name</th><th>Status</th><th>Actions</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>AI Chatbot</td><td><span class="badge badge-blue">Active</span></td><td><button style="border:none; background:none; color:blue; cursor:pointer;">Edit</button></td></tr>
+                                <tr><td>Data Dashboard</td><td><span class="badge badge-yellow">Review</span></td><td><button style="border:none; background:none; color:blue; cursor:pointer;">Edit</button></td></tr>
+                                <tr><td>VR Training</td><td><span class="badge badge-red">Paused</span></td><td><button style="border:none; background:none; color:blue; cursor:pointer;">Edit</button></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <aside>
+                <div class="card">
+                    <h3>Recent Payments</h3>
+                    <ul style="list-style: none; margin-top: 15px;">
+                        <li style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee;">
+                            <span>K. Munene</span>
+                            <strong>$450</strong>
+                        </li>
+                        <li style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee;">
+                            <span>TechCorp</span>
+                            <strong>$1,200</strong>
+                        </li>
+                        <li style="display: flex; justify-content: space-between; padding: 10px 0;">
+                            <span>S. Juma</span>
+                            <strong>$300</strong>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>Chatbot Logs</h3>
+                    <div style="font-size: 0.85rem; margin-top: 15px;">
+                        <div style="margin-bottom: 15px;">
+                            <strong style="color: var(--navy-light);">User_102</strong>
+                            <p style="color: #666;">"I need a quote for an XR app..."</p>
+                            <small style="color: #999;">2 mins ago</small>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <strong style="color: var(--navy-light);">User_105</strong>
+                            <p style="color: #666;">"How long does AI integration take?"</p>
+                            <small style="color: #999;">1 hour ago</small>
+                        </div>
+                    </div>
+                    <a href="chat-logs.html" style="display: block; text-align: center; font-size: 0.8rem; color: var(--navy-light); text-decoration: none; margin-top: 10px;">View Full Logs →</a>
+                </div>
+            </aside>
+
+        </div>
+    </div>
+
+</body>
+</html>

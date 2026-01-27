@@ -1,43 +1,204 @@
-/* Global styles */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background: #f4f4f4;
-    color: #333;
+/* 1. VARIABLES & RESET */
+:root {
+    --navy-dark: #091d36;
+    --navy-light: #1e56a0;
+    --bg-light: #f4f8fb;
+    --white: #ffffff;
+    --success: #28a745;
+    --warning: #ffc107;
+    --danger: #dc3545;
+    --text-main: #333;
+    --text-muted: #666;
+    --border: #e1e8ed;
 }
 
-header, footer {
-    background: #222;
-    color: #fff;
-    padding: 1rem;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    background-color: var(--bg-light);
+    color: var(--text-main);
+    line-height: 1.6;
+}
+
+/* 2. NAVIGATION & HERO (Gradient Styles) */
+nav {
+    background: linear-gradient(135deg, var(--navy-light), var(--navy-dark));
+    padding: 1rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
+
+nav .nav-links a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 0.9rem;
+}
+
+.hero {
+    background: linear-gradient(135deg, var(--navy-light), var(--navy-dark));
+    color: white;
+    padding: 60px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 0 0 40px 40px;
+    margin-bottom: 40px;
+}
+
+.hero-text h1 { font-size: 2.8rem; line-height: 1.2; }
+.hero-img {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    border: 6px solid rgba(255, 255, 255, 0.1);
+    object-fit: cover;
+}
+
+/* 3. LAYOUT CONTAINERS */
+.container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.card {
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    padding: 25px;
+    margin-bottom: 25px;
+    border: 1px solid rgba(0,0,0,0.03);
+}
+
+/* 4. GRID SYSTEMS */
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+}
+
+.admin-main-grid {
+    display: grid;
+    grid-template-columns: 2.5fr 1fr;
+    gap: 25px;
+}
+
+/* 5. FORMS & BUTTONS */
+.form-group { margin-bottom: 20px; }
+label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; }
+
+input, select, textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: #fff;
+    font-size: 1rem;
+}
+
+.btn {
+    padding: 12px 25px;
+    border-radius: 8px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    display: inline-block;
+    text-decoration: none;
     text-align: center;
 }
 
-nav a {
-    margin: 0 10px;
-    color: #fff;
-    text-decoration: none;
+.btn-primary { background: var(--navy-light); color: white; }
+.btn-success { background: var(--success); color: white; width: 100%; }
+.btn-outline { border: 2px solid white; color: white; background: transparent; }
+
+/* 6. TABLES (Fix for Manage Projects) */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
-.container {
-    max-width: 1000px;
-    margin: 2rem auto;
-    padding: 1rem;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    min-width: 500px; /* Ensures it doesn't squish too much */
 }
 
-button {
-    padding: 0.5rem 1rem;
-    background: #007BFF;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+th {
+    background: #f8f9fa;
+    text-align: left;
+    padding: 15px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid var(--border);
 }
 
-button:hover {
-    background: #0056b3;
+td {
+    padding: 15px;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.95rem;
+}
+
+/* 7. DASHBOARD STATS */
+.stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.stat-box {
+    padding: 25px;
+    border-radius: 12px;
+    color: white;
+}
+
+.stat-box h2 { font-size: 2rem; margin-top: 5px; }
+
+/* 8. BADGES */
+.badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: white;
+}
+
+.bg-blue { background: #007bff; }
+.bg-green { background: var(--success); }
+.bg-yellow { background: var(--warning); color: #000; }
+.bg-red { background: var(--danger); }
+.bg-pink { background: #e83e8c; }
+
+/* 9. LOGIN PAGE OVERRIDE */
+.login-body {
+    background: var(--navy-dark);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 10. RESPONSIVE DESIGN */
+@media (max-width: 992px) {
+    .admin-main-grid { grid-template-columns: 1fr; }
+    .hero { flex-direction: column; text-align: center; }
+    .hero-img { margin-top: 30px; }
+}
+
+@media (max-width: 600px) {
+    .hero-text h1 { font-size: 2rem; }
+    .stats-row { grid-template-columns: 1fr; }
 }

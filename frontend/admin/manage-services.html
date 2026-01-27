@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../public/css/style.css">
+    <title>Admin - Manage Services</title>
+</head>
+<body>
+    <nav>
+        <div class="logo">Admin Panel</div>
+        <div class="nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="manage-projects.html">Projects</a>
+            <a href="manage-services.html">Services</a>
+            <a href="login.html" style="color: #ff4d4d;">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
+                <h2>Manage Offered Services</h2>
+                <button class="btn-hire" style="padding: 10px 20px;">+ Add Service</button>
+            </div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Service Name</th>
+                            <th>Category</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Machine Learning Integration</td>
+                            <td>AI & Data</td>
+                            <td><span class="badge b-active">Active</span></td>
+                            <td><a href="#" style="color:var(--navy-bright)">Edit</a> | <a href="#" style="color:red">Delete</a></td>
+                        </tr>
+                        <tr>
+                            <td>XR Consultancy</td>
+                            <td>Development</td>
+                            <td><span class="badge b-pending">Hidden</span></td>
+                            <td><a href="#" style="color:var(--navy-bright)">Edit</a> | <a href="#" style="color:red">Delete</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
