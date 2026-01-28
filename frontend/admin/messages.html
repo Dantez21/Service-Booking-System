@@ -7,45 +7,22 @@
     <title>Admin - Messages</title>
 </head>
 <body>
-    <nav>
-        <div class="logo">Admin Panel</div>
-        <div class="nav-links">
-            <a href="dashboard.html">Dashboard</a>
-            <a href="messages.html">Inbox</a>
-            <a href="login.html" style="color: #ff4d4d;">Logout</a>
+    <div class="msg-container">
+     <div class="msg-inbox">
+        <div class="msg-sidebar">
+            <h3>Inbox</h3>
+            <div class="msg-item active">John Doe <span>10:30 AM</span></div>
+            <div class="msg-item">Jane Smith <span>Yesterday</span></div>
         </div>
-    </nav>
-
-    <div class="container">
-        <div class="dashboard-layout">
-            <div class="main-content">
-                <div class="card">
-                    <h2>Contact Inbox</h2>
-                    <div style="padding: 20px; border-bottom: 1px solid var(--border); position: relative;">
-                        <span class="badge b-active" style="position: absolute; right: 20px; top: 20px;">New</span>
-                        <strong style="display:block; font-size: 1.1rem;">John Mwangi</strong>
-                        <small style="color: #888;">john@example.com | Jan 27, 2026</small>
-                        <p style="margin-top: 10px; color: #444;">"I would like to inquire about your AI chatbot rates for my retail business. Can we schedule a call?"</p>
-                        <div style="margin-top: 15px;">
-                            <button class="btn btn-primary" style="padding: 5px 15px; font-size: 0.8rem;">Reply</button>
-                            <button style="border:none; background:none; color:red; margin-left:10px; cursor:pointer;">Archive</button>
-                        </div>
-                    </div>
-                    <div style="padding: 20px; border-bottom: 1px solid var(--border);">
-                        <strong style="display:block; font-size: 1.1rem;">Sarah Chen</strong>
-                        <small style="color: #888;">sarah@techcorp.com | Jan 26, 2026</small>
-                        <p style="margin-top: 10px; color: #444;">"Great portfolio! We are interested in collaborating on a VR training project next month."</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="sidebar-content">
-                <div class="card" style="background: var(--navy-deep); color: white;">
-                    <h4>Inbox Summary</h4>
-                    <p style="font-size: 0.9rem; margin-top: 10px; opacity: 0.8;">You have <strong>3 unread</strong> messages from potential clients.</p>
-                </div>
+        <div class="msg-content">
+            <div class="msg-body">
+                <h4>Project Inquiry</h4>
+                <p>From: johndoe@example.com</p>
+                <hr>
+                <p>Hi Daniel, I'm interested in your XR development services...</p>
             </div>
         </div>
+     </div>
     </div>
 </body>
 </html>

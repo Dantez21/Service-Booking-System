@@ -1,43 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="../public/css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Hire Requests</title>
+    <link rel="stylesheet" href="../public/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body>
-    <nav>
-        <span class="logo">Admin Dashboard</span>
-        <div class="nav-links"><a href="manage-projects.html">Projects</a><a href="messages.html">Messages</a></div>
-    </nav>
+<body class="dash-wrapper">
 
-    <div class="container">
-        <div class="card">
-            <h3>Hire Requests</h3>
-            <table style="width:100%; border-collapse: collapse; margin-top: 20px;">
-                <thead>
-                    <tr style="text-align: left; border-bottom: 2px solid #eee;">
-                        <th style="padding:15px;">Client Name</th>
-                        <th>Service</th>
-                        <th>Budget</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr style="border-bottom: 1px solid #eee;">
-                        <td style="padding:15px;">James Kamau</td>
-                        <td>AI Integration</td>
-                        <td>$2,500</td>
-                        <td><span class="badge badge-yellow">Pending</span></td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid #eee;">
-                        <td style="padding:15px;">TechCorp Ltd</td>
-                        <td>VR Training App</td>
-                        <td>$5,000</td>
-                        <td><span class="badge badge-blue">In Progress</span></td>
-                    </tr>
-                </tbody>
-            </table>
+    <div class="hreq-container">
+        <div class="hreq-card">
+            <div class="hreq-header">
+                <div class="hreq-icon-box">
+                    <i class="fa-solid fa-envelope-open-text"></i>
+                </div>
+                <h2>Hire Requests</h2>
+            </div>
+
+            <div class="hreq-table-wrapper">
+                <table class="hreq-table">
+                    <thead>
+                        <tr>
+                            <th>Client </th>
+                            <th>Service</th>
+                            <th>Budget</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>284 Gogo</td>
+                            <td>Name Appenzeller App</td>
+                            <td><span class="hreq-status hreq-st-green">Budget Appvd</span></td>
+                            <td>
+                                <div class="hreq-action-btns">
+                                    <button class="hreq-btn-check"><i class="fa-solid fa-check"></i></button>
+                                    <button class="hreq-btn-view">Details</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>281 Kenze</td>
+                            <td>XR Site Integration</td>
+                            <td><span class="hreq-status hreq-st-yellow">Under Review</span></td>
+                            <td>
+                                <div class="hreq-action-btns">
+                                    <button class="hreq-btn-check"><i class="fa-solid fa-check"></i></button>
+                                    <button class="hreq-btn-view">Details</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>288 30000</td>
+                            <td>Network Website Payment</td>
+                            <td><span class="hreq-status hreq-st-red">Not Approved</span></td>
+                            <td>
+                                <div class="hreq-action-btns">
+                                    <button class="hreq-btn-check"><i class="fa-solid fa-check"></i></button>
+                                    <button class="hreq-btn-view">Details</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>C51 Alice</td>
+                            <td>Webcast Marks Platforms</td>
+                            <td><span class="hreq-status hreq-st-green">Budget Appvd</span></td>
+                            <td>
+                                <div class="hreq-action-btns">
+                                    <button class="hreq-btn-check"><i class="fa-solid fa-check"></i></button>
+                                    <button class="hreq-btn-view">Details</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
+
 </body>
 </html>

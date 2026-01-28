@@ -7,115 +7,57 @@
     <title>Admin Dashboard - Daniel Wambua</title>
 </head>
 <body>
-
-    <nav>
-        <div class="logo">Danie Dashboard</div>
-        <div class="nav-links">
-            <a href="dashboard.html">Home</a>
-            <a href="manage-projects.html">Projects</a>
-            <a href="messages.html">Messages</a>
-            <a href="login.html" style="color: #ff4d4d;">Logout</a>
+    <div class="dash-wrapper">
+    <header class="dash-header">
+        <div class="dash-nav">
+            <div class="dash-logo">Danie Dashboard</div>
+            <div class="dash-nav-links">
+                <span>Home</span> <span>Manage</span> <span>Stats</span> <span>Config</span>
+                <div class="dash-user-icon"><i class="fa-solid fa-user"></i></div>
+            </div>
         </div>
-    </nav>
+        <h1 class="dash-welcome">Welcome, Admin</h1>
+    </header>
 
-    <div class="container">
-        <header style="margin-bottom: 30px;">
-            <h1>Welcome, Admin</h1>
-            <p style="color: #666;">Here is what's happening with your portfolio today.</p>
-        </header>
-
-        <div class="stats-grid">
-            <div class="stat-card bg-blue">
-                <small>New Requests</small>
-                <h2>12</h2>
+    <div class="dash-body">
+        <div class="dash-stats-row">
+            <div class="dash-stat-card dash-bg-blue">
+                <i class="fa-solid fa-file-invoice"></i>
+                <p>New Requests</p>
             </div>
-            <div class="stat-card bg-green">
-                <small>Payments Received</small>
-                <h2>KES 45,000</h2>
+            <div class="dash-stat-card dash-bg-teal">
+                <i class="fa-solid fa-envelope-open"></i>
+                <p>Payments Received</p>
             </div>
-            <div class="stat-card bg-orange">
-                <small>Messages</small>
-                <h2>8</h2>
+            <div class="dash-stat-card dash-bg-red">
+                <i class="fa-solid fa-bullhorn"></i>
+                <p>Messages</p>
             </div>
-            <div class="stat-card bg-pink">
-                <small>User Stats</small>
-                <h2>1.2k</h2>
+            <div class="dash-stat-card dash-bg-green">
+                <i class="fa-solid fa-shield-halved"></i>
+                <p>Data Sequences</p>
             </div>
         </div>
 
-        <div class="main-dash-grid">
-            
-            <section>
-                <div class="card">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                        <h3>Hire Requests</h3>
-                        <button class="btn-primary" style="font-size: 0.8rem; width: auto;">View All</button>
-                    </div>
-                    <div style="height: 200px; background: #fdfdfd; border: 1px dashed #ddd; border-radius: 8px; display: flex; align-items: flex-end; justify-content: space-around; padding: 10px;">
-                        <div style="width: 30px; height: 40%; background: var(--navy-light); border-radius: 4px;"></div>
-                        <div style="width: 30px; height: 70%; background: var(--navy-light); border-radius: 4px;"></div>
-                        <div style="width: 30px; height: 55%; background: var(--navy-light); border-radius: 4px;"></div>
-                        <div style="width: 30px; height: 90%; background: var(--success); border-radius: 4px;"></div>
-                        <div style="width: 30px; height: 30%; background: var(--navy-light); border-radius: 4px;"></div>
-                    </div>
+        <div class="dash-content-grid">
+            <div class="dash-chart-card">
+                <h3>Hire Requests</h3>
+                <div class="dash-simulated-chart">
+                    <svg viewBox="0 0 400 150">
+                        <path d="M0,120 L50,100 L100,130 L150,80 L200,110 L250,60 L300,90 L400,20" fill="none" stroke="#1e56a0" stroke-width="3"/>
+                        <circle cx="250" cy="60" r="5" fill="#4caf50" />
+                    </svg>
                 </div>
-
-                <div class="card">
-                    <h3>Manage Projects</h3>
-                    <div class="table-responsive">
-                        <table>
-                            <thead>
-                                <tr><th>Project Name</th><th>Status</th><th>Actions</th></tr>
-                            </thead>
-                            <tbody>
-                                <tr><td>AI Chatbot</td><td><span class="badge badge-blue">Active</span></td><td><button style="border:none; background:none; color:blue; cursor:pointer;">Edit</button></td></tr>
-                                <tr><td>Data Dashboard</td><td><span class="badge badge-yellow">Review</span></td><td><button style="border:none; background:none; color:blue; cursor:pointer;">Edit</button></td></tr>
-                                <tr><td>VR Training</td><td><span class="badge badge-red">Paused</span></td><td><button style="border:none; background:none; color:blue; cursor:pointer;">Edit</button></td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-
-            <aside>
-                <div class="card">
-                    <h3>Recent Payments</h3>
-                    <ul style="list-style: none; margin-top: 15px;">
-                        <li style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee;">
-                            <span>K. Munene</span>
-                            <strong>$450</strong>
-                        </li>
-                        <li style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee;">
-                            <span>TechCorp</span>
-                            <strong>$1,200</strong>
-                        </li>
-                        <li style="display: flex; justify-content: space-between; padding: 10px 0;">
-                            <span>S. Juma</span>
-                            <strong>$300</strong>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="card">
-                    <h3>Chatbot Logs</h3>
-                    <div style="font-size: 0.85rem; margin-top: 15px;">
-                        <div style="margin-bottom: 15px;">
-                            <strong style="color: var(--navy-light);">User_102</strong>
-                            <p style="color: #666;">"I need a quote for an XR app..."</p>
-                            <small style="color: #999;">2 mins ago</small>
-                        </div>
-                        <div style="margin-bottom: 15px;">
-                            <strong style="color: var(--navy-light);">User_105</strong>
-                            <p style="color: #666;">"How long does AI integration take?"</p>
-                            <small style="color: #999;">1 hour ago</small>
-                        </div>
-                    </div>
-                    <a href="chat-logs.html" style="display: block; text-align: center; font-size: 0.8rem; color: var(--navy-light); text-decoration: none; margin-top: 10px;">View Full Logs →</a>
-                </div>
-            </aside>
-
+            </div>
+            <div class="dash-table-card">
+                <h3>Recent Payments</h3>
+                <div class="dash-payment-row"><span>Safaricom</span> <span class="dash-text-green">+$ 5</span> <button class="dash-mini-btn">View</button></div>
+                <div class="dash-payment-row"><span>Bank Transfer</span> <span>$ 1,200.00</span> <button class="dash-mini-btn">View</button></div>
+                <div class="dash-payment-row"><span>Paypal</span> <span>$ 300.00</span> <button class="dash-mini-btn">View</button></div>
+            </div>
         </div>
     </div>
+</div>
 
 </body>
 </html>

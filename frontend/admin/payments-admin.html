@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Payment Management</title>
+    <link rel="stylesheet" href="../public/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="dash-wrapper">
+
+    <div class="padm-container">
+        <div class="padm-stats">
+            <div class="padm-stat-card">
+                <small>Total Revenue</small>
+                <h3>KES 542,000</h3>
+                <span class="padm-trend-up"><i class="fa-solid fa-arrow-up"></i> 12%</span>
+            </div>
+            <div class="padm-stat-card">
+                <small>Pending Payouts</small>
+                <h3>KES 12,500</h3>
+                <span class="padm-trend-neutral">Stable</span>
+            </div>
+            <div class="padm-stat-card">
+                <small>Completed Transactions</small>
+                <h3>148</h3>
+                <span class="padm-trend-up"><i class="fa-solid fa-check"></i> Verified</span>
+            </div>
+        </div>
+
+        <div class="padm-card">
+            <div class="padm-header">
+                <div class="padm-title-box">
+                    <i class="fa-solid fa-file-invoice-dollar"></i>
+                    <h2>Transaction Ledger</h2>
+                </div>
+                <div class="padm-actions">
+                    <button class="padm-export-btn"><i class="fa-solid fa-download"></i> Export CSV</button>
+                </div>
+            </div>
+
+            <div class="padm-table-wrapper">
+                <table class="padm-table">
+                    <thead>
+                        <tr>
+                            <th>Transaction ID</th>
+                            <th>Client</th>
+                            <th>Method</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#MP45902</td>
+                            <td>John Mwangi</td>
+                            <td><span class="padm-method m-pesa">M-Pesa</span></td>
+                            <td><strong>KES 5,000</strong></td>
+                            <td>28 Jan 2026</td>
+                            <td><span class="padm-badge bg-success">Completed</span></td>
+                        </tr>
+                        <tr>
+                            <td>#BK11200</td>
+                            <td>Sarah Chen</td>
+                            <td><span class="padm-method bank">Bank</span></td>
+                            <td><strong>KES 45,000</strong></td>
+                            <td>27 Jan 2026</td>
+                            <td><span class="padm-badge bg-warning">Pending</span></td>
+                        </tr>
+                        <tr>
+                            <td>#PP88231</td>
+                            <td>Alex Johnson</td>
+                            <td><span class="padm-method paypal">PayPal</span></td>
+                            <td><strong>KES 12,800</strong></td>
+                            <td>25 Jan 2026</td>
+                            <td><span class="padm-badge bg-success">Completed</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

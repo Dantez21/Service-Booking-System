@@ -5,23 +5,23 @@
     <title>Chatbot Logs</title>
 </head>
 <body>
-    <nav><span class="logo">Admin Panel</span></nav>
-    <div class="container">
-        <div class="card">
-            <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                <h3>Chatbot Logs</h3>
-                <input type="text" placeholder="Search logs..." style="width: 250px;">
-            </div>
-            <table style="width: 100%; font-size: 0.85rem;">
-                <thead style="background: #f8f9fa;">
-                    <tr><th style="padding:12px;">User IP</th><th style="padding:12px;">Last Message</th><th>Date</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td style="padding:12px;">192.168.1.45</td><td>"Tell me about VR services"</td><td>25 Jan 2026</td></tr>
-                    <tr><td style="padding:12px;">102.44.21.10</td><td>"Pricing for AI bots?"</td><td>25 Jan 2026</td></tr>
-                </tbody>
-            </table>
+    <div class="clog-container">
+     <div class="clog-card">
+        <div class="clog-header">
+            <i class="fa-solid fa-comment-dots"></i>
+            <h2>Chatbot Logs</h2>
         </div>
+        <div class="clog-list">
+            <div class="clog-item">
+                <div class="clog-meta"><strong>User 192.168.1.1</strong> <span>Today</span></div>
+                <p>"How much for a VR app?"</p>
+            </div>
+            <div class="clog-item">
+                <div class="clog-meta"><strong>User 104.22.4.10</strong> <span>Yesterday</span></div>
+                <p>"Where are you located?"</p>
+            </div>
+        </div>
+     </div>
     </div>
 </body>
 </html>

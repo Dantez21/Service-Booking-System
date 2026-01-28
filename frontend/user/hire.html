@@ -6,20 +6,50 @@
     <title>Hire Me</title>
 </head>
 <body>
-    <nav>
-        <a href="services.html" class="logo">Daniel Wambua</a>
-        <ul><li><a href="services.html">Services</a></li><li><a href="payment.html">Payment</a></li></ul>
-    </nav>
-    <div class="container" style="max-width: 600px;">
-        <div class="card">
-            <h2>Start a Project</h2>
-            <form>
-                <div class="form-group"><label>Name</label><input type="text" placeholder="Your Name"></div>
-                <div class="form-group"><label>Service</label><select><option>AI Development</option><option>XR Solutions</option></select></div>
-                <div class="form-group"><label>Details</label><textarea rows="5"></textarea></div>
-                <button class="btn btn-blue">Submit Request</button>
-            </form>
+    <div class="hire-container">
+     <div class="hire-card">
+        <h2 class="hire-title">Hire Me</h2>
+        <hr class="hire-divider">
+        
+        <div class="hire-form-group">
+            <label>Your Name:</label>
+            <input type="text" placeholder="Email" class="hire-input">
+        </div>
+
+        <div class="hire-form-group">
+            <label>Email:</label>
+            <input type="email" placeholder="username@example.com" class="hire-input">
+        </div>
+
+        <div class="hire-form-group">
+            <label>Select Service:</label>
+            <select class="hire-select">
+                <option>Please select</option>
+                <option>AI Development</option>
+                <option>Data Science</option>
+                <option>XR/VR Development</option>
+            </select>
+        </div>
+
+        <div class="hire-form-group">
+            <label>Budget:</label>
+            <select class="hire-select">
+                <option>Select budget range</option>
+                <option>$500 - $1000</option>
+                <option>$1000 - $5000</option>
+                <option>$5000+</option>
+            </select>
+        </div>
+
+        <div class="hire-form-group">
+            <label>Project Details:</label>
+            <textarea class="hire-textarea" placeholder="Describe your project..."></textarea>
+        </div>
+
+        <div class="hire-center-btn">
+            <button class="hire-submit-btn">Submit Request</button>
         </div>
     </div>
+</div>
 </body>
 </html>

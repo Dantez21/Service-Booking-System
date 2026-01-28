@@ -6,20 +6,27 @@
     <title>Manage Projects</title>
 </head>
 <body>
-    <nav><span class="logo">Project Manager</span><ul><li><a href="hire-requests.html">Back to Dashboard</a></li></ul></nav>
-    <div class="container">
-        <div class="card">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h2>Current Projects</h2>
-                <button class="btn btn-green" style="width: auto;">+ New Project</button>
+    <div class="mng-container">
+    <div class="mng-card">
+        <div class="mng-header">
+            <div class="mng-icon-title">
+                <i class="fa-solid fa-box-archive"></i>
+                <h2>Manage Projects</h2>
             </div>
-            <table>
-                <thead><tr><th>Project</th><th>Status</th><th>Actions</th></tr></thead>
+            <button class="mng-add-btn">+ Add New</button>
+        </div>
+        <div class="mng-table-wrapper">
+            <table class="mng-table">
+                <thead>
+                    <tr><th>Project Name</th><th>Status</th><th>Actions</th></tr>
+                </thead>
                 <tbody>
-                    <tr><td>Data Dashboard</td><td><span style="color: var(--success)">● Active</span></td><td><button>Edit</button></td></tr>
+                    <tr><td>AI Chatbot</td><td><span class="mng-badge mng-bg-green">Live</span></td><td><button class="mng-btn-blue">Edit</button></td></tr>
+                    <tr><td>Data Audit</td><td><span class="mng-badge mng-bg-yellow">Draft</span></td><td><button class="mng-btn-blue">Edit</button></td></tr>
                 </tbody>
             </table>
         </div>
+    </div>
     </div>
 </body>
 </html>
