@@ -287,236 +287,6 @@ button {
 .mng-bg-green { background: #28a745; } .mng-bg-yellow { background: #ffc107; color: black; }
 .mng-btn-blue { background: #1e56a0; color: white; border: none; padding: 6px 15px; border-radius: 4px; cursor: pointer; }
 
-/* --- Admin Modal Styles Manage-Projects Add projects(Modal)--- */
-
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7); /* Dark semi-transparent background */
-    display: none; /* Controlled by JS toggleModal function */
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    backdrop-filter: blur(5px); /* Modern blur effect */
-}
-.modal-content {
-    background: white;
-    padding: 2rem;
-    border-radius: 12px;
-    width: 90%;
-    max-width: 500px; /* Limits the width so it's not "Big" */
-    max-height: 90vh; /* Prevents it from going off-screen */
-    overflow-y: auto; /* Adds scrollbar if content is too long */
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-}
-
-.modal-content h3 {
-    margin-bottom: 1.5rem;
-    color: #1a202c;
-    font-size: 1.5rem;
-}
-
-.admin-form .form-group {
-    margin-bottom: 1.2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.admin-form input, 
-.admin-form textarea, 
-.admin-form select {
-    padding: 10px;
-    border: 1px solid #e2e8f0;
-    border-radius: 6px;
-    font-family: inherit;
-}
-
-.admin-form textarea {
-    height: 100px;
-    resize: vertical;
-}
-
-/* Form Layout */
-.form-group {
-    margin-bottom: 15px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: 600;
-    color: #555;
-    font-size: 0.9rem;
-}
-
-.form-group input, 
-.form-group textarea, 
-.form-group select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-family: inherit;
-    font-size: 1rem;
-    outline: none;
-    transition: border-color 0.3s;
-}
-
-.form-group input:focus, 
-.form-group textarea:focus {
-    border-color: #007bff; /* Adjust to your primary brand color */
-}
-
-.form-group textarea {
-    height: 80px;
-    resize: vertical;
-}
-
-/* Modal Buttons */
-.modal-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 12px;
-    margin-top: 25px;
-    padding-top: 15px;
-    border-top: 1px solid #eee;
-}
-
-.btn-cancel {
-    background: #f1f3f5;
-    color: #495057;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 6px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-
-.btn-cancel:hover {
-    background: #e9ecef;
-}
-
-.btn-save {
-    background: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 25px;
-    border-radius: 6px;
-    font-weight: 600;
-    cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 123, 255, 0.2);
-    transition: all 0.2s;
-}
-
-.btn-save:hover {
-    background: #0056b3;
-    transform: translateY(-1px);
-    box-shadow: 0 6px 12px rgba(0, 123, 255, 0.3);
-}
-
-/* Entrance Animation */
-@keyframes slideIn {
-    from { transform: translateY(-20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
-
-/* Styling the "+ Add New" Button */
-.mng-add-btn {
-    background-color: #28a745; /* Clean Success Green */
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    box-shadow: 0 4px 6px rgba(40, 167, 69, 0.2);
-}
-
-.mng-add-btn:hover {
-    background-color: #218838;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(40, 167, 69, 0.3);
-}
-
-/* File Upload Specific Styling */
-.file-upload-wrapper {
-    border: 2px dashed #ddd;
-    padding: 15px;
-    border-radius: 8px;
-    text-align: center;
-    background: #fdfdfd;
-    transition: border-color 0.3s;
-}
-
-.file-upload-wrapper:hover {
-    border-color: #007bff;
-}
-
-.file-upload-wrapper input[type="file"] {
-    cursor: pointer;
-    color: #555;
-}
-
-/* --- Admin Table Actions --- */
-
-/* The Delete Button */
-.mng-btn-delete {
-    background-color: #ff4d4d; /* Destructive Red */
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 6px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.mng-btn-delete:hover {
-    background-color: #cc0000;
-    transform: scale(1.05);
-    box-shadow: 0 2px 8px rgba(255, 77, 77, 0.3);
-}
-
-.mng-btn-delete i {
-    font-size: 0.8rem;
-}
-
-/* Row Hover Effect */
-.mng-table tbody tr {
-    transition: background-color 0.2s;
-}
-
-.mng-table tbody tr:hover {
-    background-color: #f8f9fa; /* Subtle highlight when hovering over a row */
-}
-
-/* Badge for Categories in Table */
-.mng-badge {
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-}
-
-.mng-bg-blue {
-    background-color: #e7f1ff;
-    color: #007bff;
-}
-
 /* --- CHAT LOGS (clog-) --- */
 .clog-container { padding: 30px; display: flex; justify-content: center; }
 .clog-card { background: white; width: 100%; max-width: 600px; border-radius: 12px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
@@ -737,174 +507,87 @@ button {
     background: rgba(255, 255, 255, 0.2);
 }
 
-/* project page Container & Grid & Cards */
-
+/* Grid & Cards */
 .prj-container {
-    max-width: 1200px;
-    margin: 40px auto;
-    padding: 0 20px;
+    padding: 50px 8%;
 }
 
 .prj-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 30px;
 }
 
-/* Individual Card */
 .prj-card {
-    background: #fff;
+    background: white;
     border-radius: 15px;
     overflow: hidden;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-    transition: all 0.3s ease;
-    border: 1px solid #f0f0f0;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    border: 1px solid #eee;
+    transition: transform 0.3s;
 }
 
 .prj-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    transform: translateY(-5px);
 }
 
-/* Image Section with Overlay */
-.prj-image-box {
+.prj-img-holder {
+    height: 180px;
+    background-color: #0b1d36;
+    background-size: cover;
+    background-position: center;
     position: relative;
-    height: 220px;
-    width: 100%;
-    overflow: hidden;
-}
-
-.prj-image-box img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-}
-
-.prj-card:hover .prj-image-box img {
-    transform: scale(1.1);
-}
-
-.prj-overlay {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.4);
     display: flex;
-    justify-content: center;
     align-items: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.prj-card:hover .prj-overlay {
-    opacity: 1;
-}
-
-.prj-links {
-    display: flex;
-    gap: 15px;
-}
-
-.prj-links a {
-    width: 45px;
-    height: 45px;
-    background: white;
-    color: #333;
-    border-radius: 50%;
-    display: flex;
     justify-content: center;
-    align-items: center;
-    text-decoration: none;
-    font-size: 1.2rem;
-    transition: all 0.2s ease;
 }
 
-.prj-links a:hover {
-    background: #007bff;
-    color: white;
-    transform: scale(1.1);
+.prj-overlay-icon {
+    font-size: 3rem;
+    color: rgba(255,255,255,0.3);
 }
 
-/* Text Content */
-.prj-content {
+.prj-details {
     padding: 20px;
 }
 
-.prj-tag {
-    display: inline-block;
-    background: #eef2ff;
-    color: #4f46e5;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    margin-bottom: 12px;
-}
-
-.prj-content h3 {
+.prj-details h3 {
     margin: 0 0 10px 0;
-    font-size: 1.25rem;
-    color: #1f2937;
+    font-size: 1.1rem;
+    color: #0b1d36;
 }
 
-.prj-content p {
-    color: #6b7280;
-    font-size: 0.9rem;
+.prj-details p {
+    font-size: 0.85rem;
+    color: #666;
     line-height: 1.5;
-    margin: 0;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    margin-bottom: 20px;
 }
-.prj-search-box {
-    position: relative;
+
+.prj-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #f0f0f0;
+    padding-top: 15px;
+}
+
+.prj-btn-view {
+    background: #1e56a0;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.prj-heart {
+    font-size: 0.8rem;
+    color: #999;
     display: flex;
     align-items: center;
-    background: #f3f4f6;
-    border-radius: 30px;
-    padding: 5px 15px;
-    margin: 0 20px;
-    flex: 1;
-    max-width: 400px;
-    border: 1px solid transparent;
-    transition: all 0.3s ease;
-}
-
-.prj-search-box:focus-within {
-    background: white;
-    border-color: #4f46e5;
-    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
-}
-
-.prj-search-box i {
-    color: #9ca3af;
-    margin-right: 10px;
-}
-
-.prj-search-box input {
-    border: none;
-    background: transparent;
-    outline: none;
-    width: 100%;
-    padding: 8px 0;
-    font-size: 0.95rem;
-    color: #374151;
-}
-
-/* Ensure Nav Bar handles the search box well on mobile */
-@media (max-width: 768px) {
-    .prj-nav-bar {
-        flex-direction: column;
-        gap: 15px;
-    }
-    .prj-search-box {
-        margin: 0;
-        max-width: 100%;
-        width: 100%;
-    }
+    gap: 5px;
 }
 
 /* Responsive */
