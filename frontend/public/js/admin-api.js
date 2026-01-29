@@ -1,4 +1,6 @@
-const API_BASE_URL = "http://127.0.0.1:8000/api";
+// const API_BASE_URL = "http://127.0.0.1:8000/api";
+const API_BASE_URL = "https://daniel-portfolio-backend.onrender.com/api";
+
 // This must match the ADMIN_SECRET_TOKEN in your backend
 // const ADMIN_TOKEN = "your_super_secret_token_123"; 
 const ADMIN_TOKEN = "supersecretkey";
