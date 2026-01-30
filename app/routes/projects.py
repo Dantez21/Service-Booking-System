@@ -1,9 +1,9 @@
-from fastapi import APIRouter, Depends, HTTPException, status, File, UploadFile, Form, Header
-from sqlalchemy.orm import Session
-from typing import List, Optional
-import shutil
 import os
 import uuid
+import shutil
+from typing import List, Optional
+from fastapi import APIRouter, Depends, HTTPException, status, File, UploadFile, Form, Header, Request
+from sqlalchemy.orm import Session
 
 from app.database import get_db
 from app.models.project import Project
@@ -15,11 +15,11 @@ UPLOAD_DIR = "static/uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 # --- SECURITY CONFIG ---
-# In a production app, move this to an environment variable (.env)
-ADMIN_SECRET_TOKEN = "your_super_secret_token_123"
+# Pulling the secret key from the .env loaded in database.py or main.py
+ADMIN_SECRET_TOKEN = os.getenv("SECRET_KEY")
 
 async def verify_admin(x_admin_token: str = Header(None)):
-    if x_admin_token != ADMIN_SECRET_TOKEN:
+    if not ADMIN_SECRET_TOKEN or x_admin_token != ADMIN_SECRET_TOKEN:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN, 
             detail="Unauthorized: Invalid Admin Token"
@@ -31,13 +31,14 @@ async def verify_admin(x_admin_token: str = Header(None)):
 # 1. CREATE (Protected)
 @router.post("/", response_model=ProjectOut)
 async def create_project(
+    request: Request, # Added to get the current base URL
     title: str = Form(...),
     description: str = Form(...),
     category: str = Form(...),
     github_link: Optional[str] = Form(None),
     live_demo: Optional[str] = Form(None),
     file: UploadFile = File(...),
-    admin_check: str = Depends(verify_admin), # Security Check
+    admin_check: str = Depends(verify_admin),
     db: Session = Depends(get_db)
 ):
     file_extension = os.path.splitext(file.filename)[1]
@@ -47,7 +48,10 @@ async def create_project(
     with open(file_path, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
 
-    image_url = f"http://127.0.0.1:8000/static/uploads/{unique_filename}"
+    # Dynamic URL: This will be http://127.0.0.1:8000 locally 
+    # and https://your-site.render.com on the web.
+    base_url = str(request.base_url).rstrip('/')
+    image_url = f"{base_url}/static/uploads/{unique_filename}"
 
     new_project = Project(
         title=title,
@@ -71,6 +75,7 @@ def get_all_projects(db: Session = Depends(get_db)):
 # 3. UPDATE (Protected)
 @router.put("/{project_id}", response_model=ProjectOut)
 async def update_project(
+    request: Request,
     project_id: int,
     title: str = Form(...),
     description: str = Form(...),
@@ -78,7 +83,7 @@ async def update_project(
     github_link: Optional[str] = Form(None),
     live_demo: Optional[str] = Form(None),
     file: Optional[UploadFile] = File(None),
-    admin_check: str = Depends(verify_admin), # Security Check
+    admin_check: str = Depends(verify_admin),
     db: Session = Depends(get_db)
 ):
     project = db.query(Project).filter(Project.id == project_id).first()
@@ -97,7 +102,9 @@ async def update_project(
         file_path = os.path.join(UPLOAD_DIR, unique_filename)
         with open(file_path, "wb") as buffer:
             shutil.copyfileobj(file.file, buffer)
-        project.image_url = f"http://127.0.0.1:8000/static/uploads/{unique_filename}"
+        
+        base_url = str(request.base_url).rstrip('/')
+        project.image_url = f"{base_url}/static/uploads/{unique_filename}"
 
     db.commit()
     db.refresh(project)
@@ -107,19 +114,21 @@ async def update_project(
 @router.delete("/{project_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_project(
     project_id: int, 
-    admin_check: str = Depends(verify_admin), # Security Check
+    admin_check: str = Depends(verify_admin),
     db: Session = Depends(get_db)
 ):
     project = db.query(Project).filter(Project.id == project_id).first()
     if not project:
         raise HTTPException(status_code=404, detail="Project not found")
     
-    # Optional: Delete file from local storage too
     if project.image_url:
         filename = project.image_url.split("/")[-1]
         old_file_path = os.path.join(UPLOAD_DIR, filename)
         if os.path.exists(old_file_path):
-            os.remove(old_file_path)
+            try:
+                os.remove(old_file_path)
+            except Exception as e:
+                print(f"Error deleting file: {e}")
 
     db.delete(project)
     db.commit()
