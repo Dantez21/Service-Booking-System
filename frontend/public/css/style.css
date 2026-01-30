@@ -17,20 +17,28 @@
     color: var(--idx-text-dark);
 }
 
-/* Hero & Nav Wrapper */
+/* IMPORTANT: Add padding to the top of your body or hero section 
+   to prevent the sticky nav from covering your hero text initially. */
 .idx-hero-wrap {
     background: linear-gradient(135deg, var(--idx-blue-light) 0%, var(--idx-navy) 100%);
     color: white;
-    padding: 0 8% 60px 8%;
+    padding: 80px;
     border-radius: 0 0 40px 40px;
 }
 
-/* Navigation */
 .idx-nav {
+    position: fixed;    /* Fixes the nav to the viewport */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;      /* Ensures it stays above all other content */
+    /* background: white;   Prevents content from overlapping behind text */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1); /* Adds depth when scrolling */
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 0;
+    padding: 15px 50px; /* Adjust padding as needed */
+    box-sizing: border-box;
 }
 
 .idx-logo {
@@ -53,6 +61,175 @@
     color: rgba(255,255,255,0.8);
     text-decoration: none;
     font-size: 0.95rem;
+}
+/* --- Base Mobile Navigation Styles --- */
+.nav-toggle {
+    display: none; /* Hidden on desktop */
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    color: #1e56a0;
+    /* color: #333; */
+    cursor: pointer;
+    padding: 5px;
+}
+
+/* --- Scroll to Top Button --- */
+.scroll-top-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 45px;
+    height: 45px;
+    background-color: #1e56a0; /* Your brand blue */
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+    
+    /* Hidden by default */
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease-in-out;
+    transform: translateY(20px);
+}
+
+/* Show state */
+.scroll-top-btn.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.scroll-top-btn:hover {
+    background-color: #2ecc71; /* Switch to green on hover */
+    transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+    .scroll-top-btn {
+        bottom: 20px;
+        right: 20px;
+        width: 40px;
+        height: 40px;
+    }
+}
+/* Lapto[ View /Hire Button/ Base floating Hire Me button */
+.idx-hire-floating {
+    position: fixed;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding: 12px 20px;
+    border-radius: 30px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* =========================
+   DESKTOP / LAPTOP VIEW
+   ========================= */
+@media (min-width: 769px) {
+    .idx-hire-floating {
+        top: 16px;
+        right: 24px;
+
+        transform: none;
+    }
+}
+
+/* Mobile view */
+@media (max-width: 768px) {
+
+    .idx-hire-floating {
+        display: flex;
+        position: fixed;
+        bottom: 16px;
+        left: 50%;
+        transform: translateX(-50%);
+
+        width: calc(100% - 32px);
+        max-width: 420px;
+
+        padding: 14px 20px;
+        border-radius: 40px;
+
+        font-size: 16px;
+        font-weight: 600;
+
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+
+        z-index: 2000;
+        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Prevent footer overlap */
+    body {
+        padding-bottom: 90px;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .nav-toggle {
+        display: block; /* Show hamburger icon on mobile */
+    }
+
+    .idx-nav {
+        padding: 15px 20px; /* Thinner padding for small screens */
+        position: fixed;
+        flex-wrap: wrap;
+    }
+    .idx-nav-links {
+        display: none; /* Default hidden */
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: #ffffff;
+        padding: 20px 0;
+        box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+        z-index: 999;
+    }
+   
+    .idx-nav-links.active {
+        display: flex; /* Force show */
+    }
+
+    .idx-nav-links li {
+        width: 100%;
+        text-align: center;
+        list-style: none;
+    }
+
+   .idx-nav-links li a {
+        display: block;
+        padding: 15px;
+        color: #333 !important; /* Force dark text */
+        font-size: 1.1rem;
+        font-weight: 600;
+        text-decoration: none;
+        border-bottom: 1px solid #f5f5f5;
+    }
+/* Ensure the Hire Me button isn't hidden */
+    .idx-nav-btn {
+        margin: 20px auto;
+        display: block !important;
+        width: 80%;
+    }
+
 }
 
 /* Hero Content */
@@ -85,6 +262,22 @@
     border-radius: 50%;
     border: 5px solid rgba(255,255,255,0.2);
     object-fit: cover;
+}
+/* Ensure the Hero container stacks correctly */
+@media (max-width: 768px) {
+    .idx-hero-btns {
+        display: flex;
+        flex-direction: column; /* Stack buttons vertically on small screens */
+        gap: 15px;
+        width: 100%;
+    }
+
+    .idx-btn-blue, .idx-btn-green {
+        width: 100%; /* Make buttons full width for easier tapping */
+        padding: 15px;
+        font-size: 1.1rem;
+    }
+    
 }
 
 /* Buttons */
@@ -183,8 +376,16 @@ button {
 .idx-proj-content p {
     color: var(--idx-text-gray);
     font-size: 0.9rem;
-    line-height: 1.4;
+    /* line-height: 1.4; */
     margin-bottom: 20px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Show exactly 3 lines */
+    -webkit-box-orient: vertical;  
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.5;
+    height: 4.5em; /* (line-height * 3) ensures consistency even if 1 line */
+    /* color: #555; */
 }
 
 .idx-proj-footer {
@@ -198,6 +399,47 @@ button {
     cursor: pointer;
     font-size: 1.2rem;
 }
+/* Modal Background Overlay */
+.prj-modal {
+    display: none; 
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.8);
+    backdrop-filter: blur(5px);
+}
+
+/* Modal Content Box */
+.prj-modal-content {
+    background-color: #fff;
+    margin: 5% auto;
+    padding: 30px;
+    width: 90%;
+    max-width: 700px;
+    border-radius: 15px;
+    position: relative;
+    max-height: 85vh;
+    overflow-y: auto;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.close-modal {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    font-size: 28px;
+    cursor: pointer;
+    color: #333;
+}
+
 
 /* Chat Helpers */
 .idx-section-header {
@@ -229,6 +471,15 @@ button {
     font-size: 0.9rem;
 }
 
+/* About Section Styles */
+.idx-about-bg { background-color: #f9f9f9; padding: 80px 0; }
+.idx-container-narrow { max-width: 800px; margin: 0 auto; text-align: center; padding: 0 20px; }
+.idx-about-content p { font-size: 1.1rem; line-height: 1.8; color: #555; margin-bottom: 30px; }
+
+.idx-about-stats { display: flex; justify-content: center; gap: 50px; margin-top: 40px; }
+.stat-box { display: flex; flex-direction: column; }
+.stat-number { font-size: 2.5rem; font-weight: bold; color: #2ecc71; } /* Green accent */
+.stat-label { font-size: 0.9rem; color: #888; text-transform: uppercase; }
 /* --- HIRE ME STYLES (hire-) --- */
 .hire-container { padding: 50px; display: flex; justify-content: center; background: #f4f7f9; }
 .hire-card { background: white; width: 100%; max-width: 600px; padding: 30px; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
@@ -275,7 +526,7 @@ button {
 .cont-icon-red { color: #f44336; font-size: 1.2rem; }
 
 /* --- MANAGE PROJECTS (mng-) --- */
-.mng-container { padding: 30px; display: flex; justify-content: center; }
+/* .mng-container { padding: 30px; display: flex; justify-content: center; }
 .mng-card { background: white; width: 100%; max-width: 1000px; padding: 25px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
 .mng-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
 .mng-icon-title { display: flex; align-items: center; gap: 10px; color: #0b1d36; }
@@ -285,10 +536,227 @@ button {
 .mng-table td { padding: 15px 12px; border-bottom: 1px solid #eee; }
 .mng-badge { padding: 4px 10px; border-radius: 4px; font-size: 0.75rem; color: white; font-weight: bold; }
 .mng-bg-green { background: #28a745; } .mng-bg-yellow { background: #ffc107; color: black; }
-.mng-btn-blue { background: #1e56a0; color: white; border: none; padding: 6px 15px; border-radius: 4px; cursor: pointer; }
+.mng-btn-blue { background: #1e56a0; color: white; border: none; padding: 6px 15px; border-radius: 4px; cursor: pointer; } */
+/* --- PROJECT MANAGEMENT CONTAINER & NAV --- */
+.mng-header-nav { 
+    margin-bottom: 20px; 
+}
 
+.back-link { 
+    text-decoration: none; 
+    color: #666; 
+    font-size: 0.9rem; 
+    transition: 0.3s; 
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.back-link:hover { 
+    color: #2ecc71; 
+}
+
+/* --- MAIN CARD --- */
+.mng-card { 
+    background: white; 
+    border-radius: 12px; 
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05); 
+    overflow: hidden; 
+}
+
+.mng-header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 25px;
+    border-bottom: 1px solid #eee;
+}
+
+.mng-icon-title { 
+    display: flex; 
+    align-items: center; 
+    gap: 15px; 
+}
+
+.title-badge { 
+    background: #e8f5e9; 
+    color: #2ecc71; 
+    width: 45px; 
+    height: 45px; 
+    border-radius: 10px;
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    font-size: 1.2rem;
+}
+
+.mng-subtitle { 
+    color: #888; 
+    font-size: 0.85rem; 
+    margin-top: 3px; 
+}
+
+/* --- TABLE STYLING --- */
+.mng-table-wrapper { 
+    overflow-x: auto; 
+}
+
+.mng-table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    min-width: 600px; 
+}
+
+.mng-table th { 
+    background: #fcfcfc; 
+    text-align: left; 
+    padding: 15px 25px; 
+    color: #444; 
+    font-size: 0.9rem; 
+    text-transform: capitalize;
+}
+
+.mng-table td { 
+    padding: 15px 25px; 
+    border-top: 1px solid #f0f0f0; 
+    vertical-align: middle; 
+}
+
+.table-img { 
+    width: 60px; 
+    height: 60px; 
+    border-radius: 8px; 
+    object-fit: cover; 
+    background: #eee; 
+    border: 1px solid #f0f0f0;
+}
+
+/* --- CATEGORY PILLS (Blue Style) --- */
+.mng-category-badge {
+    background: #e7f1ff;
+    color: #0d6efd;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    display: inline-block;
+}
+
+/* --- ACTION BUTTONS (Stacked style from mp.png) --- */
+.text-right { 
+    text-align: right; 
+}
+
+.action-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-end; /* Aligns buttons to the right edge */
+}
+
+.btn-edit-action, .btn-delete-action { 
+    border: none; 
+    padding: 8px 15px; 
+    border-radius: 6px; 
+    cursor: pointer; 
+    transition: 0.2s;
+    font-size: 0.85rem;
+    font-weight: 600;
+    width: 85px; /* Ensures uniform button width */
+    text-align: center;
+}
+
+.btn-edit-action { 
+    background: #1e56a0; 
+    color: white; 
+}
+
+.btn-edit-action:hover {
+    background: #16427a;
+}
+
+.btn-delete-action { 
+    background: #ff4d4d; 
+    color: white; 
+}
+
+.btn-delete-action:hover {
+    background: #e63939;
+}
+
+/* --- MODAL & FORM GRID --- */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.close-modal-x {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #999;
+}
+
+.form-grid { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 15px; 
+}
+
+/* --- UPLOAD PREVIEW --- */
+.custom-file-upload {
+    position: relative;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 6px;
+    background: #fafafa;
+}
+
+.upload-preview { 
+    width: 100%; 
+    max-height: 120px; 
+    object-fit: contain; 
+    border-radius: 6px; 
+    margin-top: 10px; 
+    border: 1px solid #eee;
+    background: #fff;
+}
+
+/* --- MOBILE RESPONSIVENESS --- */
+@media (max-width: 768px) {
+    .mng-header { 
+        flex-direction: column; 
+        align-items: flex-start; 
+        gap: 15px; 
+    }
+    
+    .mng-add-btn { 
+        width: 100%; 
+    }
+    
+    .form-grid { 
+        grid-template-columns: 1fr; 
+    }
+    
+    /* Hide preview image column on mobile to prevent table squishing */
+    .mng-table th:nth-child(1), 
+    .mng-table td:nth-child(1) { 
+        display: none; 
+    }
+    
+    .action-cell {
+        align-items: center; /* Center buttons on mobile */
+    }
+}
+/* Admin Specific Styles */
+.admin-body { background-color: #f4f7f6; font-family: 'Inter', sans-serif; }
 /* --- Admin Modal Styles Manage-Projects Add projects(Modal)--- */
-
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -1069,12 +1537,145 @@ button {
 .chat-input { flex: 1; border: 1px solid #ddd; border-radius: 20px; padding: 8px 15px; }
 .chat-send-btn { background: #1e56a0; color: white; border: none; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; }
 
-/* --- USER SERVICES (usrv-) --- */
-.usrv-container { padding: 60px 8%; text-align: center; }
-.usrv-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 40px; }
-.usrv-card { padding: 40px; background: white; border-radius: 15px; border: 1px solid #eee; transition: 0.3s; }
-.usrv-card i { font-size: 2.5rem; color: #1e56a0; margin-bottom: 20px; }
-.usrv-link { display: inline-block; margin-top: 15px; color: #1e56a0; text-decoration: none; font-weight: bold; }
+
+/* Initial state: hidden and slightly lower */
+.idx-about-content {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out;
+}
+
+/* State when visible */
+.idx-about-content.reveal {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+/* Feedback while waiting for the scroll */
+.idx-nav-links a:active {
+    color: #2ecc71; /* Briefly turns green to show click was successful */
+    /* transition: 0.1s; */
+}
+
+/* Add an offset so the sticky navigation doesn't cover your title */
+#about {
+    scroll-margin-top: 80px; 
+}
+
+/* --- SERVICES PAGE STYLES (usrv- prefix) --- */
+.usrv-body {
+    background-color: #fcfcfc;
+    min-height: 100vh;
+}
+
+.usrv-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 100px 20px 60px; /* Space for the fixed nav */
+}
+
+.usrv-header-section {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.usrv-main-title {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.usrv-subtitle {
+    color: #777;
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* --- GRID & CARDS --- */
+.usrv-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+}
+
+.usrv-card {
+    background: white;
+    padding: 40px;
+    border-radius: 16px;
+    border: 1px solid #eee;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.usrv-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.07);
+    border-color: #2ecc71; /* Green highlight on hover */
+}
+
+/* --- ICON STYLING --- */
+.usrv-icon-wrap {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+}
+
+.icon-ai { background: #f0f7ff; color: #1e56a0; }   /* Blue */
+.icon-data { background: #e8f5e9; color: #2ecc71; } /* Green */
+.icon-web { background: #fff3e0; color: #e67e22; }
+
+/* --- TEXT & LINKS --- */
+.usrv-card h3 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.usrv-card p {
+    color: #666;
+    line-height: 1.7;
+    margin-bottom: 25px;
+    flex-grow: 1; /* Pushes the link to the bottom */
+}
+
+.usrv-link {
+    text-decoration: none;
+    color: #1e56a0; /* Blue */
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.2s;
+}
+
+.usrv-link:hover {
+    gap: 12px;
+    color: #2ecc71; /* Green */
+}
+
+.usrv-footer {
+    text-align: center;
+    padding: 40px;
+    color: #999;
+    font-size: 0.9rem;
+}
+
+/* --- MOBILE --- */
+@media (max-width: 768px) {
+    .usrv-container { padding-top: 80px; }
+    .usrv-main-title { font-size: 2rem; }
+}
 
 /* --- MANAGE SERVICES (msrv-) --- */
 .msrv-container { padding: 30px; }

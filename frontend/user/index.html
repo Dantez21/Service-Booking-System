@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daniel Wambua | Portfolio</title>
+    <title>Daniel Wambua | AI, Data & XR Developer</title>
     <link rel="stylesheet" href="../public/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -12,35 +12,64 @@
     <header class="idx-hero-wrap">
         <nav class="idx-nav">
             <div class="idx-logo">
-                <img src="logo-placeholder.png" alt="" class="idx-logo-icon"> Daniel Wambua
+                <i class="fa-solid fa-code idx-logo-icon"></i> Daniel Wambua
             </div>
-            <ul class="idx-nav-links">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Projects</a></li>
-                <li><a href="#">Services</a></li>
-                <li><a href="#">Contacts</a></li>
-                <li><button class="idx-btn-green idx-nav-btn">Hire Me</button></li>
+
+            <button class="nav-toggle" id="nav-toggle" aria-label="open navigation">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <ul class="idx-nav-links" id="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#about">About Me</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="contact.html">Contacts</a></li>
+                <li><button onclick="location.href='hire.html'" class="idx-btn-green idx-nav-btn">Hire Me</button></li>
             </ul>
         </nav>
 
         <div class="idx-hero-container">
             <div class="idx-hero-text">
                 <h1>Daniel Wambua</h1>
-                <p>AI, Data & XR Developer</p>
+                <p>Architecting the future with AI, Data Science & XR</p>
                 <div class="idx-hero-btns">
-                    <button class="idx-btn-blue">View My Projects</button>
-                    <button class="idx-btn-green">Hire Me</button>
+                    <button onclick="location.href='projects.html'" class="idx-btn-blue">View My Projects</button>
+                    <button onclick="location.href='contact.html'" class="idx-btn-green">Get In Touch</button>
                 </div>
             </div>
             <div class="idx-hero-img">
-                <img src="profile-placeholder.png" alt="Daniel Wambua">
+                <img src="../public/images/laptop.jpg" alt="Developer Workspace">
             </div>
         </div>
     </header>
 
+    <section id="about" class="idx-section idx-about-bg">
+        <div class="idx-container-narrow">
+            <h2 class="idx-section-title">About Me</h2>
+            <div class="idx-about-content">
+                <p>
+                    I am a results-driven developer specializing in creating intelligent solutions. 
+                    Whether it's building <strong>data-driven dashboards</strong> for business insights 
+                    or training <strong>AI models</strong> for high-speed image classification, 
+                    I focus on technical challenges that lead to meaningful outcomes.
+                </p>
+                <div class="idx-about-stats">
+                    <div class="stat-box">
+                        <span class="stat-number">5+</span>
+                        <span class="stat-label">Projects Completed</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-number">3</span>
+                        <span class="stat-label">Core Specializations</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="idx-section">
-        <h2 class="idx-section-title">My Skills</h2>
+        <h2 class="idx-section-title">My Expertise</h2>
         <div class="idx-skills-grid">
             <div class="idx-skill-card">
                 <div class="idx-skill-icon"><i class="fa-solid fa-robot"></i></div>
@@ -60,50 +89,24 @@
     <section class="idx-section">
         <div class="idx-section-header">
             <h2 class="idx-section-title">Featured Projects</h2>
-            <div class="idx-chat-bubble-inline">Hi there! Need any assistance?</div>
+            <div class="idx-chat-bubble-inline">Fetching my latest work...</div>
         </div>
         
-        <div class="idx-projects-grid">
-            <div class="idx-project-card">
-                <div class="idx-proj-img" style="background-image: url('project1.jpg');"></div>
-                <div class="idx-proj-content">
-                    <h3>AI Chatbot System</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
-                    <div class="idx-proj-footer">
-                        <button class="idx-btn-proj">View Details</button>
-                        <i class="fa-regular fa-heart idx-heart"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="idx-project-card">
-                <div class="idx-proj-img" style="background-image: url('project2.jpg');"></div>
-                <div class="idx-proj-content">
-                    <h3>Data Analytics Dashboard</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
-                    <div class="idx-proj-footer">
-                        <button class="idx-btn-proj">View Details</button>
-                        <i class="fa-regular fa-heart idx-heart"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="idx-project-card">
-                <div class="idx-proj-img" style="background-image: url('project3.jpg');"></div>
-                <div class="idx-proj-content">
-                    <h3>VR Training App</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
-                    <div class="idx-proj-footer">
-                        <button class="idx-btn-proj">View Details</button>
-                        <i class="fa-regular fa-heart idx-heart"></i>
-                    </div>
-                </div>
-            </div>
+        <div id="featured-projects-container" class="idx-projects-grid">
+            <p>Loading projects...</p>
         </div>
     </section>
 
-    <div class="idx-floating-chat">
+    <div class="idx-floating-chat" onclick="location.href='chatbot.html'">
         <i class="fa-solid fa-comment-dots"></i>
-        <span>Hi there! Need any assistance?</span>
+        <span>Need assistance? Ask my AI</span>
     </div>
 
+    <button id="scroll-top-btn" class="scroll-top-btn" aria-label="Scroll to top">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <script src="../public/js/api.js"></script>
+    <script src="index-logic.js"></script>
 </body>
 </html>

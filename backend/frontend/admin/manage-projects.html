@@ -1,32 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../public/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <title>Manage Projects</title>
 </head>
 <body>
     <div class="mng-container">
-    <div class="mng-card">
-        <div class="mng-header">
-            <div class="mng-icon-title">
-                <i class="fa-solid fa-box-archive"></i>
-                <h2>Manage Projects</h2>
+        <div class="mng-card">
+            <div class="mng-header">
+                <div class="mng-icon-title">
+                    <i class="fa-solid fa-box-archive"></i>
+                    <h2>Manage Projects</h2>
+                </div>
+                <button class="mng-add-btn" onclick="toggleModal(true)">+ Add New</button>
             </div>
-            <button class="mng-add-btn">+ Add New</button>
-        </div>
-        <div class="mng-table-wrapper">
-            <table class="mng-table">
-                <thead>
-                    <tr><th>Project Name</th><th>Status</th><th>Actions</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td>AI Chatbot</td><td><span class="mng-badge mng-bg-green">Live</span></td><td><button class="mng-btn-blue">Edit</button></td></tr>
-                    <tr><td>Data Audit</td><td><span class="mng-badge mng-bg-yellow">Draft</span></td><td><button class="mng-btn-blue">Edit</button></td></tr>
-                </tbody>
-            </table>
+            
+            <div class="mng-table-wrapper">
+                <table class="mng-table">
+                    <thead>
+                        <tr>
+                            <th>Project Name</th>
+                            <th>Category</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-project-list">
+                        </tbody>
+                </table>
+            </div>
         </div>
     </div>
+
+    <div id="project-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <h3>Add New Project</h3>
+            <form id="add-project-form" class="admin-form">
+    <div class="form-group">
+        <label>Title</label>
+        <input type="text" id="prj-title" required placeholder="Project Title">
     </div>
+
+    <div class="form-group">
+        <label>Description</label>
+        <textarea id="prj-desc" required placeholder="What is this project about?"></textarea>
+    </div>
+    
+    <div class="form-group">
+        <label>Project Image</label>
+        <div class="file-upload-wrapper">
+            <input type="file" id="prj-file" accept="image/*" required>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Category</label>
+        <select id="prj-category">
+            <option value="AI/ML">AI/ML</option>
+            <option value="Web Development">Web Development</option>
+            <option value="Data Science">Data Science</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>GitHub Link</label>
+        <input type="url" id="prj-github" placeholder="https://github.com/...">
+    </div>
+
+    <div class="modal-actions">
+        <button type="button" class="btn-cancel" onclick="closeModal()">Cancel</button>
+        <button type="submit" class="btn-save">Upload & Save</button>
+    </div>
+</form>
+            
+        </div>
+    </div>
+
+    <script src="../public/js/admin-api.js"></script>
+    <script>
+        // Simple UI logic to show/hide the form
+        function toggleModal(show) {
+            const modal = document.getElementById('project-modal');
+            modal.style.display = show ? 'flex' : 'none';
+        }
+    </script>
 </body>
 </html>

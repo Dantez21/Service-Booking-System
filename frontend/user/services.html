@@ -1,27 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../public/css/style.css">
     <title>Services - Daniel Wambua</title>
+    <link rel="stylesheet" href="../public/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body>
+<body class="usrv-body">
+
+    <nav class="idx-nav">
+        <div class="idx-logo">
+            <i class="fa-solid fa-code idx-logo-icon"></i> Daniel Wambua
+        </div>
+        <ul class="idx-nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="services.html" class="active">Services</a></li>
+            <li><a href="contact.html">Contacts</a></li>
+        </ul>
+    </nav>
+
     <div class="usrv-container">
-    <h2 class="usrv-main-title">My Expertise</h2>
-    <div class="usrv-grid">
-        <div class="usrv-card">
-            <i class="fa-solid fa-brain"></i>
-            <h3>AI Development</h3>
-            <p>Custom LLMs, chatbots, and automation tools tailored for your business needs.</p>
-            <a href="hire.html" class="usrv-link">Get Started</a>
+        <div class="usrv-header-section">
+            <h2 class="usrv-main-title">Professional Services</h2>
+            <p class="usrv-subtitle">Leveraging AI, Data, and Web technologies to build technical outcomes.</p>
         </div>
-        <div class="usrv-card">
-            <i class="fa-solid fa-vial"></i>
-            <h3>Data Science</h3>
-            <p>Transforming raw data into actionable insights through predictive modeling.</p>
-            <a href="hire.html" class="usrv-link">Get Started</a>
+
+        <div class="usrv-grid">
+            <div class="usrv-card">
+                <div class="usrv-icon-wrap icon-ai"><i class="fa-solid fa-brain"></i></div>
+                <h3>AI Development</h3>
+                <p>Building intelligent systems like support chatbots that automatically respond to inquiries in real-time.</p>
+                <a href="hire.html" class="usrv-link">Get Started <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+
+            <div class="usrv-card">
+                <div class="usrv-icon-wrap icon-data"><i class="fa-solid fa-chart-line"></i></div>
+                <h3>Data Science</h3>
+                <p>Creating interactive dashboards to visualize business data such as sales, users, and revenue trends.</p>
+                <a href="hire.html" class="usrv-link">Get Started <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+
+            <div class="usrv-card">
+                <div class="usrv-icon-wrap icon-web"><i class="fa-solid fa-code"></i></div>
+                <h3>Web Development</h3>
+                <p>Creating high-accuracy web applications and classifying images with high accuracy and speed.</p>
+                <a href="hire.html" class="usrv-link">Get Started <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
         </div>
+        <button onclick="location.href='hire.html'" class="idx-btn-green idx-nav-btn idx-hire-floating">
+             Hire Me <i class="fa-solid fa-paper-plane"></i>
+        </button>
+
     </div>
-    </div>
+
+    <footer class="usrv-footer">
+        <p>&copy; 2026 Daniel Wambua. Architecting the future.</p>
+    </footer>
+
 </body>
 </html>
