@@ -3,25 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../public/css/style.css">
     <title>Admin - Manage Services</title>
+    <link rel="stylesheet" href="../public/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body>
-    <div class="msrv-container">
-     <div class="msrv-card">
-        <div class="msrv-header">
-            <h2><i class="fa-solid fa-gear"></i> Manage Services</h2>
-            <button class="msrv-add-btn">+ New Service</button>
-        </div>
-        <table class="msrv-table">
-            <thead>
-                <tr><th>Service Name</th><th>Icon</th><th>Visibility</th><th>Actions</th></tr>
-            </thead>
-            <tbody>
-                <tr><td>AI Development</td><td>fa-brain</td><td>Visible</td><td><button class="msrv-edit">Edit</button></td></tr>
-            </tbody>
-        </table>
-     </div>
+<body class="adm-body">
+
+    <div class="adm-wrapper">
+        <aside class="adm-sidebar" id="sidebar">
+            <div class="adm-logo">
+                <i class="fa-solid fa-user-shield"></i> <span>Admin Panel</span>
+            </div>
+            
+            <ul class="adm-nav-links">
+                <li class="adm-nav-label">Core</li>
+                <li><a href="dashboard.html"><i class="fa-solid fa-chart-line"></i> <span>Dashboard</span></a></li>
+                
+                <li class="adm-nav-label">Data Management</li>
+                <li><a href="manage-service.html" class="active"><i class="fa-solid fa-sliders"></i> <span>Manage Services</span></a></li>
+                <li><a href="manage-projects.html"><i class="fa-solid fa-pen-to-square"></i> <span>Manage Projects</span></a></li>
+                <li><a href="hire-requests.html"><i class="fa-solid fa-clipboard-list"></i> <span>Hire Requests</span></a></li>
+                
+                <li class="adm-nav-label">Live Site Preview</li>
+                <li><a href="../user/index.html" target="_blank"><i class="fa-solid fa-house"></i> <span>Home Page</span></a></li>
+                <li><a href="../user/services.html" target="_blank"><i class="fa-solid fa-hand-holding-heart"></i> <span>Services List</span></a></li>
+                
+                <li class="adm-nav-sep"></li>
+                <li><a href="#" class="adm-logout" onclick="handleLogout()"><i class="fa-solid fa-power-off"></i> <span>Logout</span></a></li>
+            </ul>
+        </aside>
+
+        <main class="adm-content">
+            <header class="adm-header">
+                <div class="adm-title-box">
+                    <h1>Services Management</h1>
+                    <p>Updating your professional offerings</p>
+                </div>
+                <button class="adm-btn-add" id="open-modal-btn">
+                    <i class="fa-solid fa-plus"></i> Add Service
+                </button>
+            </header>
+
+            <div class="adm-table-card">
+                <table class="adm-table">
+                    <thead>
+                        <tr>
+                            <th>Icon</th>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-services-list">
+                        </tbody>
+                </table>
+            </div>
+        </main>
     </div>
+
+    <div class="adm-modal" id="service-modal">
+        <div class="adm-modal-content">
+            <div class="adm-modal-header">
+                <h3 id="modal-title-text"><i class="fa-solid fa-circle-plus"></i> New Service</h3>
+                <button class="close-btn" id="close-modal-btn">&times;</button>
+            </div>
+            
+            <form id="add-service-form">
+                <div class="adm-modal-body">
+                    <div class="form-group">
+                        <label>Service Name</label>
+                        <input type="text" id="srv-title" placeholder="e.g. Data Analytics" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Icon Class (FontAwesome)</label>
+                        <input type="text" id="srv-icon" placeholder="fa-chart-pie" required>
+                        <small>Example: fa-code, fa-database, fa-mobile-screen</small>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea id="srv-desc" rows="4" placeholder="What does this service entail?" required></textarea>
+                    </div>
+                </div>
+
+                <div class="adm-modal-footer">
+                    <button type="button" class="btn-cancel" id="cancel-modal-btn">Cancel</button>
+                    <button type="submit" class="adm-btn-save" id="srv-submit-btn">Save Service</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../public/js/admin-apis.js"></script>
+    <script>
+        const modal = document.getElementById('service-modal');
+        const openBtn = document.getElementById('open-modal-btn');
+        const closeBtn = document.getElementById('close-modal-btn');
+        const cancelBtn = document.getElementById('cancel-modal-btn');
+
+        // Modal Helpers
+        function toggleModal(show) {
+            if(show) {
+                modal.classList.add('active');
+                modal.style.display = 'flex';
+            } else {
+                modal.classList.remove('active');
+                modal.style.display = 'none';
+                document.getElementById('add-service-form').reset();
+            }
+        }
+
+        openBtn.addEventListener('click', () => toggleModal(true));
+        closeBtn.addEventListener('click', () => toggleModal(false));
+        cancelBtn.addEventListener('click', () => toggleModal(false));
+
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) toggleModal(false);
+        });
+
+        function handleLogout() {
+            if(confirm("Logout from the system?")) window.location.href = 'login.html';
+        }
+    </script>
 </body>
 </html>

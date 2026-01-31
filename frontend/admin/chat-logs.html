@@ -1,27 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - AI Chat Logs</title>
     <link rel="stylesheet" href="../public/css/style.css">
-    <title>Chatbot Logs</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Chat Log Specific Styling */
+        .clog-feed {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 900px;
+        }
+
+        .clog-item {
+            background: #fff;
+            border-radius: 12px;
+            padding: 18px;
+            border-left: 5px solid #3182ce; /* Accent for bot interaction */
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            transition: transform 0.2s ease;
+        }
+
+        .clog-item:hover {
+            transform: scale(1.01);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.05);
+        }
+
+        .clog-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            border-bottom: 1px dashed #edf2f7;
+            padding-bottom: 8px;
+        }
+
+        .clog-user-id {
+            font-family: 'Courier New', Courier, monospace;
+            background: #f7fafc;
+            padding: 2px 8px;
+            border-radius: 4px;
+            color: #4a5568;
+            font-size: 0.85rem;
+        }
+
+        .clog-timestamp {
+            font-size: 0.75rem;
+            color: #a0aec0;
+            font-weight: 600;
+        }
+
+        .clog-bubble-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .clog-msg {
+            font-size: 0.95rem;
+            padding: 8px 12px;
+            border-radius: 8px;
+            max-width: 90%;
+        }
+
+        .clog-msg.user {
+            background: #ebf8ff;
+            color: #2b6cb0;
+            align-self: flex-start;
+        }
+
+        .clog-msg.ai {
+            background: #f0fff4;
+            color: #2f855a;
+            align-self: flex-start;
+            border: 1px solid #c6f6d5;
+            font-style: italic;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .clog-meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+            .clog-timestamp { align-self: flex-end; }
+        }
+    </style>
 </head>
-<body>
-    <div class="clog-container">
-     <div class="clog-card">
-        <div class="clog-header">
-            <i class="fa-solid fa-comment-dots"></i>
-            <h2>Chatbot Logs</h2>
-        </div>
-        <div class="clog-list">
-            <div class="clog-item">
-                <div class="clog-meta"><strong>User 192.168.1.1</strong> <span>Today</span></div>
-                <p>"How much for a VR app?"</p>
+<body class="adm-body">
+
+    <div class="adm-wrapper">
+        <aside class="adm-sidebar">
+            <div class="adm-logo">
+                <i class="fa-solid fa-user-shield"></i> <span>Admin Panel</span>
             </div>
-            <div class="clog-item">
-                <div class="clog-meta"><strong>User 104.22.4.10</strong> <span>Yesterday</span></div>
-                <p>"Where are you located?"</p>
+            <ul class="adm-nav-links">
+                <li class="adm-nav-label">Core</li>
+                <li><a href="dashboard.html"><i class="fa-solid fa-chart-line"></i> <span>Dashboard</span></a></li>
+                
+                <li class="adm-nav-label">Management</li>
+                <li><a href="manage-projects.html"><i class="fa-solid fa-pen-to-square"></i> <span>Projects</span></a></li>
+                <li><a href="manage-services.html"><i class="fa-solid fa-sliders"></i> <span>Services</span></a></li>
+                <li><a href="hire-requests.html"><i class="fa-solid fa-clipboard-list"></i> <span>Requests</span></a></li>
+                <li><a href="payments.html"><i class="fa-solid fa-wallet"></i> <span>Payments</span></a></li>
+                
+                <li class="adm-nav-label">Communication</li>
+                <li><a href="messages.html"><i class="fa-solid fa-comment-dots"></i> <span>Inbox</span></a></li>
+                <li><a href="chat-logs.html" class="active"><i class="fa-solid fa-robot"></i> <span>AI Chat Logs</span></a></li>
+                
+                <li class="adm-nav-sep"></li>
+                <li><a href="#" class="adm-logout" onclick="handleLogout()"><i class="fa-solid fa-power-off"></i> <span>Logout</span></a></li>
+            </ul>
+        </aside>
+
+        <main class="adm-content">
+            <header class="adm-header">
+                <div class="adm-title-box">
+                    <h1>Chatbot Activity Logs</h1>
+                    <p>Monitor real-time interactions between users and the AI assistant.</p>
+                </div>
+                <div class="adm-actions">
+                    <button class="dash-mini-btn" onclick="location.reload()" style="background:#3182ce; color:white;">
+                        <i class="fa-solid fa-rotate"></i> Refresh Feed
+                    </button>
+                </div>
+            </header>
+
+            <div class="clog-feed">
+                <div class="clog-item">
+                    <div class="clog-meta">
+                        <span class="clog-user-id"><i class="fa-solid fa-network-wired"></i> IP: 192.168.1.1</span>
+                        <span class="clog-timestamp">Today at 10:45 AM</span>
+                    </div>
+                    <div class="clog-bubble-container">
+                        <div class="clog-msg user">"How much for a VR app?"</div>
+                        <div class="clog-msg ai"><i class="fa-solid fa-robot"></i> "Our VR development starts at KES 50k. Would you like to see a brochure?"</div>
+                    </div>
+                </div>
+
+                <div class="clog-item">
+                    <div class="clog-meta">
+                        <span class="clog-user-id"><i class="fa-solid fa-network-wired"></i> IP: 104.22.4.10</span>
+                        <span class="clog-timestamp">Yesterday at 4:20 PM</span>
+                    </div>
+                    <div class="clog-bubble-container">
+                        <div class="clog-msg user">"Where are you located?"</div>
+                        <div class="clog-msg ai"><i class="fa-solid fa-robot"></i> "I am a digital assistant, but Daniel is based in Nairobi, Kenya."</div>
+                    </div>
+                </div>
             </div>
-        </div>
-     </div>
+        </main>
     </div>
+
+    <script>
+        function handleLogout() {
+            if(confirm("Exit the admin session?")) window.location.href = 'login.html';
+        }
+    </script>
 </body>
 </html>

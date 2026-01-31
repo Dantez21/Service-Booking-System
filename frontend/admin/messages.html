@@ -3,26 +3,191 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Messages | Daniel Wambua</title>
     <link rel="stylesheet" href="../public/css/style.css">
-    <title>Admin - Messages</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Inbox Specific Styles to avoid conflicts */
+        .inbox-wrapper {
+            display: flex;
+            height: calc(100vh - 120px);
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        /* Sidebar: Message List */
+        .inbox-list {
+            width: 350px;
+            border-right: 1px solid #eee;
+            display: flex;
+            flex-direction: column;
+            background: #fcfcfc;
+        }
+
+        .inbox-list-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            background: #fff;
+        }
+
+        .inbox-items-container {
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .inbox-item {
+            padding: 15px 20px;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            transition: 0.2s;
+            position: relative;
+        }
+
+        .inbox-item:hover { background: #f0f7ff; }
+        .inbox-item.active { 
+            background: #eef4ff; 
+            border-left: 4px solid #1e56a0; 
+        }
+
+        .inbox-item .sender { display: block; font-weight: 700; color: #333; margin-bottom: 4px; }
+        .inbox-item .subject { display: block; font-size: 0.85rem; color: #666; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .inbox-item .time { font-size: 0.75rem; color: #999; float: right; }
+
+        /* Content: Message View */
+        .inbox-view {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #fff;
+        }
+
+        .view-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .view-body {
+            padding: 30px;
+            overflow-y: auto;
+            line-height: 1.6;
+        }
+
+        .view-meta { margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f5f5f5; }
+        .view-meta h2 { margin-bottom: 10px; color: #1e56a0; }
+        .view-meta p { color: #777; font-size: 0.9rem; }
+
+        .back-to-list { display: none; margin-bottom: 15px; color: #1e56a0; cursor: pointer; }
+
+        /* MOBILE RESPONSIVENESS */
+        @media (max-width: 768px) {
+            .inbox-wrapper { height: auto; min-height: 500px; position: relative; }
+            .inbox-list { width: 100%; }
+            .inbox-view { 
+                display: none; /* Hidden by default on mobile */
+                position: absolute;
+                top: 0; left: 0; width: 100%; height: 100%;
+                z-index: 10;
+            }
+            .inbox-view.active { display: flex; }
+            .back-to-list { display: block; }
+        }
+    </style>
 </head>
-<body>
-    <div class="msg-container">
-     <div class="msg-inbox">
-        <div class="msg-sidebar">
-            <h3>Inbox</h3>
-            <div class="msg-item active">John Doe <span>10:30 AM</span></div>
-            <div class="msg-item">Jane Smith <span>Yesterday</span></div>
-        </div>
-        <div class="msg-content">
-            <div class="msg-body">
-                <h4>Project Inquiry</h4>
-                <p>From: johndoe@example.com</p>
-                <hr>
-                <p>Hi Daniel, I'm interested in your XR development services...</p>
+<body class="adm-body">
+
+    <div class="adm-wrapper">
+        <aside class="adm-sidebar">
+            <div class="adm-logo">
+                <i class="fa-solid fa-user-shield"></i> <span>Admin Panel</span>
             </div>
-        </div>
-     </div>
+            <ul class="adm-nav-links">
+                <li class="adm-nav-label">Core</li>
+                <li><a href="dashboard.html"><i class="fa-solid fa-chart-line"></i> <span>Dashboard</span></a></li>
+                
+                <li class="adm-nav-label">Management</li>
+                <li><a href="manage-service.html"><i class="fa-solid fa-sliders"></i> <span>Manage Services</span></a></li>
+                <li><a href="manage-projects.html"><i class="fa-solid fa-pen-to-square"></i> <span>Manage Projects</span></a></li>
+                <li><a href="hire-requests.html"><i class="fa-solid fa-clipboard-list"></i> <span>Requests</span></a></li>
+                <li><a href="payments.html"><i class="fa-solid fa-wallet"></i> <span>Payments</span></a></li>
+                <li><a href="messages.html" class="active"><i class="fa-solid fa-envelope"></i> <span>Inbox</span></a></li>
+                
+                <li class="adm-nav-sep"></li>
+                <li><a href="#" class="adm-logout" onclick="handleLogout()"><i class="fa-solid fa-power-off"></i> <span>Logout</span></a></li>
+            </ul>
+        </aside>
+
+        <main class="adm-content">
+            <header class="adm-header">
+                <div class="adm-title-box">
+                    <h1>Message Inbox</h1>
+                    <p>Communicate with potential clients and visitors.</p>
+                </div>
+            </header>
+
+            <div class="inbox-wrapper">
+                <div class="inbox-list" id="inbox-list-pane">
+                    <div class="inbox-list-header">
+                        <input type="text" placeholder="Search messages..." style="width:100%; padding:8px; border-radius:6px; border:1px solid #ddd;">
+                    </div>
+                    <div class="inbox-items-container" id="messages-list">
+                        <div class="inbox-item active" onclick="showMsg('1')">
+                            <span class="time">10:30 AM</span>
+                            <span class="sender">John Doe</span>
+                            <span class="subject">Project Inquiry: XR Development</span>
+                        </div>
+                        <div class="inbox-item" onclick="showMsg('2')">
+                            <span class="time">Yesterday</span>
+                            <span class="sender">Jane Smith</span>
+                            <span class="subject">Collaboration Request</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="inbox-view" id="message-view-pane">
+                    <div class="view-header">
+                        <div class="back-to-list" onclick="hideMsg()"><i class="fa-solid fa-arrow-left"></i> Back to Inbox</div>
+                        <div class="view-actions">
+                            <button class="adm-mini-btn" title="Reply"><i class="fa-solid fa-reply"></i></button>
+                            <button class="adm-mini-btn" title="Delete" style="color:red;"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </div>
+                    <div class="view-body" id="message-body-content">
+                        <div class="view-meta">
+                            <h2>Project Inquiry: XR Development</h2>
+                            <p><strong>From:</strong> johndoe@example.com</p>
+                            <p><strong>Date:</strong> Jan 31, 2026, 10:30 AM</p>
+                        </div>
+                        <div class="text-content">
+                            <p>Hi Daniel,</p>
+                            <p>I'm interested in your XR development services. I saw your recent portfolio project regarding the virtual training module and would like to discuss a similar project for my company.</p>
+                            <p>Are you available for a brief call next week?</p>
+                            <p>Best regards,<br>John Doe</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
+
+    <script>
+        // Mobile Toggle Logic
+        function showMsg(id) {
+            // In a real app, you would fetch the message by ID here
+            document.getElementById('message-view-pane').classList.add('active');
+        }
+
+        function hideMsg() {
+            document.getElementById('message-view-pane').classList.remove('active');
+        }
+
+        function handleLogout() {
+            if(confirm("Logout from Admin?")) window.location.href = 'login.html';
+        }
+    </script>
 </body>
 </html>

@@ -1,75 +1,61 @@
 const API_BASE_URL = "http://127.0.0.1:8000/api";
-// const API_BASE_URL = "http://192.168.0.61:8000/api";
-// const API_BASE_URL = "https://daniel-portfolio-backend.onrender.com/api";
-
-// This must match the ADMIN_SECRET_TOKEN in your backend
-// const ADMIN_TOKEN = "your_super_secret_token_123"; 
 const ADMIN_TOKEN = "supersecretkey";
 
 let isEditing = false;
 let currentEditId = null;
 
 document.addEventListener('DOMContentLoaded', () => {
-    fetchAdminProjects();
+    const projectList = document.getElementById('admin-project-list');
+    if (projectList) fetchAdminProjects();
+
     const projectForm = document.getElementById('add-project-form');
-    if (projectForm) {
-        projectForm.addEventListener('submit', handleFormSubmit);
-    }
+    if (projectForm) projectForm.addEventListener('submit', handleProjectSubmit);
+
+    // Modal Toggles
+    const modal = document.getElementById('project-modal');
+    document.getElementById('open-project-modal')?.addEventListener('click', () => {
+        isEditing = false;
+        projectForm.reset();
+        document.getElementById('modal-title').innerText = "Add New Project";
+        document.getElementById('prj-file').required = true;
+        modal.classList.add('active');
+    });
+    document.getElementById('close-project-modal')?.addEventListener('click', () => modal.classList.remove('active'));
 });
 
-// --- UI HELPERS ---
-function toggleModal(show) {
-    const modal = document.getElementById('project-modal');
-    if (modal) modal.style.display = show ? 'flex' : 'none';
-}
-
-function closeModal() {
-    isEditing = false;
-    currentEditId = null;
-    document.getElementById('add-project-form').reset();
-    document.querySelector('.modal-content h3').innerText = "Add New Project";
-    document.getElementById('prj-file').required = true;
-    toggleModal(false);
-}
-
-// --- API CALLS ---
-
+// --- FETCH PROJECTS ---
 async function fetchAdminProjects() {
     try {
         const response = await fetch(`${API_BASE_URL}/projects/`);
         const projects = await response.json();
         const tableBody = document.getElementById('admin-project-list');
-        if (!tableBody) return;
-
-        tableBody.innerHTML = ''; 
-        projects.forEach(project => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${project.title}</td>
-                <td><span class="mng-badge mng-bg-blue">${project.category}</span></td>
+        
+        tableBody.innerHTML = projects.map(proj => `
+            <tr>
+                <td><strong>${proj.title}</strong></td>
+                <td><span class="mng-badge">${proj.category}</span></td>
                 <td>
-                    <div class="mng-actions">
-                        <button class="mng-btn-blue edit-btn">Edit</button>
-                        <button class="mng-btn-delete" onclick="deleteProject(${project.id})">Delete</button>
-                    </div>
+                    <button class="mng-btn-blue" onclick='prepareEdit(${JSON.stringify(proj)})'>Edit</button>
+                    <button class="mng-btn-delete" onclick="deleteProject(${proj.id})">Delete</button>
                 </td>
-            `;
-            row.querySelector('.edit-btn').onclick = () => openEditModal(project);
-            tableBody.appendChild(row);
-        });
-    } catch (error) {
-        console.error("Fetch error:", error);
-    }
+            </tr>
+        `).join('');
+    } catch (err) { console.error("Fetch failed", err); }
 }
 
-async function handleFormSubmit(e) {
+// --- SUBMIT (CREATE/UPDATE) ---
+async function handleProjectSubmit(e) {
     e.preventDefault();
-    
+    const submitBtn = document.getElementById('prj-submit-btn');
+    submitBtn.disabled = true;
+    submitBtn.innerText = "Processing...";
+
     const formData = new FormData();
     formData.append('title', document.getElementById('prj-title').value);
     formData.append('description', document.getElementById('prj-desc').value);
     formData.append('category', document.getElementById('prj-category').value);
-    formData.append('github_link', document.getElementById('prj-github').value);
+    formData.append('github_link', document.getElementById('prj-github').value || "");
+    formData.append('live_demo', document.getElementById('prj-demo').value || "");
     
     const fileInput = document.getElementById('prj-file');
     if (fileInput.files[0]) {
@@ -82,54 +68,47 @@ async function handleFormSubmit(e) {
     try {
         const response = await fetch(url, {
             method: method,
-            headers: {
-                'x-admin-token': ADMIN_TOKEN // AUTHENTICATION HEADER
-            },
+            headers: { 'x-admin-token': ADMIN_TOKEN },
             body: formData
         });
 
         if (response.ok) {
             alert("Success!");
-            closeModal();
-            fetchAdminProjects();
+            location.reload();
         } else {
-            const err = await response.json();
-            alert("Error: " + err.detail);
+            const errorData = await response.json();
+            alert("Error: " + JSON.stringify(errorData.detail));
         }
-    } catch (error) {
-        alert("Connection failed.");
+    } catch (err) {
+        alert("Server connection failed");
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerText = "Save Project";
     }
 }
 
-function openEditModal(project) {
+// --- PREPARE EDIT ---
+window.prepareEdit = (proj) => {
     isEditing = true;
-    currentEditId = project.id;
-    document.getElementById('prj-title').value = project.title;
-    document.getElementById('prj-desc').value = project.description;
-    document.getElementById('prj-category').value = project.category;
-    document.getElementById('prj-github').value = project.github_link || '';
+    currentEditId = proj.id;
+    document.getElementById('prj-title').value = proj.title;
+    document.getElementById('prj-desc').value = proj.description;
+    document.getElementById('prj-category').value = proj.category;
+    document.getElementById('prj-github').value = proj.github_link || "";
+    document.getElementById('prj-demo').value = proj.live_demo || "";
     document.getElementById('prj-file').required = false;
-    document.querySelector('.modal-content h3').innerText = "Edit Project";
-    toggleModal(true);
-}
+    document.getElementById('modal-title').innerText = "Edit Project";
+    document.getElementById('project-modal').classList.add('active');
+};
 
+// --- DELETE ---
 async function deleteProject(id) {
-    if (!confirm("Delete this project?")) return;
-
+    if (!confirm("Delete project?")) return;
     try {
         const response = await fetch(`${API_BASE_URL}/projects/${id}`, {
             method: 'DELETE',
-            headers: {
-                'x-admin-token': ADMIN_TOKEN // AUTHENTICATION HEADER
-            }
+            headers: { 'x-admin-token': ADMIN_TOKEN }
         });
-
-        if (response.ok) {
-            fetchAdminProjects();
-        } else {
-            alert("Delete failed. Unauthorized.");
-        }
-    } catch (error) {
-        alert("Server error.");
-    }
+        if (response.ok) fetchAdminProjects();
+    } catch (err) { alert("Delete failed"); }
 }

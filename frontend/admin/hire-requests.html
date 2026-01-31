@@ -6,78 +6,181 @@
     <title>Admin - Hire Requests</title>
     <link rel="stylesheet" href="../public/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Hire Request Specific Styles */
+        .hreq-status {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .hreq-st-green { background: #d4edda; color: #155724; }
+        .hreq-st-yellow { background: #fff3cd; color: #856404; }
+        .hreq-st-red { background: #f8d7da; color: #721c24; }
+
+        .hreq-action-btns {
+            display: flex;
+            gap: 8px;
+        }
+
+        .hreq-btn-check {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .hreq-btn-view {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        /* Mobile Responsive Table */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            border-radius: 8px;
+        }
+
+        .adm-table {
+            min-width: 700px; /* Ensures it doesn't squish on mobile */
+        }
+
+        @media (max-width: 768px) {
+            .adm-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+    </style>
 </head>
-<body class="dash-wrapper">
+<body class="adm-body">
 
-    <div class="hreq-container">
-        <div class="hreq-card">
-            <div class="hreq-header">
-                <div class="hreq-icon-box">
-                    <i class="fa-solid fa-envelope-open-text"></i>
-                </div>
-                <h2>Hire Requests</h2>
+    <div class="adm-wrapper">
+        <aside class="adm-sidebar">
+            <div class="adm-logo">
+                <i class="fa-solid fa-user-shield"></i> <span>Admin Panel</span>
             </div>
+            <ul class="adm-nav-links">
+                <li class="adm-nav-label">Core</li>
+                <li><a href="dashboard.html"><i class="fa-solid fa-chart-line"></i> <span>Dashboard</span></a></li>
+                
+                <li class="adm-nav-label">Management</li>
+                <li><a href="manage-service.html"><i class="fa-solid fa-sliders"></i> <span>Services</span></a></li>
+                <li><a href="manage-projects.html"><i class="fa-solid fa-pen-to-square"></i> <span>Projects</span></a></li>
+                <li><a href="hire-requests.html" class="active"><i class="fa-solid fa-clipboard-list"></i> <span>Requests</span></a></li>
+                <li><a href="payments.html"><i class="fa-solid fa-wallet"></i> <span>Payments</span></a></li>
+                <li><a href="messages.html"><i class="fa-solid fa-envelope"></i> <span>Inbox</span></a></li>
+                
+                <li class="adm-nav-sep"></li>
+                <li><a href="#" class="adm-logout" onclick="handleLogout()"><i class="fa-solid fa-power-off"></i> <span>Logout</span></a></li>
+            </ul>
+        </aside>
 
-            <div class="hreq-table-wrapper">
-                <table class="hreq-table">
-                    <thead>
-                        <tr>
-                            <th>Client </th>
-                            <th>Service</th>
-                            <th>Budget</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>284 Gogo</td>
-                            <td>Name Appenzeller App</td>
-                            <td><span class="hreq-status hreq-st-green">Budget Appvd</span></td>
-                            <td>
-                                <div class="hreq-action-btns">
-                                    <button class="hreq-btn-check"><i class="fa-solid fa-check"></i></button>
-                                    <button class="hreq-btn-view">Details</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>281 Kenze</td>
-                            <td>XR Site Integration</td>
-                            <td><span class="hreq-status hreq-st-yellow">Under Review</span></td>
-                            <td>
-                                <div class="hreq-action-btns">
-                                    <button class="hreq-btn-check"><i class="fa-solid fa-check"></i></button>
-                                    <button class="hreq-btn-view">Details</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>288 30000</td>
-                            <td>Network Website Payment</td>
-                            <td><span class="hreq-status hreq-st-red">Not Approved</span></td>
-                            <td>
-                                <div class="hreq-action-btns">
-                                    <button class="hreq-btn-check"><i class="fa-solid fa-check"></i></button>
-                                    <button class="hreq-btn-view">Details</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>C51 Alice</td>
-                            <td>Webcast Marks Platforms</td>
-                            <td><span class="hreq-status hreq-st-green">Budget Appvd</span></td>
-                            <td>
-                                <div class="hreq-action-btns">
-                                    <button class="hreq-btn-check"><i class="fa-solid fa-check"></i></button>
-                                    <button class="hreq-btn-view">Details</button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+        <main class="adm-content">
+            <header class="adm-header">
+                <div class="adm-title-box">
+                    <h1>Project Hire Requests</h1>
+                    <p>Review and manage incoming project bookings.</p>
+                </div>
+            </header>
+
+            <div class="adm-table-card">
+                <div class="table-responsive">
+                    <table class="adm-table">
+                        <thead>
+                            <tr>
+                                <th>Client</th>
+                                <th>Requested Service</th>
+                                <th>Budget Status</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Gogo</strong><br><small>gogo@example.com</small></td>
+                                <td>Appenzeller Mobile App</td>
+                                <td><span class="hreq-status hreq-st-green">Budget Approved</span></td>
+                                <td>31 Jan 2026</td>
+                                <td>
+                                    <div class="hreq-action-btns">
+                                        <button class="hreq-btn-check" title="Mark as Started"><i class="fa-solid fa-check"></i></button>
+                                        <button class="hreq-btn-view" onclick="openDetails()">Details</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Kenze</strong><br><small>kenze@web.com</small></td>
+                                <td>XR Site Integration</td>
+                                <td><span class="hreq-status hreq-st-yellow">Under Review</span></td>
+                                <td>30 Jan 2026</td>
+                                <td>
+                                    <div class="hreq-action-btns">
+                                        <button class="hreq-btn-check"><i class="fa-solid fa-check"></i></button>
+                                        <button class="hreq-btn-view">Details</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Alice</strong><br><small>alice@design.io</small></td>
+                                <td>Webcast Platform</td>
+                                <td><span class="hreq-status hreq-st-red">Not Approved</span></td>
+                                <td>28 Jan 2026</td>
+                                <td>
+                                    <div class="hreq-action-btns">
+                                        <button class="hreq-btn-check"><i class="fa-solid fa-check"></i></button>
+                                        <button class="hreq-btn-view">Details</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="adm-modal" id="details-modal" style="display:none;">
+        <div class="adm-modal-content">
+            <div class="adm-modal-header">
+                <h3>Request Details</h3>
+                <button class="close-btn" onclick="closeDetails()">&times;</button>
+            </div>
+            <div class="adm-modal-body">
+                <p><strong>Client:</strong> John Gogo</p>
+                <p><strong>Project Description:</strong></p>
+                <p style="background: #f9f9f9; padding: 10px; border-radius: 5px;">
+                    We need a high-performance mobile application for our dairy farm management system in Appenzell...
+                </p>
+            </div>
+            <div class="adm-modal-footer">
+                <button class="btn-cancel" onclick="closeDetails()">Close</button>
+                <button class="adm-btn-save">Accept Project</button>
             </div>
         </div>
     </div>
 
+    <script>
+        function openDetails() {
+            document.getElementById('details-modal').style.display = 'flex';
+        }
+        function closeDetails() {
+            document.getElementById('details-modal').style.display = 'none';
+        }
+        function handleLogout() {
+            if(confirm("Logout?")) window.location.href = 'login.html';
+        }
+    </script>
 </body>
 </html>

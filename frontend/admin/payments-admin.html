@@ -6,81 +6,207 @@
     <title>Admin - Payment Management</title>
     <link rel="stylesheet" href="../public/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Mobile-First Payment Styles */
+        :root {
+            --success-green: #27ae60;
+            --pending-orange: #f39c12;
+            --mpesa-green: #4caf50;
+            --bank-blue: #3498db;
+            --paypal-gold: #f1c40f;
+        }
+
+        .adm-content { padding: 20px; }
+
+        /* Stats Grid - Responsive */
+        .dash-stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .dash-stat-card {
+            padding: 1.5rem;
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            transition: transform 0.3s ease;
+        }
+
+        .dash-stat-card:hover { transform: translateY(-5px); }
+
+        .dash-stat-card h2 { font-size: 1.8rem; margin: 0.5rem 0; font-weight: 700; }
+        .dash-stat-card small { font-weight: 600; text-transform: uppercase; opacity: 0.9; letter-spacing: 0.5px; }
+
+        /* Professional Method Tags */
+        .method-tag {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: inline-block;
+        }
+        .method-tag.mpesa { background: #e8f5e9; color: var(--mpesa-green); border: 1px solid #c8e6c9; }
+        .method-tag.bank { background: #e3f2fd; color: var(--bank-blue); border: 1px solid #bbdefb; }
+        .method-tag.paypal { background: #fffde7; color: #827717; border: 1px solid #fff9c4; }
+
+        /* Status Badges */
+        .status-badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .status-badge.success { background: #d4edda; color: #155724; }
+        .status-badge.warning { background: #fff3cd; color: #856404; }
+
+        /* Table Responsiveness */
+        .table-container {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto; /* Enables horizontal swipe on mobile */
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .adm-table { width: 100%; border-collapse: collapse; min-width: 800px; }
+        .adm-table th { background: #f8f9fa; text-align: left; padding: 15px; color: #555; font-size: 0.85rem; }
+        .adm-table td { padding: 15px; border-bottom: 1px solid #eee; font-size: 0.9rem; vertical-align: middle; }
+
+        /* Action Buttons */
+        .padm-actions button {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        @media (max-width: 768px) {
+            .adm-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+            .padm-actions { width: 100%; }
+            .adm-btn-add { width: 100%; justify-content: center; }
+        }
+    </style>
 </head>
-<body class="dash-wrapper">
+<body class="adm-body">
 
-    <div class="padm-container">
-        <div class="padm-stats">
-            <div class="padm-stat-card">
-                <small>Total Revenue</small>
-                <h3>KES 542,000</h3>
-                <span class="padm-trend-up"><i class="fa-solid fa-arrow-up"></i> 12%</span>
+    <div class="adm-wrapper">
+        <aside class="adm-sidebar">
+            <div class="adm-logo">
+                <i class="fa-solid fa-user-shield"></i> <span>Admin Panel</span>
             </div>
-            <div class="padm-stat-card">
-                <small>Pending Payouts</small>
-                <h3>KES 12,500</h3>
-                <span class="padm-trend-neutral">Stable</span>
-            </div>
-            <div class="padm-stat-card">
-                <small>Completed Transactions</small>
-                <h3>148</h3>
-                <span class="padm-trend-up"><i class="fa-solid fa-check"></i> Verified</span>
-            </div>
-        </div>
+            <ul class="adm-nav-links">
+                <li class="adm-nav-label">Core</li>
+                <li><a href="dashboard.html"><i class="fa-solid fa-chart-line"></i> <span>Dashboard</span></a></li>
+                
+                <li class="adm-nav-label">Data Management</li>
+                <li><a href="manage-service.html"><i class="fa-solid fa-sliders"></i> <span>Manage Services</span></a></li>
+                <li><a href="manage-projects.html"><i class="fa-solid fa-pen-to-square"></i> <span>Manage Projects</span></a></li>
+                <li><a href="hire-requests.html"><i class="fa-solid fa-clipboard-list"></i> <span>Hire Requests</span></a></li>
+                <li><a href="payments.html" class="active"><i class="fa-solid fa-wallet"></i> <span>M-Pesa Payments</span></a></li>
+                
+                <li class="adm-nav-label">Live Site</li>
+                <li><a href="../user/index.html" target="_blank"><i class="fa-solid fa-house"></i> <span>Home Page</span></a></li>
+                
+                <li class="adm-nav-sep"></li>
+                <li><a href="#" class="adm-logout" onclick="handleLogout()"><i class="fa-solid fa-power-off"></i> <span>Logout</span></a></li>
+            </ul>
+        </aside>
 
-        <div class="padm-card">
-            <div class="padm-header">
-                <div class="padm-title-box">
-                    <i class="fa-solid fa-file-invoice-dollar"></i>
-                    <h2>Transaction Ledger</h2>
+        <main class="adm-content">
+            <header class="adm-header">
+                <div class="adm-title-box">
+                    <h1>Payment Ledger</h1>
+                    <p>Track revenue and verify transaction history.</p>
                 </div>
                 <div class="padm-actions">
-                    <button class="padm-export-btn"><i class="fa-solid fa-download"></i> Export CSV</button>
+                    <button class="adm-btn-add" style="background: var(--success-green);">
+                        <i class="fa-solid fa-file-csv"></i> Export CSV
+                    </button>
+                </div>
+            </header>
+
+            <div class="dash-stats-row">
+                <div class="dash-stat-card dash-bg-green" style="background: linear-gradient(135deg, #1d976c, #93f9b9); color: #fff;">
+                    <small>Total Revenue</small>
+                    <h2>KES 542,000</h2>
+                    <span><i class="fa-solid fa-arrow-up"></i> 12% increase</span>
+                </div>
+                <div class="dash-stat-card dash-bg-teal" style="background: linear-gradient(135deg, #2193b0, #6dd5ed); color: #fff;">
+                    <small>Volume</small>
+                    <h2>148</h2>
+                    <p>Verified Transactions</p>
+                </div>
+                <div class="dash-stat-card dash-bg-blue" style="background: linear-gradient(135deg, #4b6cb7, #182848); color: #fff;">
+                    <small>Pending Payouts</small>
+                    <h2>KES 12,500</h2>
+                    <p>Action Required</p>
                 </div>
             </div>
 
-            <div class="padm-table-wrapper">
-                <table class="padm-table">
-                    <thead>
-                        <tr>
-                            <th>Transaction ID</th>
-                            <th>Client</th>
-                            <th>Method</th>
-                            <th>Amount</th>
-                            <th>Date</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>#MP45902</td>
-                            <td>John Mwangi</td>
-                            <td><span class="padm-method m-pesa">M-Pesa</span></td>
-                            <td><strong>KES 5,000</strong></td>
-                            <td>28 Jan 2026</td>
-                            <td><span class="padm-badge bg-success">Completed</span></td>
-                        </tr>
-                        <tr>
-                            <td>#BK11200</td>
-                            <td>Sarah Chen</td>
-                            <td><span class="padm-method bank">Bank</span></td>
-                            <td><strong>KES 45,000</strong></td>
-                            <td>27 Jan 2026</td>
-                            <td><span class="padm-badge bg-warning">Pending</span></td>
-                        </tr>
-                        <tr>
-                            <td>#PP88231</td>
-                            <td>Alex Johnson</td>
-                            <td><span class="padm-method paypal">PayPal</span></td>
-                            <td><strong>KES 12,800</strong></td>
-                            <td>25 Jan 2026</td>
-                            <td><span class="padm-badge bg-success">Completed</span></td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="table-container">
+                <div class="card-header" style="padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;">
+                    <h3 style="margin:0;">Recent Transactions</h3>
+                    <i class="fa-solid fa-filter" style="color: #888; cursor: pointer;"></i>
+                </div>
+                <div class="table-responsive">
+                    <table class="adm-table">
+                        <thead>
+                            <tr>
+                                <th>Transaction ID</th>
+                                <th>Client Name</th>
+                                <th>Payment Method</th>
+                                <th>Amount</th>
+                                <th>Date Issued</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="payment-list">
+                            <tr>
+                                <td style="font-family: monospace; font-weight: 600;">#MP45902</td>
+                                <td>John Mwangi</td>
+                                <td><span class="method-tag mpesa">M-PESA</span></td>
+                                <td style="font-weight: 700;">KES 5,000</td>
+                                <td>28 Jan 2026</td>
+                                <td><span class="status-badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td style="font-family: monospace; font-weight: 600;">#BK11200</td>
+                                <td>Sarah Chen</td>
+                                <td><span class="method-tag bank">BANK</span></td>
+                                <td style="font-weight: 700;">KES 45,000</td>
+                                <td>27 Jan 2026</td>
+                                <td><span class="status-badge warning">Pending</span></td>
+                            </tr>
+                            <tr>
+                                <td style="font-family: monospace; font-weight: 600;">#PP88231</td>
+                                <td>Alex Johnson</td>
+                                <td><span class="method-tag paypal">PAYPAL</span></td>
+                                <td style="font-weight: 700;">KES 12,800</td>
+                                <td>25 Jan 2026</td>
+                                <td><span class="status-badge success">Completed</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
+        </main>
     </div>
 
+    <script>
+        function handleLogout() {
+            if(confirm("Logout from Management Console?")) window.location.href = 'login.html';
+        }
+    </script>
 </body>
 </html>

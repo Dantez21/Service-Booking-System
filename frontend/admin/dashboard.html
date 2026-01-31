@@ -3,61 +3,214 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daniel Dashboard | Central Hub</title>
     <link rel="stylesheet" href="../public/css/style.css">
-    <title>Admin Dashboard - Daniel Wambua</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Dashboard-Specific Professional Styling */
+        :root {
+            --card-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            --transition: all 0.3s ease;
+        }
+
+        .status-indicator.online {
+            background: #e6fffa;
+            color: #319795;
+            padding: 6px 15px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            border: 1px solid #b2f5ea;
+        }      
+
+        .dash-stat-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+        }
+
+        .dash-stat-card h2 { font-size: 2.2rem; margin: 10px 0; }
+        .dash-stat-card p { font-weight: 600; font-size: 1.1rem; margin-bottom: 5px; }
+        .dash-stat-card small { opacity: 0.8; font-size: 0.85rem; }
+
+
+        .dash-table-card h3 { margin-bottom: 20px; color: #2d3748; }
+
+        .adm-table { width: 100%; border-collapse: collapse; }
+        .adm-table th { text-align: left; padding: 12px; color: #718096; border-bottom: 2px solid #f7fafc; font-size: 0.9rem; }
+        .adm-table td { padding: 15px 12px; border-bottom: 1px solid #f7fafc; color: #4a5568; }
+
+        .dash-mini-btn {
+            background: #ebf4ff;
+            color: #3182ce;
+            padding: 6px 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .dash-mini-btn:hover { background: #3182ce; color: white; }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .adm-header { flex-direction: column; align-items: flex-start; gap: 15px; }
+            .adm-sidebar { transform: translateX(-100%); transition: 0.3s; position: fixed; z-index: 1000; }
+            .adm-sidebar.active { transform: translateX(0); }
+            .adm-content { padding: 15px; }
+            .dash-table-card { overflow-x: auto; }
+        }
+
+        /* Toggle Button for Mobile Sidebar */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: #3182ce;
+            color: white;
+            border-radius: 50%;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 1001;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) { .menu-toggle { display: flex; } }
+    </style>
 </head>
-<body>
-    <div class="dash-wrapper">
-    <header class="dash-header">
-        <div class="dash-nav">
-            <div class="dash-logo">Danie Dashboard</div>
-            <div class="dash-nav-links">
-                <span>Home</span> <span>Manage</span> <span>Stats</span> <span>Config</span>
-                <div class="dash-user-icon"><i class="fa-solid fa-user"></i></div>
-            </div>
-        </div>
-        <h1 class="dash-welcome">Welcome, Admin</h1>
-    </header>
+<body class="adm-body">
 
-    <div class="dash-body">
-        <div class="dash-stats-row">
-            <div class="dash-stat-card dash-bg-blue">
-                <i class="fa-solid fa-file-invoice"></i>
-                <p>New Requests</p>
-            </div>
-            <div class="dash-stat-card dash-bg-teal">
-                <i class="fa-solid fa-envelope-open"></i>
-                <p>Payments Received</p>
-            </div>
-            <div class="dash-stat-card dash-bg-red">
-                <i class="fa-solid fa-bullhorn"></i>
-                <p>Messages</p>
-            </div>
-            <div class="dash-stat-card dash-bg-green">
-                <i class="fa-solid fa-shield-halved"></i>
-                <p>Data Sequences</p>
-            </div>
-        </div>
+    <div class="menu-toggle" onclick="toggleSidebar()">
+        <i class="fa-solid fa-bars"></i>
+    </div>
 
-        <div class="dash-content-grid">
-            <div class="dash-chart-card">
-                <h3>Hire Requests</h3>
-                <div class="dash-simulated-chart">
-                    <svg viewBox="0 0 400 150">
-                        <path d="M0,120 L50,100 L100,130 L150,80 L200,110 L250,60 L300,90 L400,20" fill="none" stroke="#1e56a0" stroke-width="3"/>
-                        <circle cx="250" cy="60" r="5" fill="#4caf50" />
-                    </svg>
+    <div class="adm-wrapper">
+        <aside class="adm-sidebar" id="sidebar">
+            <div class="adm-logo">
+                <i class="fa-solid fa-user-shield"></i> <span>Admin Panel</span>
+            </div>
+            
+            <ul class="adm-nav-links">
+                <li class="adm-nav-label">Core</li>
+                <li><a href="dashboard.html" class="active"><i class="fa-solid fa-chart-line"></i> <span>Dashboard</span></a></li>
+                
+                <li class="adm-nav-label">Data Management</li>
+                <li><a href="manage-projects.html"><i class="fa-solid fa-pen-to-square"></i> <span>Manage Projects</span></a></li>
+                <li><a href="manage-services.html"><i class="fa-solid fa-sliders"></i> <span>Manage Services</span></a></li>
+                <li><a href="hire-requests.html"><i class="fa-solid fa-clipboard-list"></i> <span>Hire Requests</span></a></li>
+                <li><a href="payments.html"><i class="fa-solid fa-wallet"></i> <span>M-Pesa Payments</span></a></li>
+                
+                <li class="adm-nav-label">Live Site Preview</li>
+                <li><a href="../user/index.html" target="_blank"><i class="fa-solid fa-house"></i> <span>Home Page</span></a></li>
+                <li><a href="../user/projects.html" target="_blank"><i class="fa-solid fa-briefcase"></i> <span>Projects Gallery</span></a></li>
+                <li><a href="../user/services.html" target="_blank"><i class="fa-solid fa-hand-holding-heart"></i> <span>Services List</span></a></li>
+                
+                <li class="adm-nav-label">Communication</li>
+                <li><a href="messages.html"><i class="fa-solid fa-comment-dots"></i> <span>Inbox Messages</span></a></li>
+                <li><a href="chat-logs.html"><i class="fa-solid fa-robot"></i> <span>AI Chat Logs</span></a></li>
+                
+                <li class="adm-nav-sep"></li>
+                <li><a href="#" class="adm-logout" onclick="handleLogout()"><i class="fa-solid fa-power-off"></i> <span>Logout</span></a></li>
+            </ul>
+        </aside>
+
+        <main class="adm-content">
+            <header class="adm-header">
+                <div class="adm-title-box">
+                    <h1>Central Monitoring</h1>
+                    <p>Access management tools and view live pages from one place.</p>
+                </div>
+                <div class="adm-header-actions">
+                    <span class="status-indicator online">System Online</span>
+                </div>
+            </header>
+
+            <div class="dash-stats-row">
+                <div class="dash-stat-card dash-bg-blue" onclick="location.href='manage-projects.html'">
+                    <i class="fa-solid fa-gears"></i>
+                    <h2 id="total-projects">0</h2>
+                    <p>Manage Projects</p>
+                    <small>Click to Add/Edit</small>
+                </div>
+                <div class="dash-stat-card dash-bg-teal" onclick="window.open('../user/projects.html', '_blank')">
+                    <i class="fa-solid fa-eye"></i>
+                    <h2>View</h2>
+                    <p>Live Projects Page</p>
+                    <small>Public View</small>
+                </div>
+                <div class="dash-stat-card dash-bg-green" onclick="location.href='hire-requests.html'">
+                    <i class="fa-solid fa-user-check"></i>
+                    <h2 id="total-hires">0</h2>
+                    <p>Hire Requests</p>
+                    <small>Review Bookings</small>
+                </div>
+                <div class="dash-stat-card dash-bg-red" onclick="location.href='messages.html'">
+                    <i class="fa-solid fa-envelope-open-text"></i>
+                    <h2 id="total-messages">0</h2>
+                    <p>Messages</p>
+                    <small>Check Inbox</small>
                 </div>
             </div>
-            <div class="dash-table-card">
-                <h3>Recent Payments</h3>
-                <div class="dash-payment-row"><span>Safaricom</span> <span class="dash-text-green">+$ 5</span> <button class="dash-mini-btn">View</button></div>
-                <div class="dash-payment-row"><span>Bank Transfer</span> <span>$ 1,200.00</span> <button class="dash-mini-btn">View</button></div>
-                <div class="dash-payment-row"><span>Paypal</span> <span>$ 300.00</span> <button class="dash-mini-btn">View</button></div>
-            </div>
-        </div>
-    </div>
-</div>
 
+            <div class="dash-content-grid">
+                <div class="dash-table-card">
+                    <h3>Recent System Activity</h3>
+                    <div style="overflow-x: auto;">
+                        <table class="adm-table">
+                            <thead>
+                                <tr>
+                                    <th>Source</th>
+                                    <th>Action Required</th>
+                                    <th>Quick Link</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Projects</strong></td>
+                                    <td>Update your latest work</td>
+                                    <td><a href="manage-projects.html" class="dash-mini-btn">Manage</a></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Services</strong></td>
+                                    <td>Change pricing or details</td>
+                                    <td><a href="manage-services.html" class="dash-mini-btn">Manage</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const API_URL = "http://127.0.0.1:8000/api";
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+        }
+
+        async function fetchDashboardCounts() {
+            try {
+                const projRes = await fetch(`${API_URL}/projects/`);
+                if(projRes.ok) {
+                    const data = await projRes.json();
+                    document.getElementById('total-projects').innerText = data.length;
+                }
+            } catch (err) {
+                console.log("Stats fetch paused until endpoints are ready.");
+            }
+        }
+
+        function handleLogout() {
+            if(confirm("Logout from the system?")) window.location.href = 'login.html';
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchDashboardCounts);
+    </script>
 </body>
 </html>

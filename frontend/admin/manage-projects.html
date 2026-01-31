@@ -3,23 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Manage Projects</title>
     <link rel="stylesheet" href="../public/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <title>Manage Projects</title>
 </head>
-<body>
-    <div class="mng-container">
-        <div class="mng-card">
-            <div class="mng-header">
-                <div class="mng-icon-title">
-                    <!-- <i class="fa-solid fa-box-archive"></i> -->
-                    <h2>Manage Projects</h2>
-                </div>
-                <button class="mng-add-btn" onclick="toggleModal(true)">+ Add New</button>
+<body class="adm-body">
+
+    <div class="adm-wrapper">
+        <aside class="adm-sidebar">
+            <div class="adm-logo">
+                <i class="fa-solid fa-user-shield"></i> <span>Admin Panel</span>
             </div>
-            
-            <div class="mng-table-wrapper">
-                <table class="mng-table">
+            <ul class="adm-nav-links">
+                <li class="adm-nav-label">Main</li>
+                <li><a href="Dashboard.html"><i class="fa-solid fa-chart-line"></i> <span>Dashboard</span></a></li>
+                
+                <li class="adm-nav-label">Management</li>
+                <li><a href="manage-service.html"><i class="fa-solid fa-gears"></i> <span>Services</span></a></li>
+                <li><a href="manage-projects.html" class="active"><i class="fa-solid fa-laptop-code"></i> <span>Projects</span></a></li>
+                
+                <li class="adm-nav-label">Live Site</li>
+                <li><a href="index.html" target="_blank"><i class="fa-solid fa-house"></i> <span>Home</span></a></li>
+                <li><a href="projects.html" target="_blank"><i class="fa-solid fa-briefcase"></i> <span>View Projects</span></a></li>
+                
+                <li class="adm-nav-sep"></li>
+                <li><a href="#" class="adm-logout" onclick="handleLogout()"><i class="fa-solid fa-right-from-bracket"></i> <span>Logout</span></a></li>
+            </ul>
+        </aside>
+
+        <main class="adm-content">
+            <header class="adm-header">
+                <div class="adm-title-box">
+                    <h1>Manage Projects</h1>
+                    <p>Showcase your portfolio work to the world.</p>
+                </div>
+                <button class="adm-btn-add" onclick="toggleModal(true)">
+                    <i class="fa-solid fa-plus"></i> Add New Project
+                </button>
+            </header>
+
+            <div class="adm-table-card">
+                <table class="adm-table">
                     <thead>
                         <tr>
                             <th>Project Name</th>
@@ -31,59 +55,92 @@
                         </tbody>
                 </table>
             </div>
-        </div>
+        </main>
     </div>
 
-    <div id="project-modal" class="modal-overlay" style="display: none;">
-        <div class="modal-content">
-            <h3>Add New Project</h3>
-            <form id="add-project-form" class="admin-form">
-    <div class="form-group">
-        <label>Title</label>
-        <input type="text" id="prj-title" required placeholder="Project Title">
-    </div>
-
-    <div class="form-group">
-        <label>Description</label>
-        <textarea id="prj-desc" required placeholder="What is this project about?"></textarea>
-    </div>
-    
-    <div class="form-group">
-        <label>Project Image</label>
-        <div class="file-upload-wrapper">
-            <input type="file" id="prj-file" accept="image/*" required>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label>Category</label>
-        <select id="prj-category">
-            <option value="AI/ML">AI/ML</option>
-            <option value="Web Development">Web Development</option>
-            <option value="Data Science">Data Science</option>
-        </select>
-    </div>
-
-    <div class="form-group">
-        <label>GitHub Link</label>
-        <input type="url" id="prj-github" placeholder="https://github.com/...">
-    </div>
-
-    <div class="modal-actions">
-        <button type="button" class="btn-cancel" onclick="closeModal()">Cancel</button>
-        <button type="submit" class="btn-save">Upload & Save</button>
-    </div>
-</form>
+    <div id="project-modal" class="adm-modal">
+        <div class="adm-modal-content">
+            <div class="adm-modal-header">
+                <h3 id="modal-title-text">Add New Project</h3>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
             
+            <form id="add-project-form">
+                <div class="adm-modal-body">
+                    <div class="form-group">
+                        <label>Title</label>
+                        <input type="text" id="prj-title" required placeholder="e.g. AI Chatbot">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea id="prj-desc" rows="3" required placeholder="Project overview..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select id="prj-category">
+                            <option value="AI/ML">AI/ML</option>
+                            <option value="Web Development">Web Development</option>
+                            <option value="Data Science">Data Science</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>GitHub Link</label>
+                        <input type="url" id="prj-github" placeholder="https://github.com/...">
+                    </div>
+
+                    <!-- <div class="form-group">
+                        <label>Live Demo Link</label>
+                        <input type="url" id="prj-demo" placeholder="https://demo.com/...">
+                    </div> -->
+                    
+                    <div class="form-group">
+                        <label>Project Image</label>
+                        <input type="file" id="prj-file" accept="image/*">
+                        <small id="file-help-text">Required for new projects</small>
+                    </div>
+                </div>
+
+                <div class="adm-modal-footer">
+                    <button type="button" class="btn-cancel" onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="adm-btn-save" id="prj-submit-btn">Upload & Save</button>
+                </div>
+            </form>
         </div>
     </div>
 
-    <script src="../public/js/admin-api.js"></script>
+    <script src="../public/js/admin-apis.js"></script>
     <script>
-        // Simple UI logic to show/hide the form
         function toggleModal(show) {
             const modal = document.getElementById('project-modal');
-            modal.style.display = show ? 'flex' : 'none';
+            if(show) {
+                modal.classList.add('active');
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden'; // Prevent background scroll
+            } else {
+                modal.classList.remove('active');
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function closeModal() {
+            // isEditing and currentEditId are defined in admin-apis.js
+            if (typeof isEditing !== 'undefined') isEditing = false;
+            if (typeof currentEditId !== 'undefined') currentEditId = null;
+            
+            document.getElementById('add-project-form').reset();
+            document.getElementById('modal-title-text').innerText = "Add New Project";
+            document.getElementById('prj-file').required = true;
+            toggleModal(false);
+        }
+
+        function handleLogout() {
+            if(confirm("Are you sure you want to logout?")) {
+                window.location.href = 'login.html';
+            }
         }
     </script>
 </body>

@@ -3,110 +3,262 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daniel Wambua | AI, Data & XR Developer</title>
+    <title>Daniel Wambua | AI & XR Solutions Architect</title>
     <link rel="stylesheet" href="../public/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Premium Polish Styles */
+        :root {
+            --brand-dark: #0f172a;
+            --brand-accent: #2563eb;
+            --brand-success: #10b981;
+            --text-main: #1e293b;
+        }
+
+        .idx-hero-wrap {
+            background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+            padding-bottom: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Sophisticated Navigation */
+        .idx-nav {
+            background: linear-gradient(to bottom, #0b1d36, #162e4d);
+            /* max-width: 1200px; */
+            margin: 0 auto;
+            padding: 25px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .idx-logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: white;
+            /* color: var(--brand-dark); */
+        }
+
+        .idx-nav-links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .idx-nav-links a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: 0.3s;
+        }
+
+        .idx-nav-links a:hover { color: var(--brand-accent); }
+
+        /* High-Tier Hero Section */
+        .idx-hero-container {
+            max-width: 1200px;
+            margin: 60px auto 0;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .idx-hero-text h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            line-height: 1.1;
+            color: var(--brand-dark);
+            margin-bottom: 20px;
+            font-weight: 900;
+        }
+
+        .idx-hero-text p {
+            font-size: 1.25rem;
+            color: #64748b;
+            margin-bottom: 35px;
+            max-width: 500px;
+            line-height: 1.6;
+        }
+
+        .idx-hero-btns { display: flex; gap: 15px; }
+
+        .idx-btn-premium {
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-filled { background: var(--brand-dark); color: white; }
+        .btn-filled:hover { background: #000; transform: translateY(-3px); }
+
+        .btn-outline { background: transparent; border: 2px solid #e2e8f0; color: var(--brand-dark); }
+        .btn-outline:hover { border-color: var(--brand-dark); }
+
+        /* Stats Section */
+        .idx-about-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .stat-box {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            text-align: center;
+            border: 1px solid #f1f5f9;
+        }
+
+        .stat-number { font-size: 2.5rem; font-weight: 800; color: var(--brand-accent); display: block; }
+        .stat-label { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; font-weight: 700; }
+
+        /* Modern Skills Grid */
+        .idx-skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .idx-skill-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 20px;
+            transition: 0.4s;
+            border: 1px solid #f1f5f9;
+        }
+
+        .idx-skill-card:hover { 
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px -12px rgba(0,0,0,0.1);
+        }
+
+        .idx-skill-icon {
+            font-size: 2rem;
+            color: var(--brand-accent);
+            margin-bottom: 20px;
+        }
+
+        /* Floating AI Chat - Polished */
+        .idx-floating-chat {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--brand-dark);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            transition: 0.3s;
+            z-index: 999;
+        }
+
+        .idx-floating-chat:hover { transform: scale(1.05); background: var(--brand-accent); }
+
+        @media (max-width: 968px) {
+            .idx-hero-container { grid-template-columns: 1fr; text-align: center; }
+            .idx-hero-text p { margin: 0 auto 30px; }
+            .idx-hero-btns { justify-content: center; }
+            .idx-nav-links { display: none; } /* Add a mobile burger menu logic later */
+        }
+    </style>
 </head>
 <body class="idx-body">
 
     <header class="idx-hero-wrap">
         <nav class="idx-nav">
             <div class="idx-logo">
-                <i class="fa-solid fa-code idx-logo-icon"></i> Daniel Wambua
+                <i class="fa-solid fa-terminal"></i> Daniel Wambua
             </div>
 
-            <button class="nav-toggle" id="nav-toggle" aria-label="open navigation">
-                <i class="fa-solid fa-bars"></i>
-            </button>
-
-            <ul class="idx-nav-links" id="nav-menu">
+            <ul class="idx-nav-links">
                 <li><a href="index.html">Home</a></li>
-                <li><a href="#about">About Me</a></li>
-                <li><a href="projects.html">Projects</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="contact.html">Contacts</a></li>
-                <li><button onclick="location.href='hire.html'" class="idx-btn-green idx-nav-btn">Hire Me</button></li>
+                <li><a href="#about">Philosophy</a></li>
+                <li><a href="projects.html">Portfolio</a></li>
+                <li><a href="services.html">Expertise</a></li>
+                <li><button onclick="location.href='hire.html'" class="idx-btn-premium btn-filled" style="padding: 10px 24px;">Hire Me</button></li>
             </ul>
         </nav>
 
         <div class="idx-hero-container">
             <div class="idx-hero-text">
-                <h1>Daniel Wambua</h1>
-                <p>Architecting the future with AI, Data Science & XR</p>
+                <h1>Turning Complex Data into <span style="color: var(--brand-accent);">Intelligent Reality.</span></h1>
+                <p>Specializing in high-performance AI models, scalable data architectures, and immersive XR experiences for forward-thinking enterprises.</p>
                 <div class="idx-hero-btns">
-                    <button onclick="location.href='projects.html'" class="idx-btn-blue">View My Projects</button>
-                    <button onclick="location.href='contact.html'" class="idx-btn-green">Get In Touch</button>
+                    <button onclick="location.href='projects.html'" class="idx-btn-premium btn-filled">Explore Portfolio</button>
+                    <button onclick="location.href='contact.html'" class="idx-btn-premium btn-outline">Consultation</button>
                 </div>
             </div>
             <div class="idx-hero-img">
-                <img src="../public/images/laptop.jpg" alt="Developer Workspace">
+                <div style="background: var(--brand-dark); border-radius: 30px; padding: 10px; box-shadow: 0 50px 100px -20px rgba(0,0,0,0.25);">
+                    <img src="../public/images/laptop.jpg" alt="Developer Workspace" style="width: 100%; border-radius: 20px; filter: grayscale(20%);">
+                </div>
             </div>
         </div>
     </header>
 
-    <section id="about" class="idx-section idx-about-bg">
-        <div class="idx-container-narrow">
-            <h2 class="idx-section-title">About Me</h2>
-            <div class="idx-about-content">
-                <p>
-                    I am a results-driven developer specializing in creating intelligent solutions. 
-                    Whether it's building <strong>data-driven dashboards</strong> for business insights 
-                    or training <strong>AI models</strong> for high-speed image classification, 
-                    I focus on technical challenges that lead to meaningful outcomes.
-                </p>
-                <div class="idx-about-stats">
-                    <div class="stat-box">
-                        <span class="stat-number">5+</span>
-                        <span class="stat-label">Projects Completed</span>
-                    </div>
-                    <div class="stat-box">
-                        <span class="stat-number">3</span>
-                        <span class="stat-label">Core Specializations</span>
-                    </div>
+    <section id="about" class="idx-section">
+        <div style="max-width: 800px; margin: 0 auto; text-align: center; padding: 100px 20px;">
+            <h2 class="idx-section-title" style="font-size: 2.5rem; margin-bottom: 30px;">Strategic Engineering</h2>
+            <p style="font-size: 1.2rem; color: #64748b; line-height: 1.8;">
+                I bridge the gap between heavy technical complexity and business growth. Whether training <strong>LLMs</strong> for enterprise automation or developing <strong>XR interfaces</strong>, my focus is on precision, speed, and ROI.
+            </p>
+            
+            <div class="idx-about-stats">
+                <div class="stat-box">
+                    <span class="stat-number">12+</span>
+                    <span class="stat-label">Deployments</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">99%</span>
+                    <span class="stat-label">Model Accuracy</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="idx-section">
-        <h2 class="idx-section-title">My Expertise</h2>
+    <section class="idx-section" style="background: #fff; padding: 100px 20px;">
+        <h2 class="idx-section-title" style="text-align: center; margin-bottom: 60px;">Core Specializations</h2>
         <div class="idx-skills-grid">
             <div class="idx-skill-card">
-                <div class="idx-skill-icon"><i class="fa-solid fa-robot"></i></div>
-                <span>AI & Machine Learning</span>
+                <div class="idx-skill-icon"><i class="fa-solid fa-microchip"></i></div>
+                <h3 style="margin-bottom: 15px;">AI & Intelligence</h3>
+                <p style="color: #64748b; font-size: 0.95rem;">Building predictive models and neural networks that automate high-stakes decision making.</p>
             </div>
             <div class="idx-skill-card">
-                <div class="idx-skill-icon"><i class="fa-solid fa-chart-line"></i></div>
-                <span>Data Science</span>
+                <div class="idx-skill-icon"><i class="fa-solid fa-database"></i></div>
+                <h3 style="margin-bottom: 15px;">Data Architecture</h3>
+                <p style="color: #64748b; font-size: 0.95rem;">Engineering robust pipelines that turn raw data into actionable executive insights.</p>
             </div>
             <div class="idx-skill-card">
-                <div class="idx-skill-icon"><i class="fa-solid fa-vr-cardboard"></i></div>
-                <span>XR Development</span>
+                <div class="idx-skill-icon"><i class="fa-solid fa-layer-group"></i></div>
+                <h3 style="margin-bottom: 15px;">Spatial Computing</h3>
+                <p style="color: #64748b; font-size: 0.95rem;">Developing next-gen XR environments for training, simulation, and industrial visualization.</p>
             </div>
-        </div>
-    </section>
-
-    <section class="idx-section">
-        <div class="idx-section-header">
-            <h2 class="idx-section-title">Featured Projects</h2>
-            <div class="idx-chat-bubble-inline">Fetching my latest work...</div>
-        </div>
-        
-        <div id="featured-projects-container" class="idx-projects-grid">
-            <p>Loading projects...</p>
         </div>
     </section>
 
     <div class="idx-floating-chat" onclick="location.href='chatbot.html'">
-        <i class="fa-solid fa-comment-dots"></i>
-        <span>Need assistance? Ask my AI</span>
+        <i class="fa-solid fa-bolt"></i>
+        <span>AI Chat</span>
     </div>
 
-    <button id="scroll-top-btn" class="scroll-top-btn" aria-label="Scroll to top">
-        <i class="fa-solid fa-arrow-up"></i>
-    </button>
-
     <script src="../public/js/api.js"></script>
-    <script src="index-logic.js"></script>
 </body>
 </html>

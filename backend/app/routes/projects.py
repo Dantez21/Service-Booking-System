@@ -11,15 +11,16 @@ from app.schemas.project import ProjectOut
 
 router = APIRouter(tags=["Projects"])
 
+# Match the directory to your main.py mount
 UPLOAD_DIR = "static/uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 # --- SECURITY CONFIG ---
-# Pulling the secret key from the .env loaded in database.py or main.py
-ADMIN_SECRET_TOKEN = os.getenv("SECRET_KEY")
+# Fallback to 'supersecretkey' if .env SECRET_KEY is missing
+ADMIN_SECRET_TOKEN = os.getenv("SECRET_KEY", "supersecretkey")
 
 async def verify_admin(x_admin_token: str = Header(None)):
-    if not ADMIN_SECRET_TOKEN or x_admin_token != ADMIN_SECRET_TOKEN:
+    if not x_admin_token or x_admin_token != ADMIN_SECRET_TOKEN:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN, 
             detail="Unauthorized: Invalid Admin Token"
@@ -29,9 +30,9 @@ async def verify_admin(x_admin_token: str = Header(None)):
 # --- ROUTES ---
 
 # 1. CREATE (Protected)
-@router.post("/", response_model=ProjectOut)
+@router.post("/", response_model=ProjectOut, status_code=status.HTTP_201_CREATED)
 async def create_project(
-    request: Request, # Added to get the current base URL
+    request: Request,
     title: str = Form(...),
     description: str = Form(...),
     category: str = Form(...),
@@ -41,15 +42,18 @@ async def create_project(
     admin_check: str = Depends(verify_admin),
     db: Session = Depends(get_db)
 ):
+    # Save the file with a unique name
     file_extension = os.path.splitext(file.filename)[1]
     unique_filename = f"{uuid.uuid4()}{file_extension}"
     file_path = os.path.join(UPLOAD_DIR, unique_filename)
 
-    with open(file_path, "wb") as buffer:
-        shutil.copyfileobj(file.file, buffer)
+    try:
+        with open(file_path, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Could not save file: {str(e)}")
 
-    # Dynamic URL: This will be http://127.0.0.1:8000 locally 
-    # and https://your-site.render.com on the web.
+    # Construct dynamic URL
     base_url = str(request.base_url).rstrip('/')
     image_url = f"{base_url}/static/uploads/{unique_filename}"
 
@@ -70,7 +74,8 @@ async def create_project(
 # 2. GET ALL (Public)
 @router.get("/", response_model=List[ProjectOut])
 def get_all_projects(db: Session = Depends(get_db)):
-    return db.query(Project).order_by(Project.created_at.desc()).all()
+    # Returns projects ordered by newest first
+    return db.query(Project).order_by(Project.id.desc()).all()
 
 # 3. UPDATE (Protected)
 @router.put("/{project_id}", response_model=ProjectOut)
@@ -96,10 +101,12 @@ async def update_project(
     project.github_link = github_link
     project.live_demo = live_demo
 
+    # If a new file is uploaded, replace the old one
     if file:
         file_extension = os.path.splitext(file.filename)[1]
         unique_filename = f"{uuid.uuid4()}{file_extension}"
         file_path = os.path.join(UPLOAD_DIR, unique_filename)
+        
         with open(file_path, "wb") as buffer:
             shutil.copyfileobj(file.file, buffer)
         
@@ -121,6 +128,7 @@ def delete_project(
     if not project:
         raise HTTPException(status_code=404, detail="Project not found")
     
+    # Clean up the image file from storage
     if project.image_url:
         filename = project.image_url.split("/")[-1]
         old_file_path = os.path.join(UPLOAD_DIR, filename)

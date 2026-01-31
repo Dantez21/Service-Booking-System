@@ -3,60 +3,168 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>M-Pesa Payment - Daniel Wambua</title>
-    <link rel="stylesheet" href="../public/css/style.css">
+    <title>M-Pesa Payment</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: #f8fafc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .pay-card {
+            background: white;
+            width: 95%;
+            max-width: 400px;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+
+        /* FIX: Aligning Logo and Title on the same line */
+        .pay-header {
+            display: flex;
+            align-items: center; /* Vertical Center */
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #f1f5f9;
+            padding-bottom: 15px;
+        }
+
+        .pay-logo-img {
+            height: 35px; /* Fixed height for consistency */
+            width: auto;
+        }
+
+        .pay-title {
+            font-size: 1.4rem;
+            color: #1e293b;
+            font-weight: 700;
+            line-height: 1; /* Removes extra space above/below letters */
+        }
+
+        /* FIX: Aligning Country Code and Input Number */
+        .pay-input-group {
+            margin-bottom: 20px;
+        }
+
+        .pay-label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: #475569;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .pay-field-wrapper {
+            display: flex;
+            align-items: stretch; /* Ensures prefix and input are same height */
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+
+        .pay-field-wrapper:focus-within {
+            border-color: #49b24b;
+        }
+
+        .pay-prefix {
+            background: #f1f5f9;
+            color: #1e293b;
+            font-weight: 700;
+            padding: 12px 15px;
+            display: flex;
+            align-items: center; /* Centers +254 vertically */
+            border-right: 2px solid #e2e8f0;
+            font-size: 1rem;
+        }
+
+        .pay-input {
+            flex: 1;
+            border: none;
+            padding: 12px 15px;
+            font-size: 1.1rem;
+            outline: none;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: #1e293b;
+        }
+
+        /* Amount Display Alignment */
+        .pay-amount-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f0fdf4;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px dashed #49b24b;
+            margin-bottom: 25px;
+        }
+
+        .pay-amount-label { color: #166534; font-weight: 600; }
+        .pay-amount-value { color: #166534; font-weight: 800; font-size: 1.1rem; }
+
+        .pay-btn {
+            width: 100%;
+            background: #49b24b;
+            color: white;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(73, 178, 75, 0.2);
+        }
+
+        .pay-security {
+            text-align: center;
+            font-size: 0.75rem;
+            color: #94a3b8;
+            margin-top: 15px;
+        }
+    </style>
 </head>
-<body class="idx-body">
+<body>
 
-    <div class="pay-container">
-        <div class="pay-card">
-            <div class="pay-header">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/1/15/M-PESA_LOGO-01.svg" alt="M-Pesa" class="pay-logo-img">
-                <h2 class="pay-title">M-Pesa Payment</h2>
-            </div>
-            
-            <div class="pay-form">
-                <div class="pay-input-group">
-                    <input type="text" id="phone" placeholder="Enter Your Phone Number" class="pay-input">
-                </div>
-                
-                <div class="pay-amount-display">
-                    <span>Amount: KES 5,000</span>
-                    <i class="fa-solid fa-chevron-right"></i>
-                </div>
-
-                <button class="pay-btn" onclick="triggerPayment()">Pay Now</button>
+    <div class="pay-card">
+        <div class="pay-header">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/15/M-PESA_LOGO-01.svg" alt="M-Pesa" class="pay-logo-img">
+            <h2 class="pay-title">M-Pesa Payment</h2>
+        </div>
+        
+        <div class="pay-input-group">
+            <label class="pay-label">Enter Phone Number</label>
+            <div class="pay-field-wrapper">
+                <span class="pay-prefix">+254</span>
+                <input type="number" placeholder="712345678" class="pay-input">
             </div>
         </div>
-    </div>
 
-    <div id="successModal" class="pay-modal-overlay">
-        <div class="pay-modal-card">
-            <div class="pay-success-icon">
-                <i class="fa-solid fa-circle-check"></i>
-            </div>
-            <h2 class="pay-modal-title">Payment Successful!</h2>
-            <p class="pay-modal-text">Your payment has been received!</p>
-            <button class="pay-modal-btn" onclick="closeModal()">OK</button>
+        <div class="pay-amount-row">
+            <span class="pay-amount-label">Amount:</span>
+            <span class="pay-amount-value">KES 5,000</span>
         </div>
+
+        <button class="pay-btn">Pay Now</button>
+
+        <p class="pay-security">
+            <i class="fa-solid fa-lock"></i> Secured by Daraja API
+        </p>
     </div>
 
-    <script>
-        function triggerPayment() {
-            const btn = document.querySelector('.pay-btn');
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
-            
-            // Simulating a 2-second API delay (Daraja API latency)
-            setTimeout(() => {
-                document.getElementById('successModal').classList.add('active');
-                btn.innerHTML = 'Pay Now';
-            }, 2000);
-        }
-
-        function closeModal() {
-            document.getElementById('successModal').classList.remove('active');
-        }
-    </script>
 </body>
 </html>

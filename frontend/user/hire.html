@@ -1,55 +1,187 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../public/css/style.css">
-    <title>Hire Me</title>
+    <title>Hire Daniel Wambua</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Universal Box Sizing - Prevents padding from breaking width */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --hire-accent: #10b981;
+            --hire-bg: #f3f4f6;
+            --hire-card: #ffffff;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--hire-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Container that adjusts width based on screen size */
+        .hire-wrapper {
+            width: 100%;
+            max-width: 600px; /* Limits size on desktop */
+            padding: 20px;    /* Margin on mobile */
+        }
+
+        .hire-card {
+            background: var(--hire-card);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            width: 100%;
+        }
+
+        .hire-title {
+            font-size: clamp(1.5rem, 5vw, 2rem); /* Dynamic font size */
+            color: #111827;
+            text-align: center;
+            margin: 0 0 10px 0;
+        }
+
+        .hire-divider {
+            border: 0;
+            height: 3px;
+            width: 50px;
+            background: var(--hire-accent);
+            margin: 0 auto 25px;
+        }
+
+        /* Responsive Form Grid */
+        .hire-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .hire-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .hire-group label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #4b5563;
+        }
+
+        .hire-input, .hire-select, .hire-textarea {
+            width: 100%; /* Important for mobile */
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .hire-input:focus, .hire-select:focus, .hire-textarea:focus {
+            border-color: var(--hire-accent);
+            border-width: 2px;
+        }
+
+        .hire-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .hire-submit-btn {
+            width: 100%;
+            background: var(--hire-accent);
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: opacity 0.2s;
+        }
+
+        .hire-submit-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Tablet & Desktop Adjustments */
+        @media (min-width: 768px) {
+            .hire-card {
+                padding: 3rem;
+            }
+        }
+
+        /* Very Small Devices Adjustments */
+        @media (max-width: 480px) {
+            .hire-wrapper {
+                padding: 10px;
+            }
+            .hire-card {
+                padding: 1.5rem;
+                border-radius: 12px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="hire-container">
-     <div class="hire-card">
-        <h2 class="hire-title">Hire Me</h2>
-        <hr class="hire-divider">
-        
-        <div class="hire-form-group">
-            <label>Your Name:</label>
-            <input type="text" placeholder="Email" class="hire-input">
-        </div>
 
-        <div class="hire-form-group">
-            <label>Email:</label>
-            <input type="email" placeholder="username@example.com" class="hire-input">
-        </div>
+    <div class="hire-wrapper">
+        <div class="hire-card">
+            <div class="hire-header">
+                <h2 class="hire-title">Start a Project</h2>
+                <div class="hire-divider"></div>
+                <p class="hire-lead">Ready to bring your ideas to life? Fill out the form below to secure a consultation for your AI, Data, or XR needs.</p>
+            </div>
+            
+            <form class="hire-form">
+                <div class="hire-group">
+                    <label>Full Name</label>
+                    <input type="text" placeholder="Your name" class="hire-input">
+                </div>
 
-        <div class="hire-form-group">
-            <label>Select Service:</label>
-            <select class="hire-select">
-                <option>Please select</option>
-                <option>AI Development</option>
-                <option>Data Science</option>
-                <option>XR/VR Development</option>
-            </select>
-        </div>
+                <div class="hire-group">
+                    <label>Email</label>
+                    <input type="email" placeholder="email@example.com" class="hire-input">
+                </div>
 
-        <div class="hire-form-group">
-            <label>Budget:</label>
-            <select class="hire-select">
-                <option>Select budget range</option>
-                <option>$500 - $1000</option>
-                <option>$1000 - $5000</option>
-                <option>$5000+</option>
-            </select>
-        </div>
+                <div class="hire-group">
+                    <label>Service Type</label>
+                    <select class="hire-select">
+                        <option>AI Development</option>
+                        <option>Data Science</option>
+                        <option>XR/VR Solutions</option>
+                    </select>
+                </div>
 
-        <div class="hire-form-group">
-            <label>Project Details:</label>
-            <textarea class="hire-textarea" placeholder="Describe your project..."></textarea>
-        </div>
+                <div class="hire-group">
+                    <label>Project Budget</label>
+                    <select class="hire-select">
+                        <option>Below $1,000</option>
+                        <option>$1,000 - $5,000</option>
+                        <option>$5,000+</option>
+                    </select>
+                </div>
 
-        <div class="hire-center-btn">
-            <button class="hire-submit-btn">Submit Request</button>
+                <div class="hire-group">
+                    <label>Project Details</label>
+                    <textarea class="hire-textarea" placeholder="Tell me about your project..."></textarea>
+                </div>
+
+                <button type="submit" class="hire-submit-btn">Send Inquiry</button>
+            </form>
         </div>
     </div>
-</div>
+
 </body>
 </html>
