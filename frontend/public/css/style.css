@@ -123,16 +123,119 @@
 /* Lapto[ View /Hire Button/ Base floating Hire Me button */
 .idx-hire-floating {
     position: fixed;
-    z-index: 2000;
+    z-index: 1000;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-
     padding: 12px 20px;
     border-radius: 30px;
     font-weight: 600;
     cursor: pointer;
+}
+
+/* --- Exact Design Match for About Section --- */
+.idx-about-wrap {
+    background-color: #eeeeee; /* The light grey from your design */
+    padding: 80px 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.idx-about-grid {
+    max-width: 1200px;
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Side by side on desktop */
+    align-items: center;
+    gap: 40px;
+}
+
+/* Image Styling */
+.about-image-container {
+    display: flex;
+    justify-content: center;
+}
+
+.about-main-img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Text Styling */
+.about-title-styled {
+    font-size: 3rem;
+    color: #555555;
+    margin-bottom: 30px;
+    font-weight: 500;
+}
+
+.about-description-styled p {
+    color: #777777;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/* Button Styling (Exact Yellow Match) */
+.about-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.btn-yellow {
+    background: #1e56a0;
+    transition: all 0.3s ease;
+    color: white;
+    border: none;
+    padding: 12px 35px;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.btn-yellow:hover {
+    filter: brightness(1.2); 
+    transform: translateY(-2px); 
+}
+
+/* --- Responsive Adjustments --- */
+
+/* For Tablets and smaller desktops */
+@media (max-width: 992px) {
+    .about-title-styled {
+        font-size: 2.5rem;
+    }
+}
+
+/* For Mobile Devices */
+@media (max-width: 768px) {
+    .idx-about-grid {
+        grid-template-columns: 1fr; /* Stack vertically */
+        text-align: center;
+    }
+
+    .about-image-container {
+        order: 1; /* Move image to top */
+    }
+
+    .about-content-col {
+        order: 2;
+    }
+
+    .about-actions {
+        justify-content: center;
+        flex-direction: column; /* Stack buttons on small phones */
+    }
+    
+    .btn-yellow {
+        width: 100%;
+        max-width: 250px;
+        margin: 0 auto;
+    }
 }
 
 /* =========================
@@ -146,37 +249,44 @@
         transform: none;
     }
 }
-
-/* Mobile view */
+/* Hire Me and AI Assistant Button  */
 @media (max-width: 768px) {
-
+    /* Anchored to Bottom Left */
     .idx-hire-floating {
-        display: flex;
-        position: fixed;
-        bottom: 16px;
-        left: 50%;
-        transform: translateX(-50%);
-
-        width: calc(100% - 32px);
-        max-width: 420px;
-
-        padding: 14px 20px;
-        border-radius: 40px;
-
-        font-size: 16px;
-        font-weight: 600;
-
+        position: fixed !important;
+        bottom: 20px !important;
+        margin-left: 2px !important;
+        
+        /* THE FIX: Prevents full-width stretching */
+        width: auto !important; 
+        right: auto !important; 
+        display: inline-flex !important; 
         align-items: center;
         justify-content: center;
-        gap: 10px;
-
+        
+        /* Styling */
+        padding: 12px 20px;
+        border-radius: 50px;
         z-index: 2000;
-        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+        font-size: 0.9rem;
+        gap: 8px;
+        white-space: nowrap; /* Prevents text from wrapping to a second line */
     }
 
-    /* Prevent footer overlap */
-    body {
-        padding-bottom: 90px;
+    /* Anchored to Bottom Right (AI Assistant) */
+    .idx-floating-chat {
+        position: fixed !important;
+        bottom: 20px !important;
+        right: 20px !important;
+        left: auto !important;
+        
+        width: auto !important;
+        display: inline-flex !important;
+        padding: 12px 20px;
+        border-radius: 50px;
+        z-index: 2000;
+        font-size: 0.9rem;
+        gap: 8px;
     }
 }
 
@@ -187,21 +297,19 @@
     }
 
     .idx-nav {
-        padding: 15px 20px; /* Thinner padding for small screens */
-        position: fixed;
-        flex-wrap: wrap;
-    }
-    .idx-nav-links {
-        display: none; /* Default hidden */
         flex-direction: column;
-        position: absolute;
-        top: 100%;
-        left: 0;
+        padding: 15px 20px;
+        height: auto; /* Allow nav to grow with content */
+    }
+   
+    .idx-nav-links {
+        display: flex !important; /* Forces visibility */
+        flex-direction: column;   /* Stacks Home, About, etc. */
+        align-items: center;
         width: 100%;
-        background-color: #ffffff;
-        padding: 20px 0;
-        box-shadow: 0 10px 15px rgba(0,0,0,0.1);
-        z-index: 999;
+        padding: 0;
+        margin-top: 15px;
+        gap: 15px;               /* Space between links */
     }
    
     .idx-nav-links.active {
@@ -209,8 +317,6 @@
     }
 
     .idx-nav-links li {
-        width: 100%;
-        text-align: center;
         list-style: none;
     }
 
@@ -223,13 +329,6 @@
         text-decoration: none;
         border-bottom: 1px solid #f5f5f5;
     }
-/* Ensure the Hire Me button isn't hidden */
-    .idx-nav-btn {
-        margin: 20px auto;
-        display: block !important;
-        width: 80%;
-    }
-
 }
 
 /* Hero Content */
@@ -456,20 +555,47 @@ button {
     font-size: 0.8rem;
 }
 
+/* AI ASSISTANT CHATBOT BUTTON */
 .idx-floating-chat {
     position: fixed;
     bottom: 30px;
     right: 30px;
-    background-color: var(--idx-blue-light);
+    background: #1e56a0;
     color: white;
-    padding: 12px 20px;
-    border-radius: 30px;
+    padding: 15px 20px;
+    border-radius: 50px;
+    z-index: 1000;
     display: flex;
     align-items: center;
-    gap: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    font-size: 0.9rem;
+    gap: 12px;
+    box-shadow: 0 10px 25px rgba(30, 86, 160, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    user-select: none;
+    
+    /* Trigger the pulse animation */
+    animation: assistantPulse 3s infinite;
 }
+
+.idx-floating-chat:hover {
+    background: #163e75;
+    transform: scale(1.05);
+    animation: none; /* Stops pulsing when the user is hovering */
+}
+
+/* The Pulse Effect */
+@keyframes assistantPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(30, 86, 160, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 15px rgba(30, 86, 160, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(30, 86, 160, 0);
+    }
+}
+/* .idx-floa */
 
 /* About Section Styles */
 .idx-about-bg { background-color: #f9f9f9; padding: 80px 0; }
@@ -1903,29 +2029,7 @@ html {
     .adm-content { margin-left: 80px; }
 }
 
-/* @media (max-width: 768px) {
-    .adm-wrapper { flex-direction: column; }
-    .adm-sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
-        padding: 15px;
-    }
-    .adm-nav-links {
-        display: flex;
-        justify-content: space-around;
-        margin: 0;
-    }
-    .adm-logo { margin-bottom: 15px; justify-content: center; }
-    .adm-content { margin-left: 0; padding: 20px; }
-    .adm-header { flex-direction: column; gap: 15px; text-align: center; }
-} */
-
 /* --- SERVICES PAGE STYLES (usrv- prefix) --- */
-.usrv-body {
-    background-color: #fcfcfc;
-    min-height: 100vh;
-}
 
 .usrv-container {
     max-width: 1200px;

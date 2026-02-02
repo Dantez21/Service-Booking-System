@@ -11,7 +11,12 @@
 
     <div class="prj-header-wrap">
         <div class="prj-nav-bar">
-            <div class="prj-logo" onclick="window.location.href='index.html'" style="cursor:pointer">Daniel Wambua</div>
+            <a href="index.html" style="text-decoration: none; color: #ffff; margin-left: -60px;">
+                <div class="idx-logo">
+                    <i class="fa-solid fa-code idx-logo-icon"></i> Daniel Wambua
+                </div>
+            </a>
+           
             <div class="prj-search-box">
                 <i class="fa-solid fa-magnifying-glass"></i>
                 <input type="text" id="prj-search-input" placeholder="Search projects..." oninput="handleSearch()">
@@ -32,6 +37,10 @@
                 <p style="margin-top: 20px; font-size: 1.1rem;">Fetching your amazing work...</p>
             </div>
         </div>
+    </div>
+    <div class="idx-floating-chat" onclick="location.href='chatbot.html'">
+        <i class="fa-solid fa-bolt"></i>
+        <span>AI Assitant</span>
     </div>
 
     <script src="../public/js/api.js"></script>

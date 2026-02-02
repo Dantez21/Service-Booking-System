@@ -209,6 +209,29 @@ async function initProjectPage() {
     }
 }
 
+function showCVMessage() {
+    const toast = document.getElementById('cv-toast');
+    
+    // Reset display and opacity for animation
+    toast.style.display = 'block';
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateX(-50%) translateY(20px)';
+    
+    // Simple fade and lift animation
+    setTimeout(() => {
+        toast.style.transition = 'all 0.5s ease';
+        toast.style.opacity = '1';
+        toast.style.transform = 'translateX(-50%) translateY(0)';
+    }, 10);
+
+    // Auto-hide after 5 seconds to give them time to click
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(-50%) translateY(20px)';
+        setTimeout(() => { toast.style.display = 'none'; }, 500);
+    }, 5000);
+}
+
 function renderProjects(projectsList) {
     const grid = document.getElementById('projects-grid');
     if (!grid) return;

@@ -7,176 +7,196 @@
     <link rel="stylesheet" href="../public/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* Premium Polish Styles */
         :root {
             --brand-dark: #0f172a;
             --brand-accent: #2563eb;
             --brand-success: #10b981;
             --text-main: #1e293b;
+            --glass-bg: rgba(255, 255, 255, 0.7);
         }
 
-        .idx-hero-wrap {
-            background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
-            padding-bottom: 80px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Sophisticated Navigation */
-        .idx-nav {
-            background: linear-gradient(to bottom, #0b1d36, #162e4d);
-            /* max-width: 1200px; */
-            margin: 0 auto;
-            padding: 25px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .idx-logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            letter-spacing: -1px;
-            color: white;
-            /* color: var(--brand-dark); */
-        }
-
-        .idx-nav-links {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-            list-style: none;
-        }
-
-        .idx-nav-links a {
-            text-decoration: none;
-            color: var(--text-main);
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: 0.3s;
-        }
-
-        .idx-nav-links a:hover { color: var(--brand-accent); }
-
-        /* High-Tier Hero Section */
-        .idx-hero-container {
-            max-width: 1200px;
-            margin: 60px auto 0;
-            padding: 0 20px;
-            display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
-            align-items: center;
-            gap: 40px;
-        }
-
-        .idx-hero-text h1 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            line-height: 1.1;
-            color: var(--brand-dark);
-            margin-bottom: 20px;
-            font-weight: 900;
-        }
-
-        .idx-hero-text p {
-            font-size: 1.25rem;
-            color: #64748b;
-            margin-bottom: 35px;
-            max-width: 500px;
-            line-height: 1.6;
-        }
-
-        .idx-hero-btns { display: flex; gap: 15px; }
-
+        /* --- Updated Premium Button Styles --- */
         .idx-btn-premium {
-            padding: 16px 32px;
-            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 30px;
+            border-radius: 8px;
+            font-size: 1rem;
             font-weight: 700;
             cursor: pointer;
-            transition: 0.3s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             border: none;
-            font-size: 1rem;
+            text-decoration: none;
         }
 
-        .btn-filled { background: var(--brand-dark); color: white; }
-        .btn-filled:hover { background: #000; transform: translateY(-3px); }
+        /* Explore Portfolio (Main Action) */
+        .btn-explore {
+            background: var(--brand-dark);
+            color: #ffffff;
+            box-shadow: 0 4px 14px rgba(15, 23, 42, 0.3);
+        }
 
-        .btn-outline { background: transparent; border: 2px solid #e2e8f0; color: var(--brand-dark); }
-        .btn-outline:hover { border-color: var(--brand-dark); }
+        .btn-explore:hover {
+            background: #000000;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(15, 23, 42, 0.4);
+        }
 
-        /* Stats Section */
-        .idx-about-stats {
+        /* Consultation (Secondary Action) */
+        .btn-consultation {
+            background: transparent;
+            color: var(--brand-dark);
+            border: 2px solid #e2e8f0;
+        }
+
+        .btn-consultation:hover {
+            border-color: var(--brand-dark);
+            background: rgba(15, 23, 42, 0.02);
+            transform: translateY(-2px);
+        }
+
+        /* Hire Me (Nav Highlight) */
+        .btn-hire-nav {
+            background: var(--brand-accent);
+            color: #ffffff;
+            padding: 10px 24px;
+            font-size: 0.9rem;
+        }
+
+        .btn-hire-nav:hover {
+            background: #1d4ed8;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        /* Start Your Journey Today (CTA Button) */
+        .btn-journey {
+            background: #ffffff;
+            color: var(--brand-dark);
+            font-size: 1.1rem;
+            padding: 18px 40px;
+        }
+
+        .btn-journey:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Icon Animation */
+        .idx-btn-premium i {
+            margin-left: 10px;
+            transition: transform 0.3s;
+        }
+
+        .idx-btn-premium:hover i {
+            transform: translateX(5px);
+        }
+
+        /* --- Layout Sections --- */
+        .idx-experience-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            margin-top: 40px;
-        }
-
-        .stat-box {
-            background: white;
-            padding: 25px;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            text-align: center;
-            border: 1px solid #f1f5f9;
-        }
-
-        .stat-number { font-size: 2.5rem; font-weight: 800; color: var(--brand-accent); display: block; }
-        .stat-label { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; font-weight: 700; }
-
-        /* Modern Skills Grid */
-        .idx-skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 25px;
             max-width: 1200px;
             margin: 0 auto;
         }
 
-        .idx-skill-card {
+        .exp-card {
             background: white;
-            padding: 40px 30px;
+            padding: 30px;
             border-radius: 20px;
-            transition: 0.4s;
             border: 1px solid #f1f5f9;
+            transition: 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
-        .idx-skill-card:hover { 
-            transform: translateY(-10px);
-            box-shadow: 0 30px 60px -12px rgba(0,0,0,0.1);
+        .exp-card:hover {
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            border-color: var(--brand-accent);
         }
 
-        .idx-skill-icon {
-            font-size: 2rem;
-            color: var(--brand-accent);
-            margin-bottom: 20px;
+        .exp-role { color: var(--brand-accent); font-weight: 800; font-size: 1.1rem; margin-bottom: 5px; }
+        .exp-company { font-weight: 600; color: var(--brand-dark); margin-bottom: 15px; font-style: italic; }
+        .exp-date { font-size: 0.85rem; color: #94a3b8; margin-bottom: 15px; display: block; }
+        .exp-desc { font-size: 0.95rem; color: #64748b; line-height: 1.6; margin-bottom: 20px; }
+
+        .tech-stack-container {
+            text-align: center;
+            padding: 60px 20px;
+            background: #f8fafc;
         }
 
-        /* Floating AI Chat - Polished */
-        .idx-floating-chat {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: var(--brand-dark);
-            color: white;
-            padding: 12px 24px;
+        .tech-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            max-width: 1000px;
+            margin: 30px auto 0;
+        }
+
+        .tech-pill {
+            background: white;
+            padding: 10px 20px;
             border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-main);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            border: 1px solid #e2e8f0;
             display: flex;
             align-items: center;
-            gap: 12px;
-            cursor: pointer;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            gap: 8px;
+        }
+
+        .cta-banner {
+            background: var(--brand-dark);
+            border-radius: 24px;
+            padding: 60px 40px;
+            text-align: center;
+            color: white;
+            max-width: 1100px;
+            margin: 80px auto;
+        }
+
+        .cta-banner h2 { font-size: 2.5rem; margin-bottom: 15px; }
+        .cta-banner p { color: #94a3b8; margin-bottom: 30px; font-size: 1.1rem; }
+
+        .idx-footer {
+            padding: 60px 20px;
+            border-top: 1px solid #e2e8f0;
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .social-btn {
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
             transition: 0.3s;
-            z-index: 999;
         }
 
-        .idx-floating-chat:hover { transform: scale(1.05); background: var(--brand-accent); }
+        .social-btn:hover { background: #f8fafc; border-color: var(--brand-accent); }
 
-        @media (max-width: 968px) {
-            .idx-hero-container { grid-template-columns: 1fr; text-align: center; }
-            .idx-hero-text p { margin: 0 auto 30px; }
-            .idx-hero-btns { justify-content: center; }
-            .idx-nav-links { display: none; } /* Add a mobile burger menu logic later */
-        }
+        .idx-hero-wrap { background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%); padding-bottom: 80px; }
+        .idx-nav { background: #0b1d36; padding: 20px; }
+        .idx-section { padding: 80px 20px; }
+
     </style>
 </head>
 <body class="idx-body">
@@ -184,79 +204,185 @@
     <header class="idx-hero-wrap">
         <nav class="idx-nav">
             <div class="idx-logo">
-                <i class="fa-solid fa-terminal"></i> Daniel Wambua
+                <i class="fa-solid fa-code" style="color: var(--brand-accent); margin-right: 8px;"></i> 
+                Daniel Wambua
             </div>
-
             <ul class="idx-nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="#about">Philosophy</a></li>
-                <li><a href="projects.html">Portfolio</a></li>
-                <li><a href="services.html">Expertise</a></li>
-                <li><button onclick="location.href='hire.html'" class="idx-btn-premium btn-filled" style="padding: 10px 24px;">Hire Me</button></li>
+                <li><a href="index.html" style="color:white">Home</a></li>
+                <li><a href="#about" style="color:white">About Me</a></li>
+                <li><a href="projects.html" style="color:white">Projects</a></li>
+                <li><a href="services.html" style="color:white">Services</a></li>
+                <li><a href="contact.html" style="color:white">Contact Me</a></li>
+                <li><button onclick="location.href='hire.html'" class="idx-btn-premium btn-hire-nav">Hire Me</button></li>
             </ul>
         </nav>
 
         <div class="idx-hero-container">
             <div class="idx-hero-text">
-                <h1>Turning Complex Data into <span style="color: var(--brand-accent);">Intelligent Reality.</span></h1>
-                <p>Specializing in high-performance AI models, scalable data architectures, and immersive XR experiences for forward-thinking enterprises.</p>
+                <h1 style="color: var(--brand-accent);">Architecting <span style="color: var(--brand-accent);">Intelligence.</span></h1>
+                <p style="color: var(--brand-accent);">Strategic developer delivering high-performance AI models, scalable architectures, and immersive spatial solutions.</p>
                 <div class="idx-hero-btns">
-                    <button onclick="location.href='projects.html'" class="idx-btn-premium btn-filled">Explore Portfolio</button>
-                    <button onclick="location.href='contact.html'" class="idx-btn-premium btn-outline">Consultation</button>
+                    <button onclick="location.href='projects.html'" class="idx-btn-premium btn-explore">
+                        Explore Portfolio <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                    <button onclick="location.href='contact.html'" class="idx-btn-premium btn-consultation">
+                        Consultation
+                    </button>
                 </div>
             </div>
             <div class="idx-hero-img">
                 <div style="background: var(--brand-dark); border-radius: 30px; padding: 10px; box-shadow: 0 50px 100px -20px rgba(0,0,0,0.25);">
-                    <img src="../public/images/laptop.jpg" alt="Developer Workspace" style="width: 100%; border-radius: 20px; filter: grayscale(20%);">
+                    <img src="../public/images/laptop.jpg" alt="Work" style="width: 100%; border-radius: 20px; filter: grayscale(20%);">
                 </div>
             </div>
         </div>
     </header>
 
-    <section id="about" class="idx-section">
-        <div style="max-width: 800px; margin: 0 auto; text-align: center; padding: 100px 20px;">
-            <h2 class="idx-section-title" style="font-size: 2.5rem; margin-bottom: 30px;">Strategic Engineering</h2>
-            <p style="font-size: 1.2rem; color: #64748b; line-height: 1.8;">
-                I bridge the gap between heavy technical complexity and business growth. Whether training <strong>LLMs</strong> for enterprise automation or developing <strong>XR interfaces</strong>, my focus is on precision, speed, and ROI.
-            </p>
+    <section id="about" class="idx-about-wrap">
+     <div class="idx-about-grid">
+        <div class="about-image-container">
+            <img src="../public/images/me.jpg" alt="Daniel Wambua" class="about-main-img">
+        </div>
+
+        <div class="about-content-col">
+            <h2 class="about-title-styled">About Me</h2>
             
-            <div class="idx-about-stats">
-                <div class="stat-box">
-                    <span class="stat-number">12+</span>
-                    <span class="stat-label">Deployments</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-number">99%</span>
-                    <span class="stat-label">Model Accuracy</span>
-                </div>
+            <div class="about-description-styled">
+                <p>
+                    I am a Solutions Architect based in Kenya, focused on the intersection of <strong>Artificial Intelligence</strong> and <strong>Spatial Computing</strong>. My work revolves around one core mission: making complex data accessible and actionable through high-performance engineering.
+                </p>
+                <p>
+                    With a background spanning from enterprise software development at Artemis Systems to technical consulting for international NGOs, I bring a unique perspective that balances <strong>technical rigor</strong> with <strong>human-centric design</strong>.
+                </p>
+            </div>
+
+            <div class="about-actions">
+                <button onclick="location.href='services.html'" class="btn-yellow">Learn More</button>
+                
+                <button class="btn-yellow" onclick="showCVMessage()">My CV</button>
+                <a href="contact.html" id="cv-toast-link" style="text-decoration: none;">
+                    <div id="cv-toast" style="display:none; position:fixed; bottom:100px; left:50%; transform:translateX(-50%); background:#1e56a0; color:white; padding:15px 30px; border-radius:50px; z-index:1001; box-shadow: 0 10px 30px rgba(0,0,0,0.3); white-space: nowrap; border: 1px solid rgba(255,255,255,0.2); transition: all 0.3s ease;">
+                        <i class="fa-solid fa-paper-plane" style="margin-right: 10px;"></i>
+                        CV unavailable, Click to contact Daniel
+                    </div>
+                </a>
             </div>
         </div>
+     </div>
     </section>
-
-    <section class="idx-section" style="background: #fff; padding: 100px 20px;">
-        <h2 class="idx-section-title" style="text-align: center; margin-bottom: 60px;">Core Specializations</h2>
+    <section class="idx-section">
+        <h2 class="idx-section-title" style="text-align: center; margin-bottom: 60px; margin-top: -20px;">Core Specializations</h2>
         <div class="idx-skills-grid">
             <div class="idx-skill-card">
                 <div class="idx-skill-icon"><i class="fa-solid fa-microchip"></i></div>
-                <h3 style="margin-bottom: 15px;">AI & Intelligence</h3>
-                <p style="color: #64748b; font-size: 0.95rem;">Building predictive models and neural networks that automate high-stakes decision making.</p>
+                <h3>AI & Neural Nets</h3>
+                <p>Building predictive systems and autonomous agents for data-driven decisions.</p>
             </div>
             <div class="idx-skill-card">
                 <div class="idx-skill-icon"><i class="fa-solid fa-database"></i></div>
-                <h3 style="margin-bottom: 15px;">Data Architecture</h3>
-                <p style="color: #64748b; font-size: 0.95rem;">Engineering robust pipelines that turn raw data into actionable executive insights.</p>
+                <h3>Data Architecture</h3>
+                <p>Engineering robust pipelines for high-velocity enterprise data.</p>
             </div>
             <div class="idx-skill-card">
                 <div class="idx-skill-icon"><i class="fa-solid fa-layer-group"></i></div>
-                <h3 style="margin-bottom: 15px;">Spatial Computing</h3>
-                <p style="color: #64748b; font-size: 0.95rem;">Developing next-gen XR environments for training, simulation, and industrial visualization.</p>
+                <h3>Spatial Computing</h3>
+                <p>Developing XR simulations and industrial visualizations.</p>
             </div>
         </div>
     </section>
 
+    <section class="idx-section" style="background: white;">
+        <h2 style="text-align:center; font-size:2.5rem; margin-bottom:50px; margin-top: -100px;">Work Experience</h2>
+        <div class="idx-experience-grid">
+            <div class="exp-card">
+                <div>
+                    <span class="exp-role">Solutions Architect & Freelancer</span>
+                    <p class="exp-company">Independent</p>
+                    <span class="exp-date">June 2024 — Present</span>
+                    <p class="exp-desc">Engineering bespoke AI models and enterprise web applications for global clients with a focus on ROI.</p>
+                </div>
+                <a href="projects.html" style="color:var(--brand-accent); font-weight:700; text-decoration:none">View Projects →</a>
+            </div>
+            <div class="exp-card">
+                <div>
+                    <span class="exp-role">Lead Admin/Technical Lead</span>
+                    <p class="exp-company">EON Reality Kenya</p>
+                    <span class="exp-date">May 2025 — To Date</span>
+                    <p class="exp-desc">Oversaw administrative operations, partner coordination, and project support for XR- and AI-driven learning solutions. Streamlined workflows, supported cross-functional teams, and ensured smooth delivery of enterprise and academic programs.</p>
+                </div>
+                <a href="#" style="color:var(--brand-accent); font-weight:700; text-decoration:none">Details</a>
+            </div>
+            <div class="exp-card">
+                <div>
+                    <span class="exp-role">Lead Admin/Technical Lead</span>
+                    <p class="exp-company">Skywave Management Services Ltd</p>
+                    <span class="exp-date">April 2022 — May 2025</span>
+                    <p class="exp-desc">Operational and training lead ensuring high-performance service delivery in fast-paced call center environments. Specialized in onboarding and training teams, optimizing workflows, and supporting client-focused operations that drive efficiency, quality, and customer satisfaction.</p>
+                </div>
+                <a href="#" style="color:var(--brand-accent); font-weight:700; text-decoration:none">Details</a>
+            </div>
+            <div class="exp-card">
+                <div>
+                    <span class="exp-role">Website Designer & Developer</span>
+                    <p class="exp-company">Beansoft Technoligies Ltd</p>
+                    <span class="exp-date">Jan 2021 — April 2021</span>
+                    <p class="exp-desc">Creative and detail-driven web designer and developer focused on building responsive, user-friendly websites that communicate clearly and convert visitors into clients. Skilled in turning ideas into functional digital experiences through clean design, modern technologies, and continuous learning in real-world projects.</p>
+                </div>
+                <a href="#" style="color:var(--brand-accent); font-weight:700; text-decoration:none">Details</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="tech-stack-container">
+        <h2 style="font-size:1.8rem; margin-bottom:10px; margin-top: -20px;">Tech Stack</h2>
+        <p style="color:#64748b">The tools I use to build the future.</p>
+        <div class="tech-grid">
+            <span class="tech-pill"><i class="fa-brands fa-python"></i> Python</span>
+            <span class="tech-pill"><i class="fa-brands fa-js"></i> JavaScript</span>
+            <span class="tech-pill"><i class="fa-solid fa-bolt"></i> Fast API</span>
+            <span class="tech-pill"><i class="fa-brands fa-node-js"></i> Node.js</span>
+            <span class="tech-pill"><i class="fa-brands fa-react"></i> React.js</span>
+            <span class="tech-pill"><i class="fa-solid fa-database"></i> PostgreSQL</span>
+            <span class="tech-pill"><i class="fa-brands fa-git-alt"></i> Git</span>
+        </div>
+    </section>
+
+    <section class="idx-section">
+        <h2 style="text-align:center; margin-bottom:40px; margin-top: -60px;">Featured Engineering</h2>
+        <div id="featured-projects-container" class="idx-skills-grid">
+            </div>
+    </section>
+
+    <section style="padding: 20px;">
+        <div class="cta-banner">
+            <h2>Ready to Build Something Extraordinary?</h2>
+            <p>I am currently accepting new projects. Let’s collaborate to turn your technical vision into a market-ready reality.</p>
+            <button onclick="location.href='hire.html'" class="idx-btn-premium btn-journey">
+                Start Your Journey Today <i class="fa-solid fa-rocket"></i>
+            </button>
+        </div>
+    </section>
+
+    <footer class="idx-footer">
+        <h2 style="margin-bottom:10px; margin-top: -20px;">Let’s connect</h2>
+        <p style="color:#64748b; margin-bottom:30px;">Open to freelance & full-time roles. I reply quickly to inquiries.</p>
+        
+        <div class="social-links">
+            <a href="mailto:daniel@example.com" class="social-btn"><i class="fa-solid fa-envelope"></i> Email</a>
+            <a href="https://github.com" class="social-btn"><i class="fa-brands fa-github"></i> GitHub</a>
+            <a href="https://linkedin.com" class="social-btn"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+            <a href="https://wa.me/254..." class="social-btn"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+        </div>
+
+        <p style="font-size:0.85rem; color:#94a3b8">
+            © 2026 Daniel Wambua | Cell: +254 790 682 630<br>
+            Designed & built with care — web & AI technologies
+        </p>
+    </footer>
+
     <div class="idx-floating-chat" onclick="location.href='chatbot.html'">
         <i class="fa-solid fa-bolt"></i>
-        <span>AI Chat</span>
+        <span>AI Assitant</span>
     </div>
 
     <script src="../public/js/api.js"></script>

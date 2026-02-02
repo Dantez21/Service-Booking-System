@@ -6,18 +6,89 @@
     <title>Services - Daniel Wambua</title>
     <link rel="stylesheet" href="../public/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        /* Navigation Container */
+.idx-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 8%;
+    background: #0b1d36; /* The deep blue you requested */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Logo Styling */
+.idx-logo {
+    display: flex;
+    align-items: center;
+    font-weight: 800;
+    font-size: 1.3rem;
+    color: white;
+    cursor: pointer;
+}
+
+.logo-bracket {
+    color: #1e56a0; /* Brand Blue */
+    font-family: monospace;
+    margin-right: 8px;
+}
+
+/* Nav Links Styling */
+.idx-nav-links {
+    display: flex;
+    list-style: none;
+    align-items: center;
+    gap: 30px;
+}
+
+.idx-nav-links a {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 500;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.idx-nav-links a:hover, 
+.idx-nav-links a.active {
+    color: #e6c200; /* Yellow accent for active/hover state */
+}
+
+/* Nav Button (Hire Me) */
+.btn-hire-nav {
+    background: #1e56a0;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-hire-nav:hover {
+    background: #e6c200;
+    color: #0b1d36;
+}
+    </style>
 </head>
 <body class="usrv-body">
 
-    <nav class="idx-nav">
-        <div class="idx-logo">
-            <i class="fa-solid fa-code idx-logo-icon"></i> Daniel Wambua
-        </div>
-        <ul class="idx-nav-links">
+    <nav class="idx-nav" style="background: #0b1d36;">
+        <a href="index.html" style="text-decoration: none;">
+            <div class="idx-logo" style="margin-left: -80px;">
+                <i class="fa-solid fa-code idx-logo-icon" style="color: var(--brand-accent);"></i> Daniel Wambua
+            </div>
+        </a>
+        <ul class="idx-nav-links" style=" margin-right: 80px;">
             <li><a href="index.html">Home</a></li>
             <li><a href="projects.html">Projects</a></li>
             <li><a href="services.html" class="active">Services</a></li>
-            <li><a href="contact.html">Contacts</a></li>
+            <li><a href="contact.html">Contact Me</a></li>
         </ul>
     </nav>
 
@@ -58,6 +129,10 @@
     <footer class="usrv-footer">
         <p>&copy; 2026 Daniel Wambua. Architecting the future.</p>
     </footer>
+    <div class="idx-floating-chat" onclick="location.href='chatbot.html'">
+        <i class="fa-solid fa-bolt"></i>
+        <span>AI Assitant</span>
+    </div>
 
 </body>
 </html>
