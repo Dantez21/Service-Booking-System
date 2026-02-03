@@ -31,47 +31,55 @@
     top: 0;
     left: 0;
     width: 100%;
+    background: #0b1d36;
+    padding: 20px;
     z-index: 1000;      /* Ensures it stays above all other content */
-    /* background: white;   Prevents content from overlapping behind text */
     box-shadow: 0 2px 10px rgba(0,0,0,0.1); /* Adds depth when scrolling */
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 50px; /* Adjust padding as needed */
     box-sizing: border-box;
+    backdrop-filter: blur(10px);
 }
 
 .idx-logo {
+    display: flex;
+    align-items: center;
+    font-weight: 800;
+    font-size: 1.3rem;
+    color: white;
+    margin: 0; 
+}
+.idx-logo-icon {
+    color: #2563eb;
+    margin-right: 10px;
+}
+/* .idx-logo {
     font-size: 1.4rem;
     font-weight: bold;
     display: flex;
     align-items: center;
     gap: 10px;
-}
+} */
 
 .idx-nav-links {
     list-style: none;
     display: flex;
     align-items: center;
-    gap: 25px;
+    gap: 30px;
     margin: 0;
+    padding: 0;
 }
-
+.idx-nav-links a {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 500;
+    transition: 0.3s;
+}
 .idx-nav-links li a {
     color: rgba(255,255,255,0.8);
     text-decoration: none;
     font-size: 0.95rem;
-}
-/* --- Base Mobile Navigation Styles --- */
-.nav-toggle {
-    display: none; /* Hidden on desktop */
-    background: none;
-    border: none;
-    font-size: 1.8rem;
-    color: #1e56a0;
-    /* color: #333; */
-    cursor: pointer;
-    padding: 5px;
 }
 
 /* --- Scroll to Top Button --- */
@@ -290,44 +298,73 @@
     }
 }
 
-
+    /* --- Desktop SERVICES Nav Fixes --- */
+    .nav-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+/* Base Toggle Style (Hidden on Desktop) */
+    .nav-toggle {
+        display: none;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+        z-index: 2001;
+    }
+    .mobile-only { display: none; }
 @media (max-width: 768px) {
     .nav-toggle {
         display: block; /* Show hamburger icon on mobile */
     }
-
     .idx-nav {
-        flex-direction: column;
-        padding: 15px 20px;
-        height: auto; /* Allow nav to grow with content */
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 25px;
+        position: sticky;
+        position: fixed;
     }
    
     .idx-nav-links {
-        display: flex !important; /* Forces visibility */
-        flex-direction: column;   /* Stacks Home, About, etc. */
+        display: flex !important;
+        position: fixed;
+        top: 0;
+        right: -100%; /* Start off-screen */
+        width: 75%; /* Slide out from right */
+        height: 80vh;
+        background: #0b1d36; /* Your deep blue */
+        flex-direction: column;
+        justify-content: center;
         align-items: center;
-        width: 100%;
+        gap: 30px;
+        transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+        z-index: 2000;
+        margin: 0;
         padding: 0;
-        margin-top: 15px;
-        gap: 15px;               /* Space between links */
     }
    
     .idx-nav-links.active {
-        display: flex; /* Force show */
+        right: 0;
+        /* display: flex;  */
     }
 
     .idx-nav-links li {
         list-style: none;
     }
 
-   .idx-nav-links li a {
-        display: block;
-        padding: 15px;
-        color: #333 !important; /* Force dark text */
-        font-size: 1.1rem;
+    .idx-nav-links li a {
+        font-size: 1.3rem;
         font-weight: 600;
-        text-decoration: none;
-        border-bottom: 1px solid #f5f5f5;
+        opacity: 0.9;
+    }
+    /* Ensure Hire Me button is centered in the list */
+    .btn-hire-nav {
+        width: auto !important;
+        margin-top: 10px;
     }
 }
 
@@ -1316,6 +1353,7 @@ button {
     background: linear-gradient(to bottom, #0b1d36, #162e4d);
     padding: 20px 8%;
     border-radius: 0 0 20px 20px;
+    /* margin-top: 50px; */
 }
 
 .prj-nav-bar {

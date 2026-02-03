@@ -194,7 +194,6 @@
         .social-btn:hover { background: #f8fafc; border-color: var(--brand-accent); }
 
         .idx-hero-wrap { background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%); padding-bottom: 80px; }
-        .idx-nav { background: #0b1d36; padding: 20px; }
         .idx-section { padding: 80px 20px; }
 
     </style>
@@ -203,16 +202,23 @@
 
     <header class="idx-hero-wrap">
         <nav class="idx-nav">
-            <div class="idx-logo">
-                <i class="fa-solid fa-code" style="color: var(--brand-accent); margin-right: 8px;"></i> 
-                Daniel Wambua
+            <a href="index.html" style="text-decoration: none;">
+                <div class="idx-logo" style="color: white; display: flex; align-items: center; font-weight: 800;">
+                    <span style="color: var(--brand-accent); font-family: monospace; margin-right: 8px;">&lt;&#47;&gt;</span> 
+                    Daniel Wambua
+                </div>
+            </a>
+
+            <div class="nav-toggle" id="mobile-menu">
+                <i class="fa-solid fa-bars"></i>
             </div>
+
             <ul class="idx-nav-links">
-                <li><a href="index.html" style="color:white">Home</a></li>
-                <li><a href="#about" style="color:white">About Me</a></li>
-                <li><a href="projects.html" style="color:white">Projects</a></li>
-                <li><a href="services.html" style="color:white">Services</a></li>
-                <li><a href="contact.html" style="color:white">Contact Me</a></li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#about">About Me</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="contact.html">Contact Me</a></li>
                 <li><button onclick="location.href='hire.html'" class="idx-btn-premium btn-hire-nav">Hire Me</button></li>
             </ul>
         </nav>
@@ -386,5 +392,29 @@
     </div>
 
     <script src="../public/js/api.js"></script>
+    <script>
+    const menuBtn = document.getElementById('mobile-menu');
+    const navItems = document.querySelector('.idx-nav-links');
+
+    menuBtn.addEventListener('click', () => {
+        navItems.classList.toggle('active');
+        
+        // Change icon to 'X' when open
+        const icon = menuBtn.querySelector('i');
+        if (navItems.classList.contains('active')) {
+            icon.classList.replace('fa-bars', 'fa-xmark');
+        } else {
+            icon.classList.replace('fa-xmark', 'fa-bars');
+        }
+    });
+
+    // Close menu when a link is clicked
+    document.querySelectorAll('.idx-nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+            navItems.classList.remove('active');
+            menuBtn.querySelector('i').classList.replace('fa-xmark', 'fa-bars');
+        });
+    });
+</script>
 </body>
 </html>

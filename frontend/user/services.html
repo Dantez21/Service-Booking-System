@@ -6,90 +6,135 @@
     <title>Services - Daniel Wambua</title>
     <link rel="stylesheet" href="../public/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
+    
     <style>
-        /* Navigation Container */
-.idx-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 8%;
-    background: #0b1d36; /* The deep blue you requested */
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-}
+        /* --- Reset & Base --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
 
-/* Logo Styling */
-.idx-logo {
-    display: flex;
-    align-items: center;
-    font-weight: 800;
-    font-size: 1.3rem;
-    color: white;
-    cursor: pointer;
-}
+        /* --- NAVIGATION: Full Width Laptop Fix --- */
+        .srv-page-nav {
+            background: #0b1d36;
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 9999;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
 
-.logo-bracket {
-    color: #1e56a0; /* Brand Blue */
-    font-family: monospace;
-    margin-right: 8px;
-}
+        .srv-page-nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%; /* Fills laptop width */
+            max-width: 100%; /* Removed the 1200px limit */
+            padding: 0 4%; /* Professional edge spacing */
+        }
 
-/* Nav Links Styling */
-.idx-nav-links {
-    display: flex;
-    list-style: none;
-    align-items: center;
-    gap: 30px;
-}
+        /* Logo Area */
+        .srv-page-logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: white;
+            font-weight: 800;
+            font-size: 1.4rem;
+        }
 
-.idx-nav-links a {
-    text-decoration: none;
-    color: rgba(255, 255, 255, 0.8);
-    font-weight: 500;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-}
+        .srv-page-logo i {
+            color: #2563eb;
+            margin-right: 10px;
+        }
 
-.idx-nav-links a:hover, 
-.idx-nav-links a.active {
-    color: #e6c200; /* Yellow accent for active/hover state */
-}
+        /* Desktop Menu Alignment */
+        .srv-page-menu {
+            display: flex;
+            align-items: center;
+            list-style: none;
+            gap: 30px;
+        }
 
-/* Nav Button (Hire Me) */
-.btn-hire-nav {
-    background: #1e56a0;
-    color: white;
-    border: none;
-    padding: 8px 20px;
-    border-radius: 20px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.3s;
-}
+        .srv-page-menu li a {
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+            font-weight: 500;
+            transition: 0.3s;
+        }
 
-.btn-hire-nav:hover {
-    background: #e6c200;
-    color: #0b1d36;
-}
+        .srv-page-menu li a.active {
+            color: #e6c200;
+        }
+
+        /* Hire Me Button */
+        .srv-page-hire-btn {
+            background: #2563eb;
+            color: white !important;
+            padding: 10px 22px;
+            border-radius: 8px;
+            font-weight: 600 !important;
+        }
+
+        /* Icon Controls */
+        .srv-page-toggle { display: none; color: white; cursor: pointer; font-size: 1.5rem; }
+        .srv-page-close { display: none; } /* Hidden on Laptop */
+
+        /* --- MOBILE DRAWER ADAPTATION --- */
+        @media (max-width: 992px) {
+            .srv-page-toggle { display: block; }
+
+            .srv-page-menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 80vh;
+                width: 75%;
+                background: #0b1d36;
+                flex-direction: column;
+                justify-content: center;
+                transition: 0.4s ease-in-out;
+            }
+
+            .srv-page-menu.active { right: 0; }
+
+            /* Show X-mark only on Mobile */
+            .srv-page-close {
+                display: block;
+                position: absolute;
+                top: 25px;
+                right: 25px;
+                color: white;
+                font-size: 1.8rem;
+                cursor: pointer;
+            }
+        }
     </style>
 </head>
-<body class="usrv-body">
+<body>
 
-    <nav class="idx-nav" style="background: #0b1d36;">
-        <a href="index.html" style="text-decoration: none;">
-            <div class="idx-logo" style="margin-left: -80px;">
-                <i class="fa-solid fa-code idx-logo-icon" style="color: var(--brand-accent);"></i> Daniel Wambua
+    <nav class="srv-page-nav">
+        <div class="srv-page-nav-container">
+            <a href="index.html" class="srv-page-logo">
+                <i class="fa-solid fa-code"></i> Daniel Wambua
+            </a>
+
+            <div class="srv-page-toggle" id="srv-menu-open">
+                <i class="fa-solid fa-bars"></i>
             </div>
-        </a>
-        <ul class="idx-nav-links" style=" margin-right: 80px;">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="projects.html">Projects</a></li>
-            <li><a href="services.html" class="active">Services</a></li>
-            <li><a href="contact.html">Contact Me</a></li>
-        </ul>
+
+            <ul class="srv-page-menu" id="srv-nav-links">
+                <div class="srv-page-close" id="srv-menu-close">
+                    <i class="fa-solid fa-xmark"></i>
+                </div>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="services.html" class="active">Services</a></li>
+                <li><a href="contact.html">Contact Me</a></li>
+                <li><a href="hire.html" class="srv-page-hire-btn">Hire Me</a></li>
+            </ul>
+        </div>
     </nav>
 
     <div class="usrv-container">
@@ -133,6 +178,15 @@
         <i class="fa-solid fa-bolt"></i>
         <span>AI Assitant</span>
     </div>
+
+    <script>
+        const openBtn = document.getElementById('srv-menu-open');
+        const closeBtn = document.getElementById('srv-menu-close');
+        const navLinks = document.getElementById('srv-nav-links');
+
+        openBtn.addEventListener('click', () => navLinks.classList.add('active'));
+        closeBtn.addEventListener('click', () => navLinks.classList.remove('active'));
+    </script>
 
 </body>
 </html>
