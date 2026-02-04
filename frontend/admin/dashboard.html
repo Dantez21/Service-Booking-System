@@ -81,6 +81,32 @@
 
         @media (max-width: 768px) { .menu-toggle { display: flex; } }
     </style>
+
+   <script>
+        // 1. Check if the JWT token exists
+        // We check 'admin_token' which matches what we set in login.html
+        const token = localStorage.getItem('admin_token');
+
+        if (!token) {
+            // No token found? Send them back to login
+            console.warn("Access denied. No token found.");
+            window.location.href = "login.html";
+        }
+
+        // 2. Real Logout Function
+        function logout() {
+            // Clear the token and the old login flag just in case
+            localStorage.removeItem('admin_token');
+            localStorage.removeItem('isAdminLoggedIn'); 
+            
+            // Redirect to login
+            window.location.href = "login.html";
+        }
+
+        // 3. Optional: Token Expiry Check
+        // In a real working app, if the FastAPI token expires, 
+        // any 'fetch' request will return a 401 error, and we should logout.
+    </script>
 </head>
 <body class="adm-body">
 

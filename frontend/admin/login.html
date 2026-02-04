@@ -2,32 +2,258 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Admin Login</title>
-    <link rel="stylesheet" href="../public/css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Daniel Wambua</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --brand-dark: #0b1d36;
+            --brand-blue: #2563eb;
+            --brand-yellow: #e6c200;
+            --text-gray: #64748b;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+        body {
+            background-color: var(--brand-dark);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .login-card {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            width: 100%;
+            max-width: 400px;
+            transition: transform 0.3s ease;
+        }
+
+        .login-header { text-align: center; margin-bottom: 30px; }
+        
+        .login-header i {
+            font-size: 2.5rem;
+            color: var(--brand-blue);
+            margin-bottom: 10px;
+        }
+
+        .login-header h2 { color: var(--brand-dark); font-size: 1.8rem; }
+
+        .form-group { margin-bottom: 20px; position: relative; }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--brand-dark);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 45px 12px 15px; /* Added right padding for icon */
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus { border-color: var(--brand-blue); }
+
+        /* Show/Hide Toggle Styling */
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 38px; /* Aligned with input center */
+            color: var(--text-gray);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .toggle-password:hover { color: var(--brand-blue); }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--brand-blue);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .login-btn:hover { background: #1d4ed8; transform: translateY(-1px); }
+
+        .utils {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            font-size: 0.85rem;
+        }
+
+        .utils a { color: var(--brand-blue); text-decoration: none; font-weight: 500; }
+        .utils a:hover { text-decoration: underline; }
+
+        #error-msg {
+            color: #dc2626;
+            background: #fef2f2;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            text-align: center;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .hidden { display: none; }
+    </style>
 </head>
 <body>
-    <div class="lgn-body-wrap">
-     <div class="lgn-card">
-        <div class="lgn-logo-area">
-            <i class="fa-solid fa-shield-halved"></i>
-            <h2>Admin Login</h2>
+
+    <div class="login-card">
+        <div id="login-section">
+            <div class="login-header">
+                <i class="fa-solid fa-user-shield"></i>
+                <h2>Admin Login</h2>
+            </div>
+
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="email" placeholder="admin@daniel.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="password" placeholder="••••••••" required>
+                    <i class="fa-solid fa-eye toggle-password" id="togglePassword"></i>
+                </div>
+
+                <div class="utils">
+                    <label style="color: var(--text-gray); cursor: pointer;">
+                        <input type="checkbox"> Remember me
+                    </label>
+                    <a href="#" id="forgot-link">Forgot Password?</a>
+                </div>
+
+                <button type="submit" class="login-btn">Sign In</button>
+                <div id="error-msg">Invalid email or password.</div>
+            </form>
         </div>
-        <div class="lgn-form">
-            <input type="text" placeholder="Username" class="lgn-input">
-            <input type="password" placeholder="Password" class="lgn-input">
-            <button class="lgn-btn">Login to Dashboard</button>
+
+        <div id="forgot-section" class="hidden">
+            <div class="login-header">
+                <i class="fa-solid fa-key"></i>
+                <h2>Reset Password</h2>
+                <p style="font-size: 0.85rem; color: var(--text-gray); margin-top: 10px;">
+                    Enter your email to receive a reset link.
+                </p>
+            </div>
+
+            <form id="forgotForm">
+                <div class="form-group">
+                    <label>Recovery Email</label>
+                    <input type="email" id="recovery-email" placeholder="admin@daniel.com" required>
+                </div>
+
+                <button type="submit" class="login-btn">Send Reset Link</button>
+                
+                <div style="text-align: center; margin-top: 20px;">
+                    <a href="#" id="back-to-login" style="color: var(--text-gray); font-size: 0.85rem; text-decoration: none;">
+                        <i class="fa-solid fa-arrow-left"></i> Back to Login
+                    </a>
+                </div>
+            </form>
         </div>
-        <a href="#" class="lgn-forgot">Forgot Password?</a>
-     </div>
     </div>
 
-    <script src="../public/js/auth.js"></script>
     <script>
-        document.getElementById("loginBtn").addEventListener("click", async () => {
-            const username = document.getElementById("username").value;
-            const password = document.getElementById("password").value;
-            const res = await login(username, password);
-            alert(JSON.stringify(res));
+        // UI Elements
+        const loginSection = document.getElementById('login-section');
+        const forgotSection = document.getElementById('forgot-section');
+        const forgotLink = document.getElementById('forgot-link');
+        const backBtn = document.getElementById('back-to-login');
+        const errorMsg = document.getElementById('error-msg');
+        
+        // Password Toggle Elements
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+
+        // 1. TOGGLE PASSWORD VISIBILITY
+        togglePassword.addEventListener('click', function () {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
+
+        // 2. VIEW TRANSITIONS (Login <-> Forgot)
+        forgotLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            errorMsg.style.display = 'none';
+            loginSection.classList.add('hidden');
+            forgotSection.classList.remove('hidden');
+        });
+
+        backBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            forgotSection.classList.add('hidden');
+            loginSection.classList.remove('hidden');
+        });
+
+        // 3. HANDLE LOGIN (FASTAPI CONNECTIVITY)
+        document.getElementById('adminLoginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            errorMsg.style.display = 'none'; // Reset error message state
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                // Updated to use your FastAPI backend URL
+                const response = await fetch('http://127.0.0.1:8000/api/admin/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    // Store JWT token for dashboard authorization
+                    localStorage.setItem('admin_token', result.access_token);
+                    // Redirect to dashboard
+                    window.location.href = "dashboard.html";
+                } else {
+                    // Display specific error from FastAPI (e.g., "Invalid credentials")
+                    errorMsg.innerText = result.detail || "Login Failed";
+                    errorMsg.style.display = "block";
+                }
+            } catch (error) {
+                console.error("Connection Error:", error);
+                errorMsg.innerText = "Backend server is unreachable. Ensure FastAPI is running.";
+                errorMsg.style.display = "block";
+            }
+        });
+
+        // 4. HANDLE FORGOT PASSWORD
+        document.getElementById('forgotForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const email = document.getElementById('recovery-email').value;
+
+            // Future Connectivity: You would fetch to your FastAPI reset endpoint here
+            alert(`If an account exists for ${email}, a reset link will be sent shortly.`);
+            
+            forgotSection.classList.add('hidden');
+            loginSection.classList.remove('hidden');
         });
     </script>
 </body>
