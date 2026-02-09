@@ -5,32 +5,28 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-# 1. SETUP PATH TO .env
-# This looks at this file (database.py), goes up to 'app', 
-# up to 'backend', then up to 'portfolio-system' to find .env
+# 1. SETUP PATH TO .env (Correctly points to portfolio-system/.env)
 base_dir = Path(__file__).resolve().parent.parent.parent
 env_path = base_dir / '.env'
-
-# 2. LOAD .env
 load_dotenv(dotenv_path=env_path)
 
-# 3. GET DATABASE URL FROM ENVIRONMENT
-# The fallback is helpful for local development if the .env isn't found
-SQLALCHEMY_DATABASE_URL = os.getenv(
-    "DATABASE_URL", 
-    "postgresql://postgres:password@localhost:5432/portfolio_db"
-)
+# 2. GET DATABASE URL
+# IMPORTANT: This will prioritize the URL in your .env file.
+SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL")
 
-# 4. SQLALCHEMY SETUP
-# 'check_same_thread' is only needed for SQLite. For PostgreSQL, we just need the URL.
+# Fallback check: If .env is missing or DATABASE_URL is empty, 
+# use a default (but you should replace 'your_password' with your real one here too)
+if not SQLALCHEMY_DATABASE_URL:
+    SQLALCHEMY_DATABASE_URL = "postgresql://postgres:your_actual_password@localhost:5432/portfolio_db"
+
+# 3. SQLALCHEMY SETUP
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
 
-# 5. DATABASE DEPENDENCY
-# This opens a connection for each request and closes it when done
+# 4. DATABASE DEPENDENCY
 def get_db():
     db = SessionLocal()
     try:

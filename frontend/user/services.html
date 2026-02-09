@@ -252,6 +252,22 @@
 
         openBtn.addEventListener('click', () => navLinks.classList.add('active'));
         closeBtn.addEventListener('click', () => navLinks.classList.remove('active'));
+
+        async function loadUserServices() {
+            const response = await fetch("http://127.0.0.1:8000/api/services");
+            const services = await response.json();
+            const grid = document.querySelector('.usrv-grid');
+            
+            grid.innerHTML = services.map(s => `
+                <div class="usrv-card">
+                    <div class="usrv-icon-wrap"><i class="fa-solid ${s.icon_class}"></i></div>
+                    <h3>${s.title}</h3>
+                    <p>${s.description}</p>
+                    <a href="hire.html" class="usrv-link">Get Started <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            `).join('');
+        }
+        loadUserServices();
     </script>
 
 </body>

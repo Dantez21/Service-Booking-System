@@ -150,6 +150,16 @@
             transform: scale(1.1);
             background: #1d4ed8;
         }
+        .typing-dots {
+            font-style: italic;
+            color: #888;
+        }
+
+        /* Ensure lists inside chat bubbles have some padding */
+        .chat-msg.bot ul {
+            padding-left: 20px;
+            margin: 10px 0;
+        }
 
         /* Animations */
         @keyframes pulse {
@@ -197,5 +207,69 @@
         </div>
     </div>
 
+   <script src="https://cdn.jsdelivr.net/npm/marked/lib/marked.umd.js"></script>
+
+    <script>
+        const API_BASE_URL = "http://127.0.0.1:8000/api";
+        const chatBox = document.getElementById('chatBox');
+        const userInput = document.getElementById('userInput');
+        const sendBtn = document.querySelector('.chat-send-btn');
+
+        async function sendMessage() {
+            const text = userInput.value.trim();
+            if (!text) return;
+
+            // 1. Append User Message
+            appendMessage('user', text);
+            userInput.value = '';
+
+            // 2. Add "Thinking" Bubble
+            const botBubble = appendMessage('bot', '<span class="typing-dots">Daniel\'s AI is thinking...</span>');
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/chatbot/chat`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: text })
+                });
+                
+                if (!response.ok) throw new Error("Backend error");
+                
+                const data = await response.json();
+                
+                // 3. Render AI Response using Markdown
+                // .parse() turns Gemini's **text** into <strong>text</strong>
+                botBubble.innerHTML = marked.parse(data.response);
+                
+            } catch (err) {
+                botBubble.innerText = "Connection error. Is the server running?";
+                console.error(err);
+            }
+            
+            // Scroll to bottom after response
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function appendMessage(role, text) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `chat-msg ${role}`;
+            
+            // Use innerHTML for bot so it can render the Markdown/HTML
+            if (role === 'bot') {
+                msgDiv.innerHTML = text;
+            } else {
+                msgDiv.innerText = text;
+            }
+            
+            chatBox.appendChild(msgDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+            return msgDiv;
+        }
+
+        sendBtn.addEventListener('click', sendMessage);
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+    </script>
 </body>
 </html>

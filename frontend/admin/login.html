@@ -57,7 +57,7 @@
 
         .form-group input {
             width: 100%;
-            padding: 12px 45px 12px 15px; /* Added right padding for icon */
+            padding: 12px 45px 12px 15px; 
             border: 1px solid #e2e8f0;
             border-radius: 8px;
             outline: none;
@@ -66,11 +66,10 @@
 
         .form-group input:focus { border-color: var(--brand-blue); }
 
-        /* Show/Hide Toggle Styling */
         .toggle-password {
             position: absolute;
             right: 15px;
-            top: 38px; /* Aligned with input center */
+            top: 38px; 
             color: var(--text-gray);
             cursor: pointer;
             transition: color 0.3s;
@@ -139,12 +138,12 @@
 
                 <div class="utils">
                     <label style="color: var(--text-gray); cursor: pointer;">
-                        <input type="checkbox"> Remember me
+                        <input type="checkbox" id="rememberMe"> Remember me
                     </label>
                     <a href="#" id="forgot-link">Forgot Password?</a>
                 </div>
 
-                <button type="submit" class="login-btn">Sign In</button>
+                <button type="submit" class="login-btn" id="submitBtn">Sign In</button>
                 <div id="error-msg">Invalid email or password.</div>
             </form>
         </div>
@@ -182,6 +181,7 @@
         const forgotLink = document.getElementById('forgot-link');
         const backBtn = document.getElementById('back-to-login');
         const errorMsg = document.getElementById('error-msg');
+        const submitBtn = document.getElementById('submitBtn');
         
         // Password Toggle Elements
         const togglePassword = document.getElementById('togglePassword');
@@ -195,7 +195,7 @@
             this.classList.toggle('fa-eye-slash');
         });
 
-        // 2. VIEW TRANSITIONS (Login <-> Forgot)
+        // 2. VIEW TRANSITIONS
         forgotLink.addEventListener('click', (e) => {
             e.preventDefault();
             errorMsg.style.display = 'none';
@@ -212,35 +212,48 @@
         // 3. HANDLE LOGIN (FASTAPI CONNECTIVITY)
         document.getElementById('adminLoginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            errorMsg.style.display = 'none'; // Reset error message state
             
+            // Visual feedback
+            errorMsg.style.display = 'none';
+            submitBtn.innerText = "Authenticating...";
+            submitBtn.disabled = true;
+
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
             try {
-                // Updated to use your FastAPI backend URL
+                // IMPORTANT: Path matches app.include_router(auth.router, prefix="/api/admin") in main.py
                 const response = await fetch('http://127.0.0.1:8000/api/admin/login', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 
+                        'Content-Type': 'application/json' 
+                    },
                     body: JSON.stringify({ email, password })
                 });
 
                 const result = await response.json();
 
                 if (response.ok) {
-                    // Store JWT token for dashboard authorization
+                    // Store JWT token safely
                     localStorage.setItem('admin_token', result.access_token);
+                    
+                    // Optional: Store admin email for display on dashboard
+                    localStorage.setItem('admin_email', email);
+
                     // Redirect to dashboard
                     window.location.href = "dashboard.html";
                 } else {
-                    // Display specific error from FastAPI (e.g., "Invalid credentials")
-                    errorMsg.innerText = result.detail || "Login Failed";
+                    // Handle 401 Unauthorized or 404
+                    errorMsg.innerText = result.detail || "Invalid login credentials.";
                     errorMsg.style.display = "block";
                 }
             } catch (error) {
                 console.error("Connection Error:", error);
-                errorMsg.innerText = "Backend server is unreachable. Ensure FastAPI is running.";
+                errorMsg.innerText = "Connection failed. Please check if the backend is running.";
                 errorMsg.style.display = "block";
+            } finally {
+                submitBtn.innerText = "Sign In";
+                submitBtn.disabled = false;
             }
         });
 
@@ -248,10 +261,8 @@
         document.getElementById('forgotForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const email = document.getElementById('recovery-email').value;
-
-            // Future Connectivity: You would fetch to your FastAPI reset endpoint here
-            alert(`If an account exists for ${email}, a reset link will be sent shortly.`);
             
+            alert(`Instruction sent to ${email} (Demo only).`);
             forgotSection.classList.add('hidden');
             loginSection.classList.remove('hidden');
         });

@@ -1,20 +1,12 @@
-from jose import JWTError, jwt
+# File: backend/app/auth/jwt.py
+from jose import jwt
 from datetime import datetime, timedelta
-from typing import Optional
-from app import config # This assumes you have SECRET_KEY in your config.py
 
-# Fallback values if config.py isn't set up yet
-SECRET_KEY = "SUPER_SECRET_KEY_123" 
+SECRET_KEY = "YOUR_SUPER_SECRET_KEY" # Ideally move this to your .env
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
-def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
+def create_access_token(data: dict):
     to_encode = data.copy()
-    if expires_delta:
-        expire = datetime.utcnow() + expires_delta
-    else:
-        expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    
+    expire = datetime.utcnow() + timedelta(minutes=60)
     to_encode.update({"exp": expire})
-    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
-    return encoded_jwt
+    return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)

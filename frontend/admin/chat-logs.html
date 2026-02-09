@@ -7,92 +7,67 @@
     <link rel="stylesheet" href="../public/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* Chat Log Specific Styling */
-        .clog-feed {
+        /* --- KEEPING YOUR EXISTING CSS UNCHANGED --- */
+        .clog-feed { display: flex; flex-direction: column; gap: 15px; max-width: 900px; }
+        .clog-item { background: #fff; border-radius: 12px; padding: 18px; border-left: 5px solid #3182ce; box-shadow: 0 4px 6px rgba(0,0,0,0.02); transition: transform 0.2s ease; }
+        .clog-item:hover { transform: scale(1.01); box-shadow: 0 6px 12px rgba(0,0,0,0.05); }
+        .clog-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1px dashed #edf2f7; padding-bottom: 8px; }
+        .clog-user-id { font-family: 'Courier New', Courier, monospace; background: #f7fafc; padding: 2px 8px; border-radius: 4px; color: #4a5568; font-size: 0.85rem; }
+        .clog-timestamp { font-size: 0.75rem; color: #a0aec0; font-weight: 600; }
+        .clog-bubble-container { display: flex; flex-direction: column; gap: 10px; }
+        .clog-msg { font-size: 0.95rem; padding: 8px 12px; border-radius: 8px; max-width: 90%; }
+        .clog-msg.user { background: #ebf8ff; color: #2b6cb0; align-self: flex-start; }
+        .clog-msg.ai { background: #f0fff4; color: #2f855a; align-self: flex-start; border: 1px solid #c6f6d5; font-style: italic; }
+
+        /* --- NEW CSS FOR ADDED BUTTONS & CHECKBOXES --- */
+        .admin-action-bar {
             display: flex;
-            flex-direction: column;
-            gap: 15px;
-            max-width: 900px;
-        }
-
-        .clog-item {
-            background: #fff;
-            border-radius: 12px;
-            padding: 18px;
-            border-left: 5px solid #3182ce; /* Accent for bot interaction */
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-            transition: transform 0.2s ease;
-        }
-
-        .clog-item:hover {
-            transform: scale(1.01);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.05);
-        }
-
-        .clog-meta {
-            display: flex;
-            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
             align-items: center;
-            margin-bottom: 12px;
-            border-bottom: 1px dashed #edf2f7;
-            padding-bottom: 8px;
         }
-
-        .clog-user-id {
-            font-family: 'Courier New', Courier, monospace;
-            background: #f7fafc;
-            padding: 2px 8px;
-            border-radius: 4px;
-            color: #4a5568;
-            font-size: 0.85rem;
-        }
-
-        .clog-timestamp {
-            font-size: 0.75rem;
-            color: #a0aec0;
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            border: none;
+            border-radius: 6px;
             font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            font-size: 0.9rem;
         }
-
-        .clog-bubble-container {
+        .btn-action:hover { opacity: 0.9; }
+        .btn-export { background-color: #28a745; color: white; }
+        .btn-delete-multi { background-color: #718096; color: white; }
+        .btn-danger-all { background-color: #ff4d4d; color: white; }
+        
+        .log-checkbox {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #3182ce;
+        }
+        .select-all-container {
             display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .clog-msg {
-            font-size: 0.95rem;
+            align-items: center;
+            gap: 8px;
+            background: #edf2f7;
             padding: 8px 12px;
-            border-radius: 8px;
-            max-width: 90%;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            color: #4a5568;
         }
 
-        .clog-msg.user {
-            background: #ebf8ff;
-            color: #2b6cb0;
-            align-self: flex-start;
-        }
-
-        .clog-msg.ai {
-            background: #f0fff4;
-            color: #2f855a;
-            align-self: flex-start;
-            border: 1px solid #c6f6d5;
-            font-style: italic;
-        }
-
-        /* Responsive adjustments */
         @media (max-width: 768px) {
-            .clog-meta {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 5px;
-            }
+            .clog-meta { flex-direction: column; align-items: flex-start; gap: 5px; }
             .clog-timestamp { align-self: flex-end; }
         }
     </style>
 </head>
 <body class="adm-body">
-
     <div class="adm-wrapper">
         <aside class="adm-sidebar">
             <div class="adm-logo">
@@ -101,17 +76,14 @@
             <ul class="adm-nav-links">
                 <li class="adm-nav-label">Core</li>
                 <li><a href="dashboard.html"><i class="fa-solid fa-chart-line"></i> <span>Dashboard</span></a></li>
-                
                 <li class="adm-nav-label">Management</li>
                 <li><a href="manage-projects.html"><i class="fa-solid fa-pen-to-square"></i> <span>Projects</span></a></li>
                 <li><a href="manage-services.html"><i class="fa-solid fa-sliders"></i> <span>Services</span></a></li>
                 <li><a href="hire-requests.html"><i class="fa-solid fa-clipboard-list"></i> <span>Requests</span></a></li>
                 <li><a href="payments.html"><i class="fa-solid fa-wallet"></i> <span>Payments</span></a></li>
-                
                 <li class="adm-nav-label">Communication</li>
                 <li><a href="messages.html"><i class="fa-solid fa-comment-dots"></i> <span>Inbox</span></a></li>
                 <li><a href="chat-logs.html" class="active"><i class="fa-solid fa-robot"></i> <span>AI Chat Logs</span></a></li>
-                
                 <li class="adm-nav-sep"></li>
                 <li><a href="#" class="adm-logout" onclick="handleLogout()"><i class="fa-solid fa-power-off"></i> <span>Logout</span></a></li>
             </ul>
@@ -130,36 +102,97 @@
                 </div>
             </header>
 
-            <div class="clog-feed">
-                <div class="clog-item">
-                    <div class="clog-meta">
-                        <span class="clog-user-id"><i class="fa-solid fa-network-wired"></i> IP: 192.168.1.1</span>
-                        <span class="clog-timestamp">Today at 10:45 AM</span>
-                    </div>
-                    <div class="clog-bubble-container">
-                        <div class="clog-msg user">"How much for a VR app?"</div>
-                        <div class="clog-msg ai"><i class="fa-solid fa-robot"></i> "Our VR development starts at KES 50k. Would you like to see a brochure?"</div>
-                    </div>
-                </div>
-
-                <div class="clog-item">
-                    <div class="clog-meta">
-                        <span class="clog-user-id"><i class="fa-solid fa-network-wired"></i> IP: 104.22.4.10</span>
-                        <span class="clog-timestamp">Yesterday at 4:20 PM</span>
-                    </div>
-                    <div class="clog-bubble-container">
-                        <div class="clog-msg user">"Where are you located?"</div>
-                        <div class="clog-msg ai"><i class="fa-solid fa-robot"></i> "I am a digital assistant, but Daniel is based in Nairobi, Kenya."</div>
-                    </div>
+            <div class="admin-action-bar">
+                <button id="clearLogsBtn" class="btn-action btn-danger-all">
+                    <i class="fa-solid fa-trash-can"></i> Clear All Logs
+                </button>
+                <button onclick="exportLogs()" class="btn-action btn-export">
+                    <i class="fa-solid fa-file-export"></i> Export to CSV
+                </button>
+                <button onclick="deleteSelected()" class="btn-action btn-delete-multi">
+                    <i class="fa-solid fa-minus-square"></i> Delete Selected
+                </button>
+                <div class="select-all-container">
+                    <input type="checkbox" id="selectAll" onclick="toggleAll(this)">
+                    <label for="selectAll">Select All</label>
                 </div>
             </div>
+
+            <div class="clog-feed" id="logFeed">
+                </div>
         </main>
     </div>
 
     <script>
+        const API_BASE_URL = "http://127.0.0.1:8000/api";
+
         function handleLogout() {
             if(confirm("Exit the admin session?")) window.location.href = 'login.html';
         }
+
+        async function loadChatLogs() {
+            const feed = document.getElementById('logFeed');
+            try {
+                const response = await fetch(`${API_BASE_URL}/chatbot/logs`);
+                const logs = await response.json();
+
+                if (logs.length === 0) {
+                    feed.innerHTML = "<p>No chat history found.</p>";
+                    return;
+                }
+
+                feed.innerHTML = logs.map(log => `
+                    <div class="clog-item">
+                        <div class="clog-meta">
+                            <div style="display:flex; align-items:center; gap:10px;">
+                                <input type="checkbox" class="log-checkbox" value="${log.id}">
+                                <span class="clog-user-id"><i class="fa-solid fa-network-wired"></i> IP: ${log.user_ip}</span>
+                            </div>
+                            <span class="clog-timestamp">${new Date(log.timestamp).toLocaleString()}</span>
+                        </div>
+                        <div class="clog-bubble-container">
+                            <div class="clog-msg user">"${log.message}"</div>
+                            <div class="clog-msg ai"><i class="fa-solid fa-robot"></i> "${log.response}"</div>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (err) {
+                feed.innerHTML = "<p style='color:red;'>Error connecting to backend.</p>";
+            }
+        }
+
+        function toggleAll(source) {
+            const checkboxes = document.querySelectorAll('.log-checkbox');
+            checkboxes.forEach(cb => cb.checked = source.checked);
+        }
+
+        async function deleteSelected() {
+            const selected = Array.from(document.querySelectorAll('.log-checkbox:checked'))
+                                  .map(cb => parseInt(cb.value));
+            if (selected.length === 0) return alert("Please select at least one log.");
+            
+            if (confirm(`Delete ${selected.length} selected chats?`)) {
+                const res = await fetch(`${API_BASE_URL}/chatbot/delete-multiple`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(selected)
+                });
+                if (res.ok) location.reload();
+            }
+        }
+
+        async function exportLogs() {
+            window.location.href = `${API_BASE_URL}/chatbot/export`;
+        }
+
+        document.getElementById('clearLogsBtn').addEventListener('click', async () => {
+            if (confirm("Permanently delete ALL logs?")) {
+                const res = await fetch(`${API_BASE_URL}/chatbot/clear`, { method: 'DELETE' });
+                if (res.ok) location.reload();
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', loadChatLogs);
     </script>
 </body>
 </html>

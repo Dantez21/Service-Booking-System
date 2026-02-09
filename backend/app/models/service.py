@@ -1,10 +1,10 @@
-from sqlalchemy import Column, Integer, String, Float, Text
-from ..database import Base
+from sqlalchemy import Column, Integer, String, Text
+from app.database import Base
 
 class Service(Base):
-    __tablename__ = "services"
+    __tablename__ = "services" # This connects to your existing table
 
     id = Column(Integer, primary_key=True, index=True)
-    title = Column(String(100), nullable=False)
+    title = Column(String, nullable=False)
+    icon_class = Column(String, nullable=False)
     description = Column(Text, nullable=False)
-    price = Column(Float, nullable=True)
