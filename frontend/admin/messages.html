@@ -132,7 +132,16 @@
             <div class="inbox-wrapper">
                 <div class="inbox-list" id="inbox-list-pane">
                     <div class="inbox-list-header">
-                        <input type="text" placeholder="Search messages..." style="width:100%; padding:8px; border-radius:6px; border:1px solid #ddd;">
+                       <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                            <input type="text" id="searchInput" onkeyup="filterMessages()" placeholder="Search sender or message..." style="flex:1; padding:8px; border-radius:6px; border:1px solid #ddd;">
+                            <button id="binBtn" onclick="toggleBin()" class="adm-mini-btn" title="Recycle Bin"><i class="fa-solid fa-trash-can"></i>
+                                <span id="binCount" >0</span>
+                            </button>
+                        </div>
+                        <div id="batchActions" style="display:none; padding: 5px; background: #eef4ff; border-radius: 5px; justify-content: space-between; align-items:center;">
+                            <span id="selectedCount" style="font-size: 0.8rem; font-weight: bold;">0 selected</span>
+                            <button onclick="deleteSelected()" style="color:red; border:none; background:none; cursor:pointer;"><i class="fa-solid fa-trash"></i></button>
+                        </div>
                     </div>
                     <div class="inbox-items-container" id="messages-list">
                         <div class="inbox-item active" onclick="showMsg('1')">
@@ -150,23 +159,18 @@
 
                 <div class="inbox-view" id="message-view-pane">
                     <div class="view-header">
-                        <div class="back-to-list" onclick="hideMsg()"><i class="fa-solid fa-arrow-left"></i> Back to Inbox</div>
-                        <div class="view-actions">
-                            <button class="adm-mini-btn" title="Reply"><i class="fa-solid fa-reply"></i></button>
-                            <button class="adm-mini-btn" title="Delete" style="color:red;"><i class="fa-solid fa-trash"></i></button>
-                        </div>
                     </div>
                     <div class="view-body" id="message-body-content">
                         <div class="view-meta">
                             <h2>Project Inquiry: XR Development</h2>
-                            <p><strong>From:</strong> johndoe@example.com</p>
-                            <p><strong>Date:</strong> Jan 31, 2026, 10:30 AM</p>
+                            <p><strong>From:</strong> admin@gmail.com</p>
+                            <p><strong>Date:</strong> Feb 10, 2026, 12:38 AM</p>
                         </div>
                         <div class="text-content">
                             <p>Hi Daniel,</p>
                             <p>I'm interested in your XR development services. I saw your recent portfolio project regarding the virtual training module and would like to discuss a similar project for my company.</p>
                             <p>Are you available for a brief call next week?</p>
-                            <p>Best regards,<br>John Doe</p>
+                            <p>Best regards,<br>Admin</p>
                         </div>
                     </div>
                 </div>
@@ -174,20 +178,179 @@
         </main>
     </div>
 
-    <script>
-        // Mobile Toggle Logic
-        function showMsg(id) {
-            // In a real app, you would fetch the message by ID here
-            document.getElementById('message-view-pane').classList.add('active');
+   <script>
+        const API_URL = "http://127.0.0.1:8000/api/messages";
+        let allMessages = [];
+        let showingTrash = false;
+
+        // 1. Fetch and Display Inbox
+        async function loadInbox() {
+            const listContainer = document.getElementById('messages-list');
+            const binBadge = document.getElementById('binCount'); // The indicator element
+
+            try {
+                const response = await fetch(`${API_URL}/all`);
+                const data = await response.json();
+                
+                // --- INDICATOR LOGIC ---
+                // Count how many messages have is_deleted: true
+                const trashCount = data.filter(m => m.is_deleted === true).length;
+                
+                if (binBadge) {
+                    if (trashCount > 0) {
+                        binBadge.innerText = trashCount;
+                        binBadge.style.display = "block"; // Show badge
+                    } else {
+                        binBadge.style.display = "none"; // Hide if bin is empty
+                    }
+                }
+                // -----------------------
+
+                // Filter based on whether we are looking at the Inbox or Recycle Bin
+                allMessages = data.filter(m => m.is_deleted === showingTrash);
+
+                if (allMessages.length === 0) {
+                    listContainer.innerHTML = `
+                        <div class="empty-state" style="text-align:center; padding:40px; color:#666;">
+                            <i class="fa-solid fa-folder-open" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                            <p>${showingTrash ? 'Recycle bin is empty.' : 'No active messages.'}</p>
+                        </div>`;
+                    return;
+                }
+
+                listContainer.innerHTML = allMessages.map((msg, index) => {
+                    const isReadClass = msg.is_read ? "" : "unread-bold";
+                    const previewText = msg.message.replace(/\n/g, " "); 
+                    const dateStr = new Date(msg.timestamp).toLocaleDateString();
+
+                    return `
+                        <div class="inbox-item ${isReadClass}" id="msg-${msg.id}">
+                            <input type="checkbox" class="msg-check" data-id="${msg.id}" onclick="event.stopPropagation();">
+                            <div onclick="viewMessage(${index})" style="flex:1; margin-left:10px; cursor:pointer;">
+                                <span class="time">${dateStr}</span>
+                                <span class="sender">${msg.full_name}</span>
+                                <span class="subject">${previewText.substring(0, 45)}...</span>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+            } catch (err) {
+                console.error("Inbox Load Error:", err);
+            }
         }
 
-        function hideMsg() {
-            document.getElementById('message-view-pane').classList.remove('active');
+        // 2. View Individual Message
+        async function viewMessage(index) {
+            const msg = allMessages[index];
+            const viewPane = document.getElementById('message-body-content');
+            
+            document.querySelectorAll('.inbox-item').forEach(el => el.classList.remove('active'));
+            const currentEl = document.getElementById(`msg-${msg.id}`);
+            if(currentEl) currentEl.classList.add('active');
+
+            if (!msg.is_read) {
+                await fetch(`${API_URL}/${msg.id}/read`, { method: 'PATCH' });
+                msg.is_read = true; 
+                if(currentEl) currentEl.classList.remove('unread-bold');
+            }
+
+            viewPane.innerHTML = `
+                <button class="mobile-back-btn" onclick="document.getElementById('message-view-pane').classList.remove('active')" 
+                        style="display: none; border: none; background: none; color: #2563eb; font-weight: 600; cursor: pointer; margin-bottom: 20px;">
+                    <i class="fa-solid fa-chevron-left"></i> Back to List
+                </button>
+                <div class="view-meta">
+                    <h2>${msg.full_name}</h2>
+                    <p><strong>Email:</strong> ${msg.email}</p>
+                    <p><strong>Date:</strong> ${new Date(msg.timestamp).toLocaleString()}</p>
+                </div>
+                <div class="text-content" style="white-space: pre-wrap; margin-top: 20px; line-height: 1.6;">${msg.message}</div>
+                <div class="view-actions" style="margin-top:40px; border-top: 1px solid #eee; padding-top: 20px; display:flex; gap:12px;">
+                    <button onclick="moveToBin(${msg.id})" class="adm-mini-btn" style="color:#dc3545; border-color:#dc3545;">
+                        <i class="fa-solid fa-trash"></i> ${showingTrash ? 'Delete Forever' : 'Move to Bin'}
+                    </button>
+                    ${showingTrash ? `
+                        <button onclick="restoreMsg(${msg.id})" class="adm-mini-btn" style="color:#28a745; border-color:#28a745;">
+                            <i class="fa-solid fa-undo"></i> Restore
+                        </button>
+                    ` : ''}
+                    <a href="mailto:${msg.email}?subject=Re: Your Message" class="adm-mini-btn" style="text-decoration:none; color:#2563eb; border:1px solid #2563eb; padding:5px 10px; border-radius:4px;">
+                        <i class="fa-solid fa-reply"></i> Reply
+                    </a>
+                </div>
+            `;
+            
+            const detailPane = document.getElementById('message-view-pane');
+            if(detailPane) detailPane.classList.add('active');
         }
 
-        function handleLogout() {
-            if(confirm("Logout from Admin?")) window.location.href = 'login.html';
+        // 3. Navigation: Toggle Bin
+        function toggleBin() {
+            showingTrash = !showingTrash;
+            
+            const title = document.getElementById('inboxTitle');
+            const binBtn = document.getElementById('binBtn');
+            const viewPane = document.getElementById('message-body-content');
+
+            if (title) {
+                title.innerText = showingTrash ? "Recycle Bin" : "Message Inbox";
+            }
+
+            if (binBtn) {
+                if (showingTrash) {
+                    binBtn.style.color = "#dc3545";
+                    binBtn.style.background = "#fee2e2";
+                    binBtn.title = "Back to Inbox";
+                } else {
+                    binBtn.style.color = "";
+                    binBtn.style.background = "";
+                    binBtn.title = "Recycle Bin";
+                }
+            }
+
+            if (viewPane) viewPane.innerHTML = '<div class="empty-state" style="text-align:center; padding:50px; color:#999;">Select a message to view content</div>';
+            loadInbox();
         }
+
+        // 4. Actions: Restore & Delete
+        async function restoreMsg(id) {
+            try {
+                const res = await fetch(`${API_URL}/${id}/restore`, { method: 'PATCH' });
+                if (res.ok) {
+                    loadInbox(); // This will refresh the badge count automatically
+                    document.getElementById('message-body-content').innerHTML = '<div style="text-align:center; padding:50px;">Message restored to inbox.</div>';
+                }
+            } catch (err) { console.error(err); }
+        }
+
+        async function moveToBin(id) {
+            const isPermanent = showingTrash;
+            if (!confirm(isPermanent ? "Permanently delete this message?" : "Move message to Recycle Bin?")) return;
+
+            const url = isPermanent ? `${API_URL}/delete/${id}` : `${API_URL}/${id}/trash`;
+            const res = await fetch(url, { method: isPermanent ? 'DELETE' : 'PATCH' });
+            
+            if (res.ok) {
+                loadInbox(); // This will refresh the badge count automatically
+                document.getElementById('message-body-content').innerHTML = '<div style="text-align:center; padding:50px;">Message removed.</div>';
+            }
+        }
+
+        // 5. Search Filter
+        function filterMessages() {
+            const term = document.getElementById('searchInput').value.toLowerCase();
+            const items = document.querySelectorAll('.inbox-item');
+            items.forEach((item, index) => {
+                const msg = allMessages[index];
+                if (msg) {
+                    const match = msg.full_name.toLowerCase().includes(term) || msg.message.toLowerCase().includes(term);
+                    item.style.display = match ? "flex" : "none";
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', loadInbox);
     </script>
 </body>
 </html>

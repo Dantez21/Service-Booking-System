@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
-from app.routes import chatbot
+from app.routes import chatbot, messages
 from app.routes import auth, projects, services
 from app.database import engine, Base
 from app.models import chat  # Import your chat model specifically
@@ -44,6 +44,7 @@ app.include_router(auth.router, prefix="/api/auth", tags=["Authentication"])
 app.include_router(projects.router, prefix="/api/projects", tags=["Projects"])
 app.include_router(services.router, prefix="/api/services", tags=["Services"])
 app.include_router(chatbot.router, prefix="/api/chatbot", tags=["AI Assistant"])
+app.include_router(messages.router, prefix="/api/messages", tags=["Messages"]) 
 
 # 4. Root Route (Fixes the 404 on http://127.0.0.1:8000)
 @app.get("/")
