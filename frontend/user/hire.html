@@ -144,44 +144,83 @@
                 <p class="hire-lead">Ready to bring your ideas to life? Fill out the form below to secure a consultation for your AI, Data, or XR needs.</p>
             </div>
             
-            <form class="hire-form">
+            <form class="hire-form" id="hireForm">
                 <div class="hire-group">
                     <label>Full Name</label>
-                    <input type="text" placeholder="Your name" class="hire-input">
+                    <input type="text" id="clientName" placeholder="Your name" class="hire-input">
                 </div>
 
                 <div class="hire-group">
                     <label>Email</label>
-                    <input type="email" placeholder="email@example.com" class="hire-input">
+                    <input type="email" id="clientEmail" placeholder="email@example.com" class="hire-input">
                 </div>
 
                 <div class="hire-group">
                     <label>Service Type</label>
-                    <select class="hire-select">
-                        <option>AI Development</option>
-                        <option>Data Science</option>
-                        <option>XR/VR Solutions</option>
+                    <select id="serviceType" class="hire-select">
+                        <option value="AI Development">AI Development</option>
+                        <option value="Data Science">Data Science</option>
+                        <option value="XR/VR Solutions">XR/VR Solutions</option>
                     </select>
                 </div>
 
                 <div class="hire-group">
                     <label>Project Budget</label>
-                    <select class="hire-select">
-                        <option>Below $1,000</option>
-                        <option>$1,000 - $5,000</option>
-                        <option>$5,000+</option>
+                    <select id="projectBudget" class="hire-select">
+                        <option value="Below $1,000">Below $1,000</option>
+                        <option value="$1,000 - $5,000">$1,000 - $5,000</option>
+                        <option value="$5,000+">$5,000+</option>
                     </select>
                 </div>
 
                 <div class="hire-group">
                     <label>Project Details</label>
-                    <textarea class="hire-textarea" placeholder="Tell me about your project..."></textarea>
+                    <textarea id="projectDetails" class="hire-textarea" placeholder="Tell me about your project..."></textarea>
                 </div>
 
-                <button type="submit" class="hire-submit-btn">Send Inquiry</button>
+                <button type="submit" class="hire-submit-btn" id="submitBtn">Send Inquiry</button>
             </form>
         </div>
     </div>
 
+    <script>
+        const API_URL = "http://127.0.0.1:8000/api/hire"; // Match your backend route
+
+        document.getElementById('hireForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = true;
+            btn.innerText = "Sending...";
+
+            const formData = {
+                full_name: document.getElementById('clientName').value,
+                email: document.getElementById('clientEmail').value,
+                service_type: document.getElementById('serviceType').value,
+                budget: document.getElementById('projectBudget').value,
+                details: document.getElementById('projectDetails').value
+            };
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+
+                if (response.ok) {
+                    alert("Request sent successfully! Daniel will contact you soon.");
+                    document.getElementById('hireForm').reset();
+                } else {
+                    alert("Something went wrong. Please try again.");
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                alert("Could not connect to the server.");
+            } finally {
+                btn.disabled = false;
+                btn.innerText = "Send Inquiry";
+            }
+        });
+    </script>
 </body>
 </html>

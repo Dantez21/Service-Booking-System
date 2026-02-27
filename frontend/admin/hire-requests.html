@@ -29,10 +29,16 @@
             color: white;
             border: none;
             padding: 6px 10px;
+            width: 32px;
+            height: 32px;
             border-radius: 4px;
             cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            display: flex;
+            transition: all 0.3s ease;
         }
-
+     
         .hreq-btn-view {
             background: #3498db;
             color: white;
@@ -107,7 +113,7 @@
                                 <th>Actions</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="requests-list">
                             <tr>
                                 <td><strong>Gogo</strong><br><small>gogo@example.com</small></td>
                                 <td>Appenzeller Mobile App</td>
@@ -157,30 +163,189 @@
                 <h3>Request Details</h3>
                 <button class="close-btn" onclick="closeDetails()">&times;</button>
             </div>
-            <div class="adm-modal-body">
+            <div class="adm-modal-body" id="modal-details-content">
                 <p><strong>Client:</strong> John Gogo</p>
                 <p><strong>Project Description:</strong></p>
                 <p style="background: #f9f9f9; padding: 10px; border-radius: 5px;">
                     We need a high-performance mobile application for our dairy farm management system in Appenzell...
                 </p>
             </div>
-            <div class="adm-modal-footer">
-                <button class="btn-cancel" onclick="closeDetails()">Close</button>
-                <button class="adm-btn-save">Accept Project</button>
+            <div class="adm-modal-footer" style="display: flex; gap: 10px; justify-content: flex-end;">
+                <button class="btn-cancel" onclick="closeDetails()" style="background: #6c757d; color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer;">
+                    Close
+                </button>
+                
+                <button onclick="updateStatus(null, 'Rejected')" style="background: #fff; color: #dc3545; border: 1px solid #dc3545; padding: 10px 15px; border-radius: 6px; cursor: pointer;">
+                    Reject
+                </button>
+
+                <button class="adm-btn-save" onclick="updateStatus(null, 'Approved')" style="background: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 600;">
+                    <i class="fa-solid fa-check-double"></i> Accept Project
+                </button>
             </div>
         </div>
     </div>
-
     <script>
-        function openDetails() {
+        const API_URL = "http://127.0.0.1:8000/api/hire";
+        let allRequests = [];
+        let currentSelectedId = null; // Track the ID of the request currently in the modal
+
+        // 1. Fetch and Display Requests from Backend
+        async function loadRequests() {
+            const listContainer = document.getElementById('requests-list');
+            if (!listContainer) return;
+
+            try {
+                const response = await fetch(`${API_URL}/all`);
+                allRequests = await response.json();
+
+                if (allRequests.length === 0) {
+                    listContainer.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:20px;">No hire requests found.</td></tr>';
+                    return;
+                }
+
+                listContainer.innerHTML = allRequests.map((req, index) => {
+                    let statusClass = 'hreq-st-yellow'; 
+                    const isApproved = req.status === 'Approved';
+                    const isRejected = req.status === 'Rejected';
+
+                    if (isApproved) statusClass = 'hreq-st-green';
+                    if (isRejected) statusClass = 'hreq-st-red';
+
+                    // Logic for the checkmark button appearance
+                    const checkBtnBg = isApproved ? '#27ae60' : '#ccc';
+                    const checkIcon = isApproved ? 'fa-circle-check' : 'fa-check';
+                    const checkBtnCursor = isApproved ? 'default' : 'pointer';
+
+                    return `
+                        <tr>
+                            <td><strong>${req.full_name}</strong><br><small>${req.email}</small></td>
+                            <td>${req.service_type}</td>
+                            <td><span class="hreq-status ${statusClass}">${req.status || 'Under Review'}</span></td>
+                            <td>${new Date(req.timestamp).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</td>
+                            <td>
+                                <div class="hreq-action-btns">
+                                    <button class="hreq-btn-check" 
+                                        onclick="${isApproved ? '' : `updateStatus(${req.id}, 'Approved')`}" 
+                                        title="${isApproved ? 'Already Approved' : 'Quick Approve'}"
+                                        style="background: ${checkBtnBg}; color: white; border: none; cursor: ${checkBtnCursor}; width: 32px; height: 32px; border-radius: 4px; transition: 0.3s;">
+                                        <i class="fa-solid ${checkIcon}"></i>
+                                    </button>
+                                    <button class="hreq-btn-view" onclick="openDetails(${index})">Details</button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+
+            } catch (err) {
+                console.error("Error loading requests:", err);
+                listContainer.innerHTML = '<tr><td colspan="5" style="text-align:center; color:red; padding:20px;">Failed to connect to server.</td></tr>';
+            }
+        }
+
+        // 2. Open Modal and Show Specific Details
+       function openDetails(index) {
+            const req = allRequests[index];
+            currentSelectedId = req.id; 
+            
+            const modalBody = document.getElementById('modal-details-content');
+            
+            // Determine status color for the badge in modal
+            let statusColor = '#856404'; // Yellow/Under Review
+            if (req.status === 'Approved') statusColor = '#155724';
+            if (req.status === 'Rejected') statusColor = '#721c24';
+
+            modalBody.innerHTML = `
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+                    <div style="border-bottom: 1px solid #eee; padding-bottom: 15px;">
+                        <h4 style="margin: 0 0 5px 0; color: #111827; font-size: 1.2rem;">${req.full_name}</h4>
+                        <p style="margin: 0; color: #6b7280; font-size: 0.9rem;">
+                            <i class="fa-solid fa-envelope" style="margin-right: 5px;"></i> ${req.email}
+                        </p>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div style="background: #f3f4f6; padding: 12px; border-radius: 8px;">
+                            <span style="display: block; font-size: 0.75rem; color: #6b7280; text-transform: uppercase; font-weight: bold;">Service</span>
+                            <span style="color: #111827; font-weight: 600;">${req.service_type}</span>
+                        </div>
+                        <div style="background: #f3f4f6; padding: 12px; border-radius: 8px;">
+                            <span style="display: block; font-size: 0.75rem; color: #6b7280; text-transform: uppercase; font-weight: bold;">Budget</span>
+                            <span style="color: #059669; font-weight: 600;">${req.budget}</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <span style="display: block; font-size: 0.75rem; color: #6b7280; text-transform: uppercase; font-weight: bold; margin-bottom: 8px;">Project Brief & Requirements</span>
+                        <div style="background: #ffffff; border: 1px solid #e5e7eb; padding: 20px; border-radius: 12px; line-height: 1.6; color: #374151; white-space: pre-wrap; position: relative;">
+                            <i class="fa-solid fa-quote-left" style="position: absolute; top: 10px; left: 10px; color: #e5e7eb; font-size: 1.5rem;"></i>
+                            <div style="position: relative; z-index: 1;">${req.details}</div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; color: #9ca3af;">
+                        <span>Received: ${new Date(req.timestamp).toLocaleString('en-GB')}</span>
+                        <span style="color: ${statusColor}; font-weight: 600;">Status: ${req.status || 'Under Review'}</span>
+                    </div>
+                </div>
+            `;
+
             document.getElementById('details-modal').style.display = 'flex';
         }
+
+        // 3. Close Modal
         function closeDetails() {
             document.getElementById('details-modal').style.display = 'none';
+            currentSelectedId = null;
         }
+
+        // 4. Enhanced Update Status (Handles Modal Buttons & Table Buttons)
+        async function updateStatus(id, newStatus) {
+            const targetId = id || currentSelectedId;
+            if (!targetId) return;
+
+            const saveBtn = document.querySelector('.adm-btn-save');
+            const originalText = saveBtn ? saveBtn.innerHTML : '';
+            
+            if (saveBtn && !id) {
+                saveBtn.disabled = true;
+                saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
+            }
+
+            try {
+                const response = await fetch(`${API_URL}/${targetId}/status`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: newStatus })
+                });
+
+                if (response.ok) {
+                    if (!id) closeDetails(); 
+                    loadRequests(); 
+                } else {
+                    alert("Failed to update status. Please try again.");
+                }
+            } catch (err) {
+                console.error("Update failed:", err);
+                alert("Connection error. Check if your backend is running.");
+            } finally {
+                if (saveBtn && !id) {
+                    saveBtn.disabled = false;
+                    saveBtn.innerHTML = originalText;
+                }
+            }
+        }
+
+        // 5. Navigation & Auth
         function handleLogout() {
-            if(confirm("Logout?")) window.location.href = 'login.html';
+            if(confirm("Are you sure you want to logout?")) {
+                window.location.href = 'login.html';
+            }
         }
+
+        // 6. Initialize on page load
+        document.addEventListener('DOMContentLoaded', loadRequests);
     </script>
 </body>
 </html>
